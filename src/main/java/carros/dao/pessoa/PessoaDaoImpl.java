@@ -1,17 +1,23 @@
 package carros.dao.pessoa;
 
-import carros.dao.BaseDao;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
+
 import carros.entities.pessoas.Pessoa;
 
-public class PessoaDaoImpl extends BaseDao implements PessoaDao {
+@Repository
+public class PessoaDaoImpl implements PessoaDao {
 
-	public PessoaDaoImpl() {
-		super();
-	}
+	private JdbcTemplate jdbcTemplate;
 
 	@Override
 	public void inserirPessoa(Pessoa pessoa) {
 
 	}
 
+	@Autowired
+	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
+		this.jdbcTemplate = jdbcTemplate;
+	}
 }
