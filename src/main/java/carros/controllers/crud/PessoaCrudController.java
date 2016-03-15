@@ -23,10 +23,11 @@ public class PessoaCrudController {
 	private PessoaCrudService pessoaCrudService;
 
 	@RequestMapping(value = "/inserir", method = RequestMethod.POST)
-	public @ResponseBody ResponseEntity<String> inserirPessoa(
+	public @ResponseBody ResponseEntity<Pessoa> inserirPessoa(
 			@RequestBody Pessoa pessoa) {
-		System.out.println(pessoa);
-		return new ResponseEntity<String>(HttpStatus.OK);
+
+		return new ResponseEntity<Pessoa>(
+				pessoaCrudService.inserirPessoa(pessoa), HttpStatus.OK);
 	}
 
 	@Autowired

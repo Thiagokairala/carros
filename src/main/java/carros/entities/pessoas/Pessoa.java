@@ -7,7 +7,7 @@ import carros.entities.pessoas.aparencia.Imagem;
 import carros.entities.residenciais.Endereco;
 import carros.entities.residenciais.Telefone;
 
-public abstract class Pessoa implements Serializable {
+public class Pessoa implements Serializable {
 
 	private static final long serialVersionUID = -3427039606783231089L;
 

@@ -11,8 +11,8 @@ public class PessoaCrudService {
 
 	PessoaDao pessoaDao;
 
-	public void inserirPessoa(Pessoa pessoa) {
-		pessoaDao.inserirPessoa(pessoa);
+	public Pessoa inserirPessoa(Pessoa pessoa) {
+		return pessoaDao.inserirPessoa(pessoa);
 	}
 
 	@Autowired
