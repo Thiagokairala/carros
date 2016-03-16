@@ -14,18 +14,22 @@ import org.springframework.stereotype.Repository;
 import carros.dao.pessoa.PessoaDao;
 import carros.entities.pessoas.Pessoa;
 import carros.entities.usuarios.Usuario;
+import carros.services.security.password.PasswordHandler;
 
 @Repository
 public class UsuarioDaoImpl implements UsuarioDao {
 
 	private JdbcTemplate jdbcTemplate;
 	private PessoaDao pessoaDao;
+	private PasswordHandler passwordHandler;
 
 	@Override
 	public Usuario inserirUsuario(Usuario usuario) {
 		Pessoa pessoa = pessoaDao.inserirPessoa(usuario);
 
 		KeyHolder keyHolder = new GeneratedKeyHolder();
+		usuario.setSenha(this.passwordHandler.criptografarSenha(usuario
+				.getSenha()));
 
 		jdbcTemplate.update(new PreparedStatementCreator() {
 			public PreparedStatement createPreparedStatement(
@@ -35,14 +39,14 @@ public class UsuarioDaoImpl implements UsuarioDao {
 						new String[] { "id" });
 				stmt.setString(1, usuario.getUsername());
 				stmt.setString(2, usuario.getSenha());
-				stmt.setLong(3, pessoa.getId());
+				stmt.setLong(3, pessoa.getIdPessoa());
 				stmt.setString(4, usuario.getEmail());
 
 				return stmt;
 			}
 		}, keyHolder);
 
-		usuario.setId((Long) keyHolder.getKey());
+		usuario.setIdUsuario((Long) keyHolder.getKey());
 		return usuario;
 
 	}
@@ -55,6 +59,11 @@ public class UsuarioDaoImpl implements UsuarioDao {
 	@Autowired
 	public void setPessoaDao(PessoaDao pessoaDao) {
 		this.pessoaDao = pessoaDao;
+	}
+
+	@Autowired
+	public void setPasswordHandler(PasswordHandler passwordHandler) {
+		this.passwordHandler = passwordHandler;
 	}
 
 }

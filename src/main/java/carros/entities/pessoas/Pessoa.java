@@ -11,7 +11,7 @@ public class Pessoa implements Serializable {
 
 	private static final long serialVersionUID = -3427039606783231089L;
 
-	private long id;
+	private long idPessoa;
 	private String docIdentificacao;
 	private String nome;
 	private String nomeDeTela;
@@ -20,12 +20,12 @@ public class Pessoa implements Serializable {
 	private Endereco endereco;
 	private Imagem imagem;
 
-	public long getId() {
-		return id;
+	public long getIdPessoa() {
+		return idPessoa;
 	}
 
-	public void setId(long id) {
-		this.id = id;
+	public void setIdPessoa(long id) {
+		this.idPessoa = id;
 	}
 
 	public String getDocIdentificacao() {

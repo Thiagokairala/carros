@@ -56,7 +56,7 @@ public class PessoaDaoImpl implements PessoaDao {
 			}
 		}, keyHolder);
 
-		pessoa.setId((Long) keyHolder.getKey());
+		pessoa.setIdPessoa((Long) keyHolder.getKey());
 		return pessoa;
 	}
 

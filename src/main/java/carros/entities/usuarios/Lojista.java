@@ -6,5 +6,14 @@ public class Lojista extends Usuario implements Serializable {
 
 	private static final long serialVersionUID = 2276299575822593380L;
 
-	private Long id;
+	private Long idLojista;
+
+	public Long getIdLojista() {
+		return idLojista;
+	}
+
+	public void setIdLojista(Long idLojista) {
+		this.idLojista = idLojista;
+	}
+
 }
