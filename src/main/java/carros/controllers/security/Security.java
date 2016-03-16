@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import carros.entities.security.LoginForm;
+import carros.entities.usuarios.Usuario;
 import carros.services.security.LoginUserService;
 
 @RestController
@@ -22,18 +23,15 @@ import carros.services.security.LoginUserService;
 @Scope("request")
 public class Security {
 
-	private static final Logger logger = LoggerFactory
-			.getLogger(Security.class);
+	private static final Logger logger = LoggerFactory.getLogger(Security.class);
 
 	private LoginUserService LoginUserService;
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public @ResponseBody ResponseEntity<String> login(
-			@RequestBody LoginForm loginForm) {
+	public @ResponseBody ResponseEntity<Usuario> login(@RequestBody LoginForm loginForm) {
 		logger.info("/security/login");
 
-		this.LoginUserService.loginUser(loginForm);
-		return new ResponseEntity<String>(HttpStatus.OK);
+		return new ResponseEntity<Usuario>(LoginUserService.loginUser(loginForm), HttpStatus.OK);
 	}
 
 	@Autowired

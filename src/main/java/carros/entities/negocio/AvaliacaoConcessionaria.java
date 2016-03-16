@@ -11,10 +11,10 @@ public class AvaliacaoConcessionaria implements Serializable {
 	private Long id;
 	private int notaDocumentacao;
 	private int notaInformacao;
-	private Concessionaria concessionaria;
 	private GregorianCalendar dataAvaliacao;
 	private int notaVelocidade;
 	private double notaGeral;
+	private Concessionaria concessionaria;
 
 	public int getNotaDocumentacao() {
 		return notaDocumentacao;

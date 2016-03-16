@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import carros.entities.pessoas.Pessoa;
 
-public class Usuario extends Pessoa implements Serializable {
+public class Usuario implements Serializable {
 
 	private static final long serialVersionUID = -4077434045093904737L;
 
@@ -12,6 +12,8 @@ public class Usuario extends Pessoa implements Serializable {
 	private String email;
 	private String username;
 	private String senha;
+
+	private Pessoa pessoa;
 
 	public Long getIdUsuario() {
 		return idUsuario;
@@ -43,6 +45,14 @@ public class Usuario extends Pessoa implements Serializable {
 
 	public void setSenha(String senha) {
 		this.senha = senha;
+	}
+
+	public Pessoa getPessoa() {
+		return pessoa;
+	}
+
+	public void setPessoa(Pessoa pessoa) {
+		this.pessoa = pessoa;
 	}
 
 }
