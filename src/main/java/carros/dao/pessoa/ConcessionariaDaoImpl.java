@@ -11,6 +11,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
+import carros.dao.pessoa.extractor.ConcessionariaRowMapper;
 import carros.dao.security.UsuarioDao;
 import carros.entities.usuarios.Concessionaria;
 import carros.entities.usuarios.Usuario;
@@ -20,6 +21,15 @@ public class ConcessionariaDaoImpl implements ConcessionariaDao {
 
 	private JdbcTemplate jdbcTemplate;
 	private UsuarioDao usuarioDao;
+	private ConcessionariaRowMapper concessionariaRowMapper;
+
+	@Override
+	public void inserirNotaConcessionaria(Concessionaria concessionaria) {
+		Object[] arrayArguments = new Object[] { concessionaria.getNotaGeral(), concessionaria.getNumeroAvaliacoes(),
+				concessionaria.getIdConcessionaria() };
+
+		jdbcTemplate.update(ConcessionariaDaoContrato.INSERIR_AVALIACAO_CONCESSIONARIA, arrayArguments);
+	}
 
 	@Override
 	public Concessionaria inserirConcessionaria(Concessionaria concessionaria) {
@@ -28,10 +38,8 @@ public class ConcessionariaDaoImpl implements ConcessionariaDao {
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 
 		jdbcTemplate.update(new PreparedStatementCreator() {
-			public PreparedStatement createPreparedStatement(
-					Connection connection) throws SQLException {
-				PreparedStatement stmt = connection.prepareStatement(
-						ConcessionariaContrato.INSERIR_CONCESSIONARIA,
+			public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+				PreparedStatement stmt = connection.prepareStatement(ConcessionariaDaoContrato.INSERIR_CONCESSIONARIA,
 						new String[] { "id" });
 				stmt.setLong(1, usuario.getIdUsuario());
 				return stmt;
@@ -41,6 +49,19 @@ public class ConcessionariaDaoImpl implements ConcessionariaDao {
 		concessionaria.setIdConcessionaria((Long) keyHolder.getKey());
 
 		return concessionaria;
+	}
+
+	@Override
+	public Concessionaria buscarConcessionaria(Concessionaria concessionaria) {
+		Object[] arrayArguments = new Object[] { concessionaria.getIdConcessionaria() };
+		concessionaria = (Concessionaria) jdbcTemplate.queryForObject(ConcessionariaDaoContrato.SELECT_CONCESSIONARIA,
+				arrayArguments, concessionariaRowMapper);
+		return concessionaria;
+	}
+
+	@Autowired
+	public void setConcessionariaRowMapper(ConcessionariaRowMapper concessionariaRowMapper) {
+		this.concessionariaRowMapper = concessionariaRowMapper;
 	}
 
 	@Autowired

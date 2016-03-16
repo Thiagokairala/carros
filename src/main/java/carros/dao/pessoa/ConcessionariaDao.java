@@ -6,4 +6,8 @@ public interface ConcessionariaDao {
 
 	public Concessionaria inserirConcessionaria(Concessionaria concessionaria);
 
+	public void inserirNotaConcessionaria(Concessionaria concessionaria);
+	
+	public Concessionaria buscarConcessionaria(Concessionaria concessionaria);
+
 }

@@ -11,6 +11,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
+import carros.dao.pessoa.ConcessionariaDao;
 import carros.entities.negocio.AvaliacaoConcessionaria;
 
 @Repository
@@ -18,11 +19,14 @@ public class AvaliacaoConcessionariaDaoImpl implements
 		AvaliacaoConcessionariaDao {
 
 	private JdbcTemplate jdbcTemplate;
+	private ConcessionariaDao concessionariaDao;
 
 	@Override
 	public AvaliacaoConcessionaria avaliarConcessionaria(
 			AvaliacaoConcessionaria avaliacaoConcessionaria) {
 		KeyHolder keyHolder = new GeneratedKeyHolder();
+		
+		concessionariaDao.inserirNotaConcessionaria(avaliacaoConcessionaria.getConcessionaria());
 
 		jdbcTemplate.update(new PreparedStatementCreator() {
 			public PreparedStatement createPreparedStatement(
@@ -46,8 +50,15 @@ public class AvaliacaoConcessionariaDaoImpl implements
 	}
 
 	@Autowired
+	public void setConcessionariaDao(ConcessionariaDao concessionariaDao) {
+		this.concessionariaDao = concessionariaDao;
+	}
+
+	@Autowired
 	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
 		this.jdbcTemplate = jdbcTemplate;
 	}
+	
+	
 
 }
