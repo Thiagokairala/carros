@@ -1,6 +1,7 @@
 package carros.regras.security;
 
 import java.sql.ResultSet;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -23,6 +24,18 @@ public class UsuarioRegraImpl extends CarrosRegras implements UsuarioRegra {
 		usuario.setUsername(getString(rs, "txt_nome_usuario"));
 		usuario.setEmail(getString(rs, "txt_email"));
 		usuario.setTipoUsuario(tipoUsuarioRegra.buildTipoUsuario(rs));
+
+		return usuario;
+	}
+
+	@Override
+	public Usuario buildUsuario(Map<String, Object> row) {
+		Usuario usuario = new Usuario();
+		usuario.setPessoa(pessoaRegra.buildPessoa(row));
+		usuario.setIdUsuario(getLong(row, "idusuario"));
+		usuario.setUsername(getString(row, "txt_nome_usuario"));
+		usuario.setEmail(getString(row, "txt_email"));
+		usuario.setTipoUsuario(tipoUsuarioRegra.buildTipoUsuario(row));
 
 		return usuario;
 	}

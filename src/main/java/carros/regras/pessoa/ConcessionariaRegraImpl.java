@@ -1,6 +1,7 @@
 package carros.regras.pessoa;
 
 import java.sql.ResultSet;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -23,6 +24,19 @@ public class ConcessionariaRegraImpl extends CarrosRegras implements
 		concessionaria.setNumeroAvaliacoes(getInt(rs,
 				"int_numero_de_avaliacoes"));
 		concessionaria.setNotaGeral(getDouble(rs, "fl_nota_avaliacao"));
+
+		return concessionaria;
+	}
+
+	@Override
+	public Concessionaria construirConcessionaria(Map<String, Object> row) {
+		Concessionaria concessionaria = new Concessionaria();
+		concessionaria.setUsuario(usuarioRegra.buildUsuario(row));
+
+		concessionaria.setIdConcessionaria(getLong(row, "idconcessionaria"));
+		concessionaria.setNumeroAvaliacoes(getInt(row,
+				"int_numero_de_avaliacoes"));
+		concessionaria.setNotaGeral(getDouble(row, "fl_nota_avaliacao"));
 
 		return concessionaria;
 	}

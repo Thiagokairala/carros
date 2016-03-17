@@ -15,6 +15,7 @@ public class Oferta implements Serializable {
 	private Boolean finalizado;
 	private BigDecimal valorDaOferta;
 	private Lojista lojistaQueFinalizaou;
+	private GregorianCalendar dataCriado;
 	private GregorianCalendar dataFinalizacao;
 	private Concessionaria concessionaria;
 	private Veiculo veiculo;
@@ -73,6 +74,14 @@ public class Oferta implements Serializable {
 
 	public void setVeiculo(Veiculo veiculo) {
 		this.veiculo = veiculo;
+	}
+
+	public GregorianCalendar getDataCriado() {
+		return dataCriado;
+	}
+
+	public void setDataCriado(GregorianCalendar dataCriado) {
+		this.dataCriado = dataCriado;
 	}
 
 }
