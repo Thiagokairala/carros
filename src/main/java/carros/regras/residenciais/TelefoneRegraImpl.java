@@ -1,4 +1,4 @@
-package carros.rule.residenciais;
+package carros.regras.residenciais;
 
 import java.sql.ResultSet;
 

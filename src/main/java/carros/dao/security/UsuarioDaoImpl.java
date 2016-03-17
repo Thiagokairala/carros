@@ -28,14 +28,17 @@ public class UsuarioDaoImpl implements UsuarioDao {
 
 	@Override
 	public Usuario inserirUsuario(Usuario usuario) {
-		Pessoa pessoa = pessoaDao.inserirPessoa(usuario);
+		Pessoa pessoa = pessoaDao.inserirPessoa(usuario.getPessoa());
 
 		KeyHolder keyHolder = new GeneratedKeyHolder();
-		usuario.setSenha(this.passwordHandler.criptografarSenha(usuario.getSenha()));
+		usuario.setSenha(this.passwordHandler.criptografarSenha(usuario
+				.getSenha()));
 
 		jdbcTemplate.update(new PreparedStatementCreator() {
-			public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-				PreparedStatement stmt = connection.prepareStatement(UsuarioDaoContrato.INSERIR_USUARIO,
+			public PreparedStatement createPreparedStatement(
+					Connection connection) throws SQLException {
+				PreparedStatement stmt = connection.prepareStatement(
+						UsuarioDaoContrato.INSERIR_USUARIO,
 						new String[] { "id" });
 				stmt.setString(1, usuario.getUsername());
 				stmt.setString(2, usuario.getSenha());
@@ -52,8 +55,11 @@ public class UsuarioDaoImpl implements UsuarioDao {
 
 	@Override
 	public Usuario loginUsuario(LoginForm loginForm) {
-		Object[] arrayParams = new Object[] { loginForm.getUsername(), loginForm.getPassword() };
-		Usuario usuario = jdbcTemplate.queryForObject(UsuarioDaoContrato.BUSCAR_USUARIO, arrayParams, usuarioRowMapper);
+		Object[] arrayParams = new Object[] { loginForm.getUsername(),
+				loginForm.getPassword() };
+		Usuario usuario = jdbcTemplate.queryForObject(
+				UsuarioDaoContrato.BUSCAR_USUARIO, arrayParams,
+				usuarioRowMapper);
 		return usuario;
 	}
 

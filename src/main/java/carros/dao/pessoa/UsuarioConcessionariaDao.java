@@ -6,4 +6,7 @@ public interface UsuarioConcessionariaDao {
 
 	public UsuarioConcessionaria inserirUsuarioConcessionaria(
 			UsuarioConcessionaria usuarioConcessionaria);
+
+	public UsuarioConcessionaria buscarUsuarioConcessionariaPorIdUsuario(
+			Long idUsuario);
 }

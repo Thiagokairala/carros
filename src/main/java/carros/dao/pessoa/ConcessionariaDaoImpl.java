@@ -25,21 +25,27 @@ public class ConcessionariaDaoImpl implements ConcessionariaDao {
 
 	@Override
 	public void inserirNotaConcessionaria(Concessionaria concessionaria) {
-		Object[] arrayArguments = new Object[] { concessionaria.getNotaGeral(), concessionaria.getNumeroAvaliacoes(),
+		Object[] arrayArguments = new Object[] { concessionaria.getNotaGeral(),
+				concessionaria.getNumeroAvaliacoes(),
 				concessionaria.getIdConcessionaria() };
 
-		jdbcTemplate.update(ConcessionariaDaoContrato.INSERIR_AVALIACAO_CONCESSIONARIA, arrayArguments);
+		jdbcTemplate.update(
+				ConcessionariaDaoContrato.INSERIR_AVALIACAO_CONCESSIONARIA,
+				arrayArguments);
 	}
 
 	@Override
 	public Concessionaria inserirConcessionaria(Concessionaria concessionaria) {
-		Usuario usuario = usuarioDao.inserirUsuario(concessionaria);
+		Usuario usuario = usuarioDao
+				.inserirUsuario(concessionaria.getUsuario());
 
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 
 		jdbcTemplate.update(new PreparedStatementCreator() {
-			public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-				PreparedStatement stmt = connection.prepareStatement(ConcessionariaDaoContrato.INSERIR_CONCESSIONARIA,
+			public PreparedStatement createPreparedStatement(
+					Connection connection) throws SQLException {
+				PreparedStatement stmt = connection.prepareStatement(
+						ConcessionariaDaoContrato.INSERIR_CONCESSIONARIA,
 						new String[] { "id" });
 				stmt.setLong(1, usuario.getIdUsuario());
 				return stmt;
@@ -53,14 +59,25 @@ public class ConcessionariaDaoImpl implements ConcessionariaDao {
 
 	@Override
 	public Concessionaria buscarConcessionaria(Concessionaria concessionaria) {
-		Object[] arrayArguments = new Object[] { concessionaria.getIdConcessionaria() };
-		concessionaria = (Concessionaria) jdbcTemplate.queryForObject(ConcessionariaDaoContrato.SELECT_CONCESSIONARIA,
+		Object[] arrayArguments = new Object[] { concessionaria
+				.getIdConcessionaria() };
+		concessionaria = (Concessionaria) jdbcTemplate.queryForObject(
+				ConcessionariaDaoContrato.SELECT_CONCESSIONARIA,
 				arrayArguments, concessionariaRowMapper);
 		return concessionaria;
 	}
 
+	@Override
+	public Concessionaria buscarConcessionariaPorIdUsuario(Long idUsuario) {
+		Object[] arrayArguments = new Object[] { idUsuario };
+		return (Concessionaria) jdbcTemplate.queryForObject(
+				ConcessionariaDaoContrato.SELECT_CONCESSIONARIA_BY_ID_USUARIO,
+				arrayArguments, concessionariaRowMapper);
+	}
+
 	@Autowired
-	public void setConcessionariaRowMapper(ConcessionariaRowMapper concessionariaRowMapper) {
+	public void setConcessionariaRowMapper(
+			ConcessionariaRowMapper concessionariaRowMapper) {
 		this.concessionariaRowMapper = concessionariaRowMapper;
 	}
 

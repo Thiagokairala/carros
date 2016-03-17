@@ -8,7 +8,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Service;
 
 import carros.entities.usuarios.Concessionaria;
-import carros.rule.pessoa.ConcessionariaRegra;
+import carros.regras.pessoa.ConcessionariaRegra;
 
 @Service
 public class ConcessionariaRowMapper implements RowMapper<Concessionaria> {

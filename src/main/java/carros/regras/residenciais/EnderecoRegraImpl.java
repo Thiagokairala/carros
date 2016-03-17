@@ -1,4 +1,4 @@
-package carros.rule.residenciais;
+package carros.regras.residenciais;
 
 import java.sql.ResultSet;
 
@@ -15,7 +15,7 @@ public class EnderecoRegraImpl extends CarrosRegras implements EnderecoRegra {
 		Endereco endereco = new Endereco();
 		endereco.setId(getLong(rs, "idendereco"));
 		endereco.setEndereco(getString(rs, "txt_endereco"));
-		endereco.setCep(getString(rs, "txt_get"));
+		endereco.setCep(getString(rs, "txt_cep"));
 		return endereco;
 	}
 

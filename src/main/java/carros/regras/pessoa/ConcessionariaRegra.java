@@ -1,4 +1,4 @@
-package carros.rule.pessoa;
+package carros.regras.pessoa;
 
 import java.sql.ResultSet;
 

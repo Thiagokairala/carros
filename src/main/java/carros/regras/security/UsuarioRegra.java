@@ -1,4 +1,4 @@
-package carros.rule.security;
+package carros.regras.security;
 
 import java.sql.ResultSet;
 

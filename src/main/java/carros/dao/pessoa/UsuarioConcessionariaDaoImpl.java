@@ -11,6 +11,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
+import carros.dao.pessoa.extractor.UsuarioConcessionariaRowMapper;
 import carros.dao.security.UsuarioDao;
 import carros.entities.usuarios.Usuario;
 import carros.entities.usuarios.UsuarioConcessionaria;
@@ -19,11 +20,13 @@ import carros.entities.usuarios.UsuarioConcessionaria;
 public class UsuarioConcessionariaDaoImpl implements UsuarioConcessionariaDao {
 	private JdbcTemplate jdbcTemplate;
 	private UsuarioDao usuarioDao;
+	private UsuarioConcessionariaRowMapper usuarioConcessionariaRowMapper;
 
 	@Override
 	public UsuarioConcessionaria inserirUsuarioConcessionaria(
 			UsuarioConcessionaria usuarioConcessionaria) {
-		Usuario usuario = usuarioDao.inserirUsuario(usuarioConcessionaria);
+		Usuario usuario = usuarioDao.inserirUsuario(usuarioConcessionaria
+				.getUsuario());
 
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 
@@ -49,6 +52,16 @@ public class UsuarioConcessionariaDaoImpl implements UsuarioConcessionariaDao {
 		return usuarioConcessionaria;
 	}
 
+	@Override
+	public UsuarioConcessionaria buscarUsuarioConcessionariaPorIdUsuario(
+			Long idUsuario) {
+		Object[] arrayArguments = new Object[] { idUsuario };
+		return (UsuarioConcessionaria) jdbcTemplate
+				.queryForObject(
+						UsuarioConcessionariaDaoContrato.SELECT_USUARIO_CONCESSIONARIA_POR_ID_USUARIO,
+						arrayArguments, usuarioConcessionariaRowMapper);
+	}
+
 	@Autowired
 	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
 		this.jdbcTemplate = jdbcTemplate;
@@ -57,6 +70,12 @@ public class UsuarioConcessionariaDaoImpl implements UsuarioConcessionariaDao {
 	@Autowired
 	public void setUsuarioDao(UsuarioDao usuarioDao) {
 		this.usuarioDao = usuarioDao;
+	}
+
+	@Autowired
+	public void setUsuarioConcessionariaRowMapper(
+			UsuarioConcessionariaRowMapper usuarioConcessionariaRowMapper) {
+		this.usuarioConcessionariaRowMapper = usuarioConcessionariaRowMapper;
 	}
 
 }

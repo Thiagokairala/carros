@@ -8,7 +8,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Service;
 
 import carros.entities.usuarios.Usuario;
-import carros.rule.security.UsuarioRegra;
+import carros.regras.security.UsuarioRegra;
 
 @Service
 public class UsuarioRowMapper implements RowMapper<Usuario> {

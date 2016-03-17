@@ -11,6 +11,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
+import carros.dao.pessoa.extractor.LojistaRowMapper;
 import carros.dao.security.UsuarioDao;
 import carros.entities.usuarios.Lojista;
 import carros.entities.usuarios.Usuario;
@@ -19,10 +20,11 @@ import carros.entities.usuarios.Usuario;
 public class LojistaDaoImpl implements LojistaDao {
 	private JdbcTemplate jdbcTemplate;
 	private UsuarioDao usuarioDao;
+	private LojistaRowMapper lojistaRowMapper;
 
 	@Override
 	public Lojista inserirLojista(Lojista lojista) {
-		Usuario usuario = usuarioDao.inserirUsuario(lojista);
+		Usuario usuario = usuarioDao.inserirUsuario(lojista.getUsuario());
 
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 
@@ -38,8 +40,17 @@ public class LojistaDaoImpl implements LojistaDao {
 			}
 		}, keyHolder);
 
-		lojista.setIdUsuario((Long) keyHolder.getKey());
+		lojista.setIdLojista((Long) keyHolder.getKey());
 		return lojista;
+	}
+
+	@Override
+	public Lojista buscarLojistaPorIdUsuario(Long idUsuario) {
+		Object[] arrayArguments = new Object[] { idUsuario };
+		return (Lojista) jdbcTemplate.queryForObject(
+				LojistaDaoContrato.SELECT_LOJISTA_POR_ID_USUARIO,
+				arrayArguments, lojistaRowMapper);
+
 	}
 
 	@Autowired
@@ -50,6 +61,11 @@ public class LojistaDaoImpl implements LojistaDao {
 	@Autowired
 	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
 		this.jdbcTemplate = jdbcTemplate;
+	}
+
+	@Autowired
+	public void setLojistaRowMapper(LojistaRowMapper lojistaRowMapper) {
+		this.lojistaRowMapper = lojistaRowMapper;
 	}
 
 }

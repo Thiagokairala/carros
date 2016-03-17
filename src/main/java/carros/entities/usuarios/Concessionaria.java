@@ -2,13 +2,15 @@ package carros.entities.usuarios;
 
 import java.io.Serializable;
 
-public class Concessionaria extends Usuario implements Serializable {
+public class Concessionaria implements Serializable {
 
 	private static final long serialVersionUID = 4383597120730145553L;
 	private Long idConcessionaria;
 
 	private int numeroAvaliacoes;
 	private double notaGeral;
+	
+	private Usuario usuario;
 
 	public Long getIdConcessionaria() {
 		return idConcessionaria;
@@ -32,6 +34,14 @@ public class Concessionaria extends Usuario implements Serializable {
 
 	public void setNotaGeral(double notaGeral) {
 		this.notaGeral = notaGeral;
+	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
 }

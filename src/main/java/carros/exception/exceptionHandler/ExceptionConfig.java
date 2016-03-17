@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import carros.exception.CarrosException;
 import carros.exception.security.CarrosUserNotFound;
+import carros.exception.security.CarrosUsuarioNaoTemPapel;
 
 @Controller
 public class ExceptionConfig {
@@ -20,5 +21,10 @@ public class ExceptionConfig {
 	@ExceptionHandler(CarrosUserNotFound.class)
 	public @ResponseBody ResponseEntity<String> carrosUserNotFound() {
 		return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
+	}
+
+	@ExceptionHandler(CarrosUsuarioNaoTemPapel.class)
+	public @ResponseBody ResponseEntity<String> carrosUsuarioNaoTemPapel() {
+		return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
 	}
 }

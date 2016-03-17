@@ -1,4 +1,4 @@
-package carros.rule.pessoa;
+package carros.regras.pessoa;
 
 import java.sql.ResultSet;
 
@@ -7,8 +7,8 @@ import org.springframework.stereotype.Component;
 
 import carros.entities.pessoas.Pessoa;
 import carros.regras.CarrosRegras;
-import carros.rule.residenciais.EnderecoRegra;
-import carros.rule.residenciais.TelefoneRegra;
+import carros.regras.residenciais.EnderecoRegra;
+import carros.regras.residenciais.TelefoneRegra;
 
 @Component
 public class PessoaRegraImpl extends CarrosRegras implements PessoaRegra {

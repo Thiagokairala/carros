@@ -10,4 +10,6 @@ public interface ConcessionariaDao {
 	
 	public Concessionaria buscarConcessionaria(Concessionaria concessionaria);
 
+	public Concessionaria buscarConcessionariaPorIdUsuario(Long idUsuario);
+
 }

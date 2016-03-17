@@ -1,12 +1,22 @@
 package carros.services.security;
 
+import java.io.Serializable;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
+import carros.dao.pessoa.ConcessionariaDao;
+import carros.dao.pessoa.LojistaDao;
+import carros.dao.pessoa.UsuarioConcessionariaDao;
 import carros.dao.security.UsuarioDao;
 import carros.entities.security.LoginForm;
+import carros.entities.usuarios.TipoUsuario;
+import carros.entities.usuarios.TipoUsuarioConst;
 import carros.entities.usuarios.Usuario;
+import carros.entities.usuarios.UsuarioConcessionaria;
+import carros.exception.security.CarrosUserNotFound;
 import carros.services.security.password.PasswordHandler;
 
 @Service
@@ -15,11 +25,45 @@ public class LoginUserService {
 
 	private PasswordHandler passwordHandler;
 	private UsuarioDao usuarioDao;
+	private ConcessionariaDao concessionariaDao;
+	private UsuarioConcessionariaDao usuarioConcessionariaDao;
+	private LojistaDao lojistaDao;
 
-	public Usuario loginUser(LoginForm loginForm) {
+	public Serializable loginUser(LoginForm loginForm)
+			throws CarrosUserNotFound {
+		Usuario usuario;
 		loginForm.setPassword(this.passwordHandler.criptografarSenha(loginForm
 				.getPassword()));
-		return usuarioDao.loginUsuario(loginForm);
+		try {
+			usuario = usuarioDao.loginUsuario(loginForm);
+
+			return getUsuarioCorreto(usuario);
+		} catch (EmptyResultDataAccessException e) {
+			throw new CarrosUserNotFound(
+					"Usuário não cadastrado o sistema ou a senha não confere");
+		}
+	}
+
+	private Serializable getUsuarioCorreto(Usuario usuario) {
+		TipoUsuario tipoUsuario = usuario.getTipoUsuario();
+		if (tipoUsuario.getId() == TipoUsuarioConst.ADMIN.getTipoUsuarioConst()) {
+			return usuario;
+		} else if (tipoUsuario.getId() == TipoUsuarioConst.CONCESSIONARIA
+				.getTipoUsuarioConst()) {
+			return concessionariaDao.buscarConcessionariaPorIdUsuario(usuario
+					.getIdUsuario());
+		} else if (tipoUsuario.getId() == TipoUsuarioConst.USUARIO_CONCESSIONARIA
+				.getTipoUsuarioConst()) {
+			UsuarioConcessionaria usuarioConcessionaria = usuarioConcessionariaDao
+					.buscarUsuarioConcessionariaPorIdUsuario(usuario
+							.getIdUsuario());
+			usuarioConcessionaria.getConcessionaria().setUsuario(null);
+			return usuarioConcessionaria;
+		} else if (tipoUsuario.getId() == TipoUsuarioConst.LOJISTA
+				.getTipoUsuarioConst()) {
+			return lojistaDao.buscarLojistaPorIdUsuario(usuario.getIdUsuario());
+		}
+		return null;
 	}
 
 	@Autowired
@@ -31,6 +75,21 @@ public class LoginUserService {
 	public void setUsuarioDao(UsuarioDao usuarioDao) {
 		this.usuarioDao = usuarioDao;
 	}
-	
-	
+
+	@Autowired
+	public void setConcessionariaDao(ConcessionariaDao concessionariaDao) {
+		this.concessionariaDao = concessionariaDao;
+	}
+
+	@Autowired
+	public void setUsuarioConcessionariaDao(
+			UsuarioConcessionariaDao usuarioConcessionariaDao) {
+		this.usuarioConcessionariaDao = usuarioConcessionariaDao;
+	}
+
+	@Autowired
+	public void setLojistaDao(LojistaDao lojistaDao) {
+		this.lojistaDao = lojistaDao;
+	}
+
 }
