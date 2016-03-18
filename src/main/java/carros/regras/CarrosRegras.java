@@ -3,6 +3,7 @@ package carros.regras;
 import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.GregorianCalendar;
 import java.util.Map;
 
@@ -42,7 +43,12 @@ public abstract class CarrosRegras {
 
 	public int getInt(Map<String, Object> row, String columnName) {
 		int returnInt = -1;
-		returnInt = (int) row.get(columnName);
+		try {
+			returnInt = (int) row.get(columnName);
+		} catch (NullPointerException e) {
+			logger.warn("Field " + columnName + " not in the resultSet");
+		}
+
 		return returnInt;
 
 	}
@@ -61,7 +67,8 @@ public abstract class CarrosRegras {
 	public GregorianCalendar getGregorianCalendar(Map<String, Object> row,
 			String columnName) {
 		GregorianCalendar calendarReturn = new GregorianCalendar();
-		calendarReturn = (GregorianCalendar) row.get(columnName);
+		calendarReturn.setTimeInMillis(((Timestamp) row.get(columnName))
+				.getTime());
 		return calendarReturn;
 
 	}
@@ -99,7 +106,11 @@ public abstract class CarrosRegras {
 	public Long getLong(Map<String, Object> row, String columnName) {
 		Long returnLong = new Long(-1);
 
-		returnLong = (Long) row.get(columnName);
+		try {
+			returnLong = ((Integer) row.get(columnName)).longValue();
+		} catch (NullPointerException e) {
+			logger.warn("Field " + columnName + " not in the resultSet");
+		}
 
 		return returnLong;
 	}
@@ -119,7 +130,7 @@ public abstract class CarrosRegras {
 	public double getDouble(Map<String, Object> row, String columnName) {
 		double returnDouble = 0;
 
-		returnDouble = (double) row.get(columnName);
+		returnDouble = ((Float) row.get(columnName)).floatValue();
 
 		return returnDouble;
 	}
