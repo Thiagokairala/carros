@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import carros.exception.CarrosException;
 import carros.exception.security.CarrosUserNotFound;
+import carros.exception.security.CarrosUsuarioNaoAutenticado;
 import carros.exception.security.CarrosUsuarioNaoTemPapel;
 
 @Controller
@@ -27,4 +28,10 @@ public class ExceptionConfig {
 	public @ResponseBody ResponseEntity<String> carrosUsuarioNaoTemPapel() {
 		return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
 	}
+
+	@ExceptionHandler(CarrosUsuarioNaoAutenticado.class)
+	public @ResponseBody ResponseEntity<String> carrosUsuarioNaoAutenticado() {
+		return new ResponseEntity<String>(HttpStatus.NOT_ACCEPTABLE);
+	}
+
 }

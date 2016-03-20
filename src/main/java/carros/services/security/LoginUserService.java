@@ -17,6 +17,7 @@ import carros.entities.usuarios.TipoUsuarioConst;
 import carros.entities.usuarios.Usuario;
 import carros.entities.usuarios.UsuarioConcessionaria;
 import carros.exception.security.CarrosUserNotFound;
+import carros.exception.security.CarrosUsuarioNaoAutenticado;
 import carros.services.security.password.PasswordHandler;
 
 @Service
@@ -29,18 +30,33 @@ public class LoginUserService {
 	private UsuarioConcessionariaDao usuarioConcessionariaDao;
 	private LojistaDao lojistaDao;
 
-	public Serializable loginUser(LoginForm loginForm)
-			throws CarrosUserNotFound {
+	public Serializable loginUser(LoginForm loginForm) throws CarrosUserNotFound, CarrosUsuarioNaoAutenticado {
 		Usuario usuario;
-		loginForm.setPassword(this.passwordHandler.criptografarSenha(loginForm
-				.getPassword()));
+		loginForm.setPassword(this.passwordHandler.criptografarSenha(loginForm.getPassword()));
 		try {
 			usuario = usuarioDao.loginUsuario(loginForm);
+			if (usuario.isAutenticado()) {
+				return getUsuarioCorreto(usuario);
+			} else {
+				throw new CarrosUsuarioNaoAutenticado("O usuario ainda não confirmou o email");
+			}
+
+		} catch (EmptyResultDataAccessException e) {
+			throw new CarrosUserNotFound("Usuário não cadastrado o sistema ou a senha não confere");
+		}
+	}
+
+	public Serializable confirmarEmail(String token) throws CarrosUserNotFound {
+		Usuario usuario;
+		try {
+			usuario = usuarioDao.loginUsuario(token);
+			if (usuario.getIdUsuario() > 0) {
+				usuarioDao.setarAutenticado(usuario.getIdUsuario());
+			}
 
 			return getUsuarioCorreto(usuario);
 		} catch (EmptyResultDataAccessException e) {
-			throw new CarrosUserNotFound(
-					"Usuário não cadastrado o sistema ou a senha não confere");
+			throw new CarrosUserNotFound("Usuário não cadastrado o sistema ou a senha não confere");
 		}
 	}
 
@@ -48,19 +64,14 @@ public class LoginUserService {
 		TipoUsuario tipoUsuario = usuario.getTipoUsuario();
 		if (tipoUsuario.getId() == TipoUsuarioConst.ADMIN.getTipoUsuarioConst()) {
 			return usuario;
-		} else if (tipoUsuario.getId() == TipoUsuarioConst.CONCESSIONARIA
-				.getTipoUsuarioConst()) {
-			return concessionariaDao.buscarConcessionariaPorIdUsuario(usuario
-					.getIdUsuario());
-		} else if (tipoUsuario.getId() == TipoUsuarioConst.USUARIO_CONCESSIONARIA
-				.getTipoUsuarioConst()) {
+		} else if (tipoUsuario.getId() == TipoUsuarioConst.CONCESSIONARIA.getTipoUsuarioConst()) {
+			return concessionariaDao.buscarConcessionariaPorIdUsuario(usuario.getIdUsuario());
+		} else if (tipoUsuario.getId() == TipoUsuarioConst.USUARIO_CONCESSIONARIA.getTipoUsuarioConst()) {
 			UsuarioConcessionaria usuarioConcessionaria = usuarioConcessionariaDao
-					.buscarUsuarioConcessionariaPorIdUsuario(usuario
-							.getIdUsuario());
+					.buscarUsuarioConcessionariaPorIdUsuario(usuario.getIdUsuario());
 			usuarioConcessionaria.getConcessionaria().setUsuario(null);
 			return usuarioConcessionaria;
-		} else if (tipoUsuario.getId() == TipoUsuarioConst.LOJISTA
-				.getTipoUsuarioConst()) {
+		} else if (tipoUsuario.getId() == TipoUsuarioConst.LOJISTA.getTipoUsuarioConst()) {
 			return lojistaDao.buscarLojistaPorIdUsuario(usuario.getIdUsuario());
 		}
 		return null;
@@ -82,8 +93,7 @@ public class LoginUserService {
 	}
 
 	@Autowired
-	public void setUsuarioConcessionariaDao(
-			UsuarioConcessionariaDao usuarioConcessionariaDao) {
+	public void setUsuarioConcessionariaDao(UsuarioConcessionariaDao usuarioConcessionariaDao) {
 		this.usuarioConcessionariaDao = usuarioConcessionariaDao;
 	}
 
@@ -91,5 +101,4 @@ public class LoginUserService {
 	public void setLojistaDao(LojistaDao lojistaDao) {
 		this.lojistaDao = lojistaDao;
 	}
-
 }
