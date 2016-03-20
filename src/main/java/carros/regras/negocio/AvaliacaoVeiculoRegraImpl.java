@@ -16,7 +16,7 @@ public class AvaliacaoVeiculoRegraImpl extends CarrosRegras implements
 		AvaliacaoVeiculo avaliacaoVeiculo = new AvaliacaoVeiculo();
 
 		avaliacaoVeiculo.setId(getLong(row, "idavaliacao_veiculo"));
-		avaliacaoVeiculo.setDescricao(getString(row, "txt_descricao"));
+		avaliacaoVeiculo.setDescricao(getString(row, "txt_descricao_avaliacao"));
 		avaliacaoVeiculo.setPrecoParaConserto(getBidDecimal(row,
 				"db_preco_para_conserto"));
 		avaliacaoVeiculo.setKmRodado(getInt(row, "km_rodado"));
