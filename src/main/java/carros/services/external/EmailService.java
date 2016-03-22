@@ -55,7 +55,7 @@ public class EmailService {
 		try {
 			mensagem.setRecipient(Message.RecipientType.TO, new InternetAddress(usuario.getEmail()));
 			mensagem.setFrom(new InternetAddress(EmailContrato.EMAIL_FROM));
-			mensagem.setSubject("confirmação de registro");
+			mensagem.setSubject("confirmaï¿½ï¿½o de registro");
 			mensagem.setContent(emailHtmlFormatter.formatarEmail(usuario), "text/html");
 		} catch (Exception e) {
 			System.out.println(">> Erro: Completar Mensagem");

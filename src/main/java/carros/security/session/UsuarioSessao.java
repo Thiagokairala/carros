@@ -9,8 +9,7 @@ public class UsuarioSessao implements Serializable {
 	private Long sessionUserId = 0L;
 	private TipoUsuarioSessao tipoUsuarioSessao = TipoUsuarioSessao.NONE;
 
-	public UsuarioSessao(final Long sessionUserId,
-			final TipoUsuarioSessao tipoUsuarioSessao) {
+	public UsuarioSessao(final Long sessionUserId, final TipoUsuarioSessao tipoUsuarioSessao) {
 		super();
 		if (sessionUserId == null || sessionUserId.longValue() <= 0) {
 			throw new IllegalArgumentException("sessionUserId");

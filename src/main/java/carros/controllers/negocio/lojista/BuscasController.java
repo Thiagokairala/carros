@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import carros.entities.negocio.Oferta;
+import carros.security.session.UsuarioSessaoFactory;
 import carros.services.negocio.lojista.BuscasService;
 
 @RestController
@@ -23,30 +24,26 @@ import carros.services.negocio.lojista.BuscasService;
 public class BuscasController {
 
 	private BuscasService buscasService;
+	private UsuarioSessaoFactory usuarioSessaoFactory;
 
 	@RequestMapping(value = "/todasOfertas", method = RequestMethod.GET)
 	public @ResponseBody ResponseEntity<List<Oferta>> listarTodosVeiculos(
 			@RequestParam(required = false, defaultValue = "0") int pagina) {
-		return new ResponseEntity<List<Oferta>>(
-				buscasService.listarTodasOfertas(pagina), HttpStatus.OK);
+		return new ResponseEntity<List<Oferta>>(buscasService.listarTodasOfertas(pagina), HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/ofertasTipoVeiculo", method = RequestMethod.GET)
 	public @ResponseBody ResponseEntity<List<Oferta>> listarVeiculosPorTipo(
 			@RequestParam(required = true) int idTipoVeiculo,
 			@RequestParam(required = false, defaultValue = "0") int pagina) {
-		return new ResponseEntity<List<Oferta>>(
-				buscasService.listarOfertasTipoVeiculo(idTipoVeiculo, pagina),
+		return new ResponseEntity<List<Oferta>>(buscasService.listarOfertasTipoVeiculo(idTipoVeiculo, pagina),
 				HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/ofertasMarca", method = RequestMethod.GET)
-	public @ResponseBody ResponseEntity<List<Oferta>> listarVeiculosPorMarca(
-			@RequestParam(required = true) int idMarca,
+	public @ResponseBody ResponseEntity<List<Oferta>> listarVeiculosPorMarca(@RequestParam(required = true) int idMarca,
 			@RequestParam(required = false, defaultValue = "0") int pagina) {
-		return new ResponseEntity<List<Oferta>>(
-				buscasService.listarOfertasMarca(idMarca, pagina),
-				HttpStatus.OK);
+		return new ResponseEntity<List<Oferta>>(buscasService.listarOfertasMarca(idMarca, pagina), HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/ofertasPorRangeDePreco", method = RequestMethod.GET)
@@ -55,21 +52,24 @@ public class BuscasController {
 			@RequestParam(required = false, defaultValue = "0") double precoMinimo,
 			@RequestParam(required = false, defaultValue = "0") int pagina) {
 		return new ResponseEntity<List<Oferta>>(
-				buscasService.listarOfertaPorRangeDePreco(precoMinimo,
-						precoMaximo, pagina), HttpStatus.OK);
+				buscasService.listarOfertaPorRangeDePreco(precoMinimo, precoMaximo, pagina), HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/ofertasPorFiltro", method = RequestMethod.GET)
 	public @ResponseBody ResponseEntity<List<Oferta>> listarOfertasPorFiltro(
 			@RequestParam(required = true) String filtro,
-			@RequestParam(required = false, defaultValue = "0") int pagina) {
-		return new ResponseEntity<List<Oferta>>(
-				buscasService.listarOfertaPorFiltro(filtro, pagina),
-				HttpStatus.OK);
+			@RequestParam(required = false, defaultValue = "0") int pagina) throws Exception {
+		return new ResponseEntity<List<Oferta>>(buscasService.listarOfertaPorFiltro(filtro, pagina), HttpStatus.OK);
 	}
 
 	@Autowired
 	public void setBuscasService(BuscasService buscasService) {
 		this.buscasService = buscasService;
 	}
+
+	@Autowired
+	public void setUsuarioSessaoFactory(UsuarioSessaoFactory usuarioSessaoFactory) {
+		this.usuarioSessaoFactory = usuarioSessaoFactory;
+	}
+
 }

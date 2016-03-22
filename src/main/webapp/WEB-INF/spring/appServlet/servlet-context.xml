@@ -40,5 +40,4 @@
 	</beans:bean>
 
 	<context:component-scan base-package="carros" />
-
 </beans:beans>
