@@ -14,16 +14,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import carros.controllers.ControladoraBase;
 import carros.entities.negocio.MarcaVeiculo;
 import carros.entities.negocio.ModeloVeiculo;
 import carros.entities.negocio.Oferta;
+import carros.entities.usuarios.UsuarioConcessionaria;
 import carros.services.negocio.concessionaria.OfertaService;
 
 @RestController
 @Scope("request")
 @RequestMapping("/ofertas")
 @Service
-public class OfertasController {
+public class OfertasController extends ControladoraBase {
 
 	private OfertaService ofertaService;
 
@@ -39,7 +41,9 @@ public class OfertasController {
 	}
 
 	@RequestMapping(value = "/cadastrarOferta", method = RequestMethod.POST)
-	public @ResponseBody ResponseEntity<Oferta> cadastrarOferta(@RequestBody Oferta oferta) {
+	public @ResponseBody ResponseEntity<Oferta> cadastrarOferta(@RequestBody Oferta oferta) throws Exception {
+		UsuarioConcessionaria usuarioConcessionaria = super.usuarioSessaoEhUsuarioConcessionaria();
+		oferta.setConcessionaria(usuarioConcessionaria.getConcessionaria());
 		return new ResponseEntity<Oferta>(ofertaService.cadastrarOferta(oferta), HttpStatus.OK);
 	}
 
@@ -52,5 +56,4 @@ public class OfertasController {
 	public void setOfertaService(OfertaService ofertaService) {
 		this.ofertaService = ofertaService;
 	}
-
 }

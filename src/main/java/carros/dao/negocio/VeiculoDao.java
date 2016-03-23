@@ -8,4 +8,6 @@ public interface VeiculoDao {
 
 	public List<Veiculo> buscarTodosVeiculos();
 
+	public Veiculo inserirVeiculo(Veiculo veiculo);
+
 }

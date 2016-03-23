@@ -23,13 +23,12 @@ public class AvaliacaoVeiculoDaoImpl implements AvaliacaoVeiculoDao {
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 
 		jdbcTemplate.update(new PreparedStatementCreator() {
-			public PreparedStatement createPreparedStatement(
-					Connection connection) throws SQLException {
-				PreparedStatement stmt = connection.prepareStatement(
-						AvaliacaoVeiculoDaoContract.INSERIR_AVALIACAO_VEICULO,
-						new String[] { "id" });
+			public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+				PreparedStatement stmt = connection
+						.prepareStatement(AvaliacaoVeiculoDaoContract.INSERIR_AVALIACAO_VEICULO, new String[] { "id" });
 				stmt.setString(1, avaliacaoVeiculo.getDescricao());
 				stmt.setBigDecimal(2, avaliacaoVeiculo.getPrecoParaConserto());
+				stmt.setInt(3, avaliacaoVeiculo.getKmRodado());
 				return stmt;
 			}
 		}, keyHolder);

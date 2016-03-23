@@ -15,4 +15,6 @@ public interface OfertaDao {
 			double precoMaximo, int pagina);
 
 	public List<Oferta> buscarOfertasPorFiltro(String filtro, int pagina);
+
+	public Oferta inserirOferta(Oferta oferta);
 }

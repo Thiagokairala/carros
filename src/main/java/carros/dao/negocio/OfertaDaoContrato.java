@@ -65,4 +65,8 @@ public class OfertaDaoContrato {
 			+ "		OR modelo_veiculo.txt_nome_modelo LIKE ? "
 			+ "	) "
 			+ "LIMIT ?, ?";
+
+	protected static final String INSERIR_OFERTA = "INSERT INTO oferta "
+			+ "(concessionaria_idconcessionaria, veiculo_idveiculo, db_preco_oferta, dt_criado) "
+			+ "VALUES (?, ?, ?, now())";
 }
