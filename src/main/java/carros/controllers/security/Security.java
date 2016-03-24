@@ -60,7 +60,7 @@ public class Security {
 		return new ResponseEntity<Serializable>(result, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "sair", method = RequestMethod.GET)
+	@RequestMapping(value = "/sair", method = RequestMethod.GET)
 	public @ResponseBody ResponseEntity<String> sair(final HttpServletRequest request,
 			final HttpServletResponse response) {
 

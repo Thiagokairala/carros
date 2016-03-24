@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import carros.entities.negocio.Oferta;
-import carros.security.session.UsuarioSessaoFactory;
 import carros.services.negocio.lojista.BuscasService;
 
 @RestController
@@ -24,7 +23,6 @@ import carros.services.negocio.lojista.BuscasService;
 public class BuscasController {
 
 	private BuscasService buscasService;
-	private UsuarioSessaoFactory usuarioSessaoFactory;
 
 	@RequestMapping(value = "/todasOfertas", method = RequestMethod.GET)
 	public @ResponseBody ResponseEntity<List<Oferta>> listarTodosVeiculos(
@@ -65,11 +63,6 @@ public class BuscasController {
 	@Autowired
 	public void setBuscasService(BuscasService buscasService) {
 		this.buscasService = buscasService;
-	}
-
-	@Autowired
-	public void setUsuarioSessaoFactory(UsuarioSessaoFactory usuarioSessaoFactory) {
-		this.usuarioSessaoFactory = usuarioSessaoFactory;
 	}
 
 }
