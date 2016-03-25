@@ -3,8 +3,9 @@ package carros.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import carros.dao.pessoa.LojistaDao;
 import carros.dao.pessoa.UsuarioConcessionariaDao;
-import carros.dao.security.UsuarioDao;
+import carros.entities.usuarios.Lojista;
 import carros.entities.usuarios.UsuarioConcessionaria;
 import carros.exception.security.CarrosUsuarioNaoAutorizadoException;
 import carros.security.session.UsuarioSessao;
@@ -16,6 +17,7 @@ public abstract class ControladoraBase {
 	private UsuarioSessao usuarioSessao;
 
 	private UsuarioConcessionariaDao usuarioConcessionariaDao;
+	private LojistaDao lojistaDao;
 
 	public void usuarioSessaoEhAdmin() throws Exception {
 		if (!validarSessaoUsuario().isAdmin()) {
@@ -31,10 +33,12 @@ public abstract class ControladoraBase {
 		return usuarioConcessionariaDao.buscarUsuarioConcessionariaPorIdUsuario(usuarioSessao.getSessionUserId());
 	}
 
-	public void usuarioSessaoEhLojista() throws Exception {
+	public Lojista usuarioSessaoEhLojista() throws Exception {
 		if (!validarSessaoUsuario().isLojista()) {
 			throw new CarrosUsuarioNaoAutorizadoException();
 		}
+		
+		return lojistaDao.buscarLojistaPorIdUsuario(usuarioSessao.getSessionUserId());
 	}
 
 	public void usuarioSessaoEhConcessionaria() throws Exception {
@@ -64,6 +68,11 @@ public abstract class ControladoraBase {
 	@Autowired
 	public void setUsuarioSessaoFactory(UsuarioSessaoFactory usuarioSessaoFactory) {
 		this.usuarioSessaoFactory = usuarioSessaoFactory;
+	}
+
+	@Autowired
+	public void setLojistaDao(LojistaDao lojistaDao) {
+		this.lojistaDao = lojistaDao;
 	}
 
 }

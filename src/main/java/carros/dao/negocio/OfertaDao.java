@@ -17,4 +17,6 @@ public interface OfertaDao {
 	public List<Oferta> buscarOfertasPorFiltro(String filtro, int pagina);
 
 	public Oferta inserirOferta(Oferta oferta);
+
+	public Oferta buscarOfertaPorId(Oferta oferta);
 }

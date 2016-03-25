@@ -14,6 +14,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
+import carros.dao.negocio.extractor.OfertaRowMapper;
 import carros.entities.negocio.Oferta;
 import carros.regras.negocio.OfertaRule;
 import carros.util.Paginacao;
@@ -22,6 +23,7 @@ import carros.util.Paginacao;
 public class OfertaDaoImpl implements OfertaDao {
 
 	private OfertaRule ofertaRule;
+	private OfertaRowMapper ofertaRowMapper;
 
 	private JdbcTemplate jdbcTemplate;
 
@@ -65,19 +67,29 @@ public class OfertaDaoImpl implements OfertaDao {
 
 		jdbcTemplate.update(new PreparedStatementCreator() {
 			public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
-				PreparedStatement stmt = connection
-						.prepareStatement(OfertaDaoContrato.INSERIR_OFERTA, new String[] { "id" });
+				PreparedStatement stmt = connection.prepareStatement(OfertaDaoContrato.INSERIR_OFERTA,
+						new String[] { "id" });
 
 				stmt.setLong(1, oferta.getConcessionaria().getIdConcessionaria());
 				stmt.setLong(2, oferta.getVeiculo().getId());
 				stmt.setBigDecimal(3, oferta.getValorDaOferta());
-				
+
 				return stmt;
 			}
 		}, keyHolder);
 
 		oferta.setId((Long) keyHolder.getKey());
 		return oferta;
+	}
+
+	@Override
+	public Oferta buscarOfertaPorId(Oferta oferta) {
+		Object[] arrayList = new Object[] { oferta.getId() };
+
+		oferta = (Oferta) jdbcTemplate.queryForObject(OfertaDaoContrato.SELECT_OFERTA_POR_ID, arrayList,
+				ofertaRowMapper);
+		return oferta;
+
 	}
 
 	private List<Oferta> buscarOfertasPrivate(String query, Object[] params) {
@@ -98,6 +110,11 @@ public class OfertaDaoImpl implements OfertaDao {
 	@Autowired
 	public void setOfertaRule(OfertaRule ofertaRule) {
 		this.ofertaRule = ofertaRule;
+	}
+
+	@Autowired
+	public void setOfertaRowMapper(OfertaRowMapper ofertaRowMapper) {
+		this.ofertaRowMapper = ofertaRowMapper;
 	}
 
 }

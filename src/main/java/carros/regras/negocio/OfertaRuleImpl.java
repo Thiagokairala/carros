@@ -1,5 +1,6 @@
 package carros.regras.negocio;
 
+import java.sql.ResultSet;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +24,21 @@ public class OfertaRuleImpl extends CarrosRegras implements OfertaRule {
 		oferta.setValorDaOferta(getBidDecimal(row, "db_preco_oferta"));
 		oferta.setDataCriado(getGregorianCalendar(row, "dt_criado"));
 		oferta.setVeiculo(veiculoRegra.buildVeiculo(row));
-		oferta.setConcessionaria(concessionariaRegra
-				.construirConcessionaria(row));
+		oferta.setFinalizado(getBoolean(row, "bool_finalizada"));
+		oferta.setConcessionaria(concessionariaRegra.construirConcessionaria(row));
+		return oferta;
+	}
+
+	@Override
+	public Oferta buildOferta(ResultSet rs) {
+		Oferta oferta = new Oferta();
+
+		oferta.setId(getLong(rs, "idoferta"));
+		oferta.setValorDaOferta(getBidDecimal(rs, "db_preco_oferta"));
+		oferta.setDataCriado(getGregorianCalendar(rs, "dt_criado"));
+		oferta.setVeiculo(veiculoRegra.buildVeiculo(rs));
+		oferta.setFinalizado(getBoolean(rs, "bool_finalizada"));
+		oferta.setConcessionaria(concessionariaRegra.construirConcessionaria(rs));
 		return oferta;
 	}
 

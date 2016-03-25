@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
+
+import carros.dao.negocio.OfertaDao;
 import carros.entities.negocio.Oferta;
 import carros.services.negocio.lojista.BuscasService;
 
@@ -23,6 +26,7 @@ import carros.services.negocio.lojista.BuscasService;
 public class BuscasController {
 
 	private BuscasService buscasService;
+	private OfertaDao ofertaDao;
 
 	@RequestMapping(value = "/todasOfertas", method = RequestMethod.GET)
 	public @ResponseBody ResponseEntity<List<Oferta>> listarTodosVeiculos(
@@ -60,9 +64,21 @@ public class BuscasController {
 		return new ResponseEntity<List<Oferta>>(buscasService.listarOfertaPorFiltro(filtro, pagina), HttpStatus.OK);
 	}
 
+	@RequestMapping(value = "/ofertasPorId", method = RequestMethod.GET)
+	public @ResponseBody ResponseEntity<Oferta> buscarOfertaPorId(@RequestParam(defaultValue = "0") long ifOferta) {
+		Oferta oferta = new Oferta();
+		oferta.setId(ifOferta);
+		return new ResponseEntity<Oferta>(ofertaDao.buscarOfertaPorId(oferta), HttpStatus.OK);
+	}
+
 	@Autowired
 	public void setBuscasService(BuscasService buscasService) {
 		this.buscasService = buscasService;
+	}
+
+	@Autowired
+	public void setOfertaDao(OfertaDao ofertaDao) {
+		this.ofertaDao = ofertaDao;
 	}
 
 }

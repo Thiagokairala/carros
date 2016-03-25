@@ -1,5 +1,6 @@
 package carros.regras.negocio;
 
+import java.sql.ResultSet;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,19 @@ public class ModeloVeiculoRegraImpl extends CarrosRegras implements
 		return modeloVeiculo;
 	}
 
+
+	@Override
+	public ModeloVeiculo buildModeloVeiculo(ResultSet rs) {
+		ModeloVeiculo modeloVeiculo = new ModeloVeiculo();
+		modeloVeiculo.setId(getLong(rs, "idmodelo_veiculo"));
+		modeloVeiculo.setNome(getString(rs, "txt_nome_modelo"));
+		modeloVeiculo.setMarcaVeiculo(marcaVeiculoRegra.buildMarcaVeiculo(rs));
+		modeloVeiculo.setTipoVeiculo(tipoVeiculoRegra.buildTipoVeiculo(rs));
+
+		return modeloVeiculo;
+	}
+
+	
 	@Autowired
 	public void setMarcaVeiculoRegra(MarcaVeiculoRegra marcaVeiculoRegra) {
 		this.marcaVeiculoRegra = marcaVeiculoRegra;

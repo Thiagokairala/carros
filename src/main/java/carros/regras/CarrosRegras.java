@@ -53,8 +53,7 @@ public abstract class CarrosRegras {
 
 	}
 
-	public GregorianCalendar getGregorianCalendar(ResultSet rs,
-			String columnName) {
+	public GregorianCalendar getGregorianCalendar(ResultSet rs, String columnName) {
 		GregorianCalendar calendarReturn = new GregorianCalendar();
 		try {
 			calendarReturn.setTime(rs.getDate(columnName));
@@ -64,11 +63,9 @@ public abstract class CarrosRegras {
 		return calendarReturn;
 	}
 
-	public GregorianCalendar getGregorianCalendar(Map<String, Object> row,
-			String columnName) {
+	public GregorianCalendar getGregorianCalendar(Map<String, Object> row, String columnName) {
 		GregorianCalendar calendarReturn = new GregorianCalendar();
-		calendarReturn.setTimeInMillis(((Timestamp) row.get(columnName))
-				.getTime());
+		calendarReturn.setTimeInMillis(((Timestamp) row.get(columnName)).getTime());
 		return calendarReturn;
 
 	}
@@ -139,6 +136,18 @@ public abstract class CarrosRegras {
 		BigDecimal bigToReturn = new BigDecimal(-1);
 
 		bigToReturn = (BigDecimal) row.get(columnName);
+
+		return bigToReturn;
+	}
+
+	public BigDecimal getBidDecimal(ResultSet rs, String columnName) {
+		BigDecimal bigToReturn = new BigDecimal(-1);
+
+		try {
+			bigToReturn = (BigDecimal) rs.getBigDecimal(columnName);
+		} catch (SQLException e) {
+			logger.warn("Field " + columnName + " not in the resultSet");
+		}
 
 		return bigToReturn;
 	}
