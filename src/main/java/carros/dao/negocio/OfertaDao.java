@@ -3,6 +3,7 @@ package carros.dao.negocio;
 import java.util.List;
 
 import carros.entities.negocio.Oferta;
+import carros.entities.usuarios.Lojista;
 
 public interface OfertaDao {
 	public List<Oferta> buscarTodasOfertas(int page);
@@ -19,4 +20,6 @@ public interface OfertaDao {
 	public Oferta inserirOferta(Oferta oferta);
 
 	public Oferta buscarOfertaPorId(Oferta oferta);
+
+	public void finalizarOferta(Oferta oferta, Lojista lojista);
 }

@@ -80,5 +80,9 @@ public class OfertaDaoContrato {
 			+ "JOIN tipo_veiculo ON tipo_veiculo.idtipo_veiculo = modelo_veiculo.tipo_veiculo_idtipo_veiculo "
 			+ "JOIN avaliacao_veiculo ON veiculo.avaliacao_veiculo_idavaliacao_veiculo = avaliacao_veiculo.idavaliacao_veiculo "
 			+ "WHERE idoferta = ?";
+
+	public static final String FINALIZAR_OFERTA = "UPDATE oferta "
+			+ "SET bool_finalizada = true, dt_finalizado = now(), finalizado_por_lojista = ? "
+			+ "WHERE idoferta = ?";
 ;
 }

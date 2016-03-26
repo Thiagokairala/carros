@@ -16,6 +16,7 @@ import org.springframework.stereotype.Repository;
 
 import carros.dao.negocio.extractor.OfertaRowMapper;
 import carros.entities.negocio.Oferta;
+import carros.entities.usuarios.Lojista;
 import carros.regras.negocio.OfertaRule;
 import carros.util.Paginacao;
 
@@ -90,6 +91,12 @@ public class OfertaDaoImpl implements OfertaDao {
 				ofertaRowMapper);
 		return oferta;
 
+	}
+
+	@Override
+	public void finalizarOferta(Oferta oferta, Lojista lojista) {
+		Object[] arrayParams = new Object[] { lojista.getIdLojista(), oferta.getId() };
+		jdbcTemplate.update(OfertaDaoContrato.FINALIZAR_OFERTA, arrayParams);
 	}
 
 	private List<Oferta> buscarOfertasPrivate(String query, Object[] params) {

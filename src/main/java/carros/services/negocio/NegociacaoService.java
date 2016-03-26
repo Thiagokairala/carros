@@ -24,17 +24,19 @@ public class NegociacaoService {
 
 		verificarSeEstaAberto(oferta);
 
-		if (negociacao.getPrecoOferecido().compareTo(oferta.getValorDaOferta()) < 1) {
+		if (negociacao.getPrecoOferecido().compareTo(oferta.getValorDaOferta()) < 0) {
+			System.out.println("entrou no if");
 			abrirNegociacao(negociacao, lojista, oferta);
 		} else {
+			System.out.println("entrou no else");
 			finalizarOferta(negociacao, oferta, lojista);
 		}
 
 	}
 
 	private void finalizarOferta(Negociacao negociacao, Oferta oferta, Lojista lojista) {
-		// TODO Auto-generated method stub
-		
+		negociacaoDao.finalizarOferta(negociacao, oferta, lojista);
+		ofertaDao.finalizarOferta(oferta, lojista);
 	}
 
 	private void abrirNegociacao(Negociacao negociacao, Lojista lojista, Oferta oferta) {
