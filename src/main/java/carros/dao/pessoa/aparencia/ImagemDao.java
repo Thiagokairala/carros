@@ -6,4 +6,5 @@ public interface ImagemDao {
 
 	public Imagem inserir(Imagem imagem);
 
+	public Imagem buscarImagem(long id);
 }

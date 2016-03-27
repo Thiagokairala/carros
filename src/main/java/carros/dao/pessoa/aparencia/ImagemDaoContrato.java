@@ -5,4 +5,6 @@ public final class ImagemDaoContrato {
 
 	public static final String INSERIR_IMAGEM = "INSERT INTO imagem (hash_imagem, endereco_imagem, dt_inclusao) "
 			+ "VALUES (?, ?, now())";
+
+	public static final String SELECT_IMAGEM = "SELECT * FROM imagem " + "WHERE idimagem = ?";
 }
