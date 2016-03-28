@@ -3,7 +3,6 @@ package carros.services.image;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -37,8 +36,9 @@ public class ImagemService {
 	}
 
 	public ResponseEntity<byte[]> getImagem(long id) throws IOException {
+		System.out.println(id);
 		Imagem imagem = imagemDao.buscarImagem(id);
-		InputStream in = new FileInputStream("./image/1459092161965.png");
+		InputStream in = new FileInputStream("./" + imagem.getCaminhoImagem());
 
 		final HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.IMAGE_PNG);

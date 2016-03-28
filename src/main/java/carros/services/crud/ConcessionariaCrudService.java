@@ -1,5 +1,7 @@
 package carros.services.crud;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +15,11 @@ public class ConcessionariaCrudService {
 
 	public Concessionaria inserirConcessionaria(Concessionaria concessionaria) {
 		return concessionariaDao.inserirConcessionaria(concessionaria);
+	}
+
+	public List<Concessionaria> buscarTodasConcessionarias() {
+		return concessionariaDao.buscarTodasConcessionaria();
+
 	}
 
 	@Autowired

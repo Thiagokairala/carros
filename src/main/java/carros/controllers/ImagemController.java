@@ -28,6 +28,7 @@ public class ImagemController {
 	@RequestMapping(value = "/upload", method = RequestMethod.POST)
 	public @ResponseBody ResponseEntity<String> singleFileUpload(@RequestParam("image") MultipartFile file)
 			throws IOException {
+		
 
 		if (!file.isEmpty()) {
 			try {
@@ -42,9 +43,10 @@ public class ImagemController {
 			return new ResponseEntity<String>(HttpStatus.UNAUTHORIZED);
 		}
 	}
+	
 
 	@RequestMapping(value = "/buscarFoto/{id}/{hash}", method = RequestMethod.GET)
-	public ResponseEntity<byte[]> testphoto(@PathVariable("id") long id) throws IOException {
+	public ResponseEntity<byte[]> testzphoto(@PathVariable("id") long id) throws IOException { 
 		return imagemService.getImagem(id);
 	}
 

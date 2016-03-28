@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import carros.entities.pessoas.Pessoa;
 import carros.regras.CarrosRegras;
+import carros.regras.pessoa.aparencia.ImagemRegra;
 import carros.regras.residenciais.EnderecoRegra;
 import carros.regras.residenciais.TelefoneRegra;
 
@@ -16,6 +17,7 @@ public class PessoaRegraImpl extends CarrosRegras implements PessoaRegra {
 
 	private TelefoneRegra telefoneRegra;
 	private EnderecoRegra enderecoRegra;
+	private ImagemRegra imagemRegra;
 
 	@Override
 	public Pessoa buildPessoa(ResultSet rs) {
@@ -27,6 +29,7 @@ public class PessoaRegraImpl extends CarrosRegras implements PessoaRegra {
 		pessoa.setDataCriacao(getGregorianCalendar(rs, "dt_criacao_sistema"));
 		pessoa.setTelefone(telefoneRegra.buildTelefone(rs));
 		pessoa.setEndereco(enderecoRegra.buildEndereco(rs));
+		pessoa.setImagem(imagemRegra.buildImagem(rs));
 		return pessoa;
 	}
 
@@ -40,6 +43,7 @@ public class PessoaRegraImpl extends CarrosRegras implements PessoaRegra {
 		pessoa.setDataCriacao(getGregorianCalendar(row, "dt_criacao_sistema"));
 		pessoa.setTelefone(telefoneRegra.buildTelefone(row));
 		pessoa.setEndereco(enderecoRegra.buildEndereco(row));
+		pessoa.setImagem(imagemRegra.buildImagem(row));
 		return pessoa;
 	}
 
@@ -51,6 +55,11 @@ public class PessoaRegraImpl extends CarrosRegras implements PessoaRegra {
 	@Autowired
 	public void setEnderecoRegra(EnderecoRegra enderecoRegra) {
 		this.enderecoRegra = enderecoRegra;
+	}
+
+	@Autowired
+	public void setImagemRegra(ImagemRegra imagemRegra) {
+		this.imagemRegra = imagemRegra;
 	}
 
 }
