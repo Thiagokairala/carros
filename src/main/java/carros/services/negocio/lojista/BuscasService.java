@@ -7,12 +7,14 @@ import org.springframework.stereotype.Service;
 
 import carros.dao.negocio.OfertaDao;
 import carros.entities.negocio.Oferta;
+import carros.services.image.ImagemService;
 import carros.util.Paginacao;
 
 @Service
 public class BuscasService {
 
 	private OfertaDao ofertaDao;
+	private ImagemService imagemService;
 
 	public List<Oferta> listarTodasOfertas(int page) {
 		page *= Paginacao.TAMANHO_PAGINA;
@@ -29,11 +31,13 @@ public class BuscasService {
 		return ofertaDao.buscarOfertasMarca(idMarca, pagina);
 	}
 
-	public List<Oferta> listarOfertaPorRangeDePreco(double precoMinimo,
-			double precoMaximo, int pagina) {
+	public List<Oferta> listarOfertaPorRangeDePreco(double precoMinimo, double precoMaximo, int pagina) {
 		pagina *= Paginacao.TAMANHO_PAGINA;
-		return ofertaDao.buscarOfertasPorRangeDePreco(precoMinimo, precoMaximo,
-				pagina);
+		return ofertaDao.buscarOfertasPorRangeDePreco(precoMinimo, precoMaximo, pagina);
+	}
+
+	public List<Oferta> getOfertasConcessionaria(long idConcessionaria) {
+		return ofertaDao.buscarOfertasPorConcessionaria(idConcessionaria);
 	}
 
 	public List<Oferta> listarOfertaPorFiltro(String filtro, int pagina) {
@@ -44,6 +48,11 @@ public class BuscasService {
 	@Autowired
 	public void setOfertaDao(OfertaDao ofertaDao) {
 		this.ofertaDao = ofertaDao;
+	}
+
+	@Autowired
+	public void setImagemService(ImagemService imagemService) {
+		this.imagemService = imagemService;
 	}
 
 }

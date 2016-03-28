@@ -52,6 +52,8 @@ public class OfertasController extends ControladoraBase {
 		return new ResponseEntity<List<Oferta>>(HttpStatus.OK);
 	}
 
+	
+
 	@Autowired
 	public void setOfertaService(OfertaService ofertaService) {
 		this.ofertaService = ofertaService;

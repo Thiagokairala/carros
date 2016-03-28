@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -35,6 +36,12 @@ public class ConcessionariaCrudController {
 	@RequestMapping(value = "/buscarTodas", method = RequestMethod.GET)
 	public @ResponseBody ResponseEntity<List<Concessionaria>> buscarTodasConcessionarias() {
 		return new ResponseEntity<List<Concessionaria>>(concessionariaCrudService.buscarTodasConcessionarias(),
+				HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/buscarPorId", method = RequestMethod.GET)
+	public @ResponseBody ResponseEntity<Concessionaria> buscarConcessionariaPorId(@RequestParam long id) {
+		return new ResponseEntity<Concessionaria>(concessionariaCrudService.buscarConcessionariaPorId(id),
 				HttpStatus.OK);
 	}
 

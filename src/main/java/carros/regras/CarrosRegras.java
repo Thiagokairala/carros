@@ -64,9 +64,14 @@ public abstract class CarrosRegras {
 	}
 
 	public GregorianCalendar getGregorianCalendar(Map<String, Object> row, String columnName) {
-		GregorianCalendar calendarReturn = new GregorianCalendar();
-		calendarReturn.setTimeInMillis(((Timestamp) row.get(columnName)).getTime());
-		return calendarReturn;
+		try {
+			GregorianCalendar calendarReturn = new GregorianCalendar();
+			calendarReturn.setTimeInMillis(((Timestamp) row.get(columnName)).getTime());
+			return calendarReturn;
+		} catch (Exception e) {
+			logger.warn("Field " + columnName + " not in the resultSet");
+			return null;
+		}
 
 	}
 

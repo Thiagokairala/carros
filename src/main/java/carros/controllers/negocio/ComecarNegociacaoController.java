@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 import carros.controllers.ControladoraBase;
 import carros.entities.auxiliar.Negociacao;
 import carros.entities.comunicacao.Chat;
-import carros.entities.negocio.Oferta;
 import carros.entities.usuarios.Lojista;
 import carros.services.negocio.NegociacaoService;
 

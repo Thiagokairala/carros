@@ -13,7 +13,8 @@ public final class ConcessionariaDaoContrato {
 			+ "JOIN pessoa ON usuario.pessoa_idpessoa = pessoa.idpessoa "
 			+ "JOIN tipo_usuario ON usuario.tipo_usuario_idtipo_usuario = tipo_usuario.idtipo_usuario "
 			+ "JOIN endereco ON pessoa.endereco_idendereco = endereco.idendereco "
-			+ "JOIN telefone ON pessoa.telefone_idtelefone = telefone.idtelefone " + "WHERE usuario_idusuario = ?";
+			+ "JOIN telefone ON pessoa.telefone_idtelefone = telefone.idtelefone "
+			+ "JOIN imagem ON pessoa.imagem_idimagem = imagem.idimagem " + "WHERE usuario_idusuario = ?";
 
 	public static final String SELECT_TODAS_CONCESSIONARIO = "SELECT * FROM concessionaria "
 			+ "JOIN usuario ON concessionaria.usuario_idusuario = usuario.idusuario "

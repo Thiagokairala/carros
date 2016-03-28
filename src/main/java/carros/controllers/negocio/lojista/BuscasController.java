@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
-
 import carros.dao.negocio.OfertaDao;
 import carros.entities.negocio.Oferta;
 import carros.services.negocio.lojista.BuscasService;
@@ -69,6 +67,13 @@ public class BuscasController {
 		Oferta oferta = new Oferta();
 		oferta.setId(ifOferta);
 		return new ResponseEntity<Oferta>(ofertaDao.buscarOfertaPorId(oferta), HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/ofertasPorConcessionaria", method = RequestMethod.GET)
+	public @ResponseBody ResponseEntity<List<Oferta>> ofertasPorConcessionaria(
+			@RequestParam(required = true) long idConcessionaria) {
+		return new ResponseEntity<List<Oferta>>(buscasService.getOfertasConcessionaria(idConcessionaria),
+				HttpStatus.OK);
 	}
 
 	@Autowired

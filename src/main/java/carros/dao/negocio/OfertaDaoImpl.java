@@ -99,6 +99,13 @@ public class OfertaDaoImpl implements OfertaDao {
 		jdbcTemplate.update(OfertaDaoContrato.FINALIZAR_OFERTA, arrayParams);
 	}
 
+	@Override
+	public List<Oferta> buscarOfertasPorConcessionaria(long idConcessionaria) {
+		Object[] arrayList = new Object[] {idConcessionaria};
+		
+		return buscarOfertasPrivate(OfertaDaoContrato.SELECT_OFERTA_POR_CONCESSIONARIA, arrayList);
+	}
+
 	private List<Oferta> buscarOfertasPrivate(String query, Object[] params) {
 		List<Oferta> ofertas = new ArrayList<Oferta>();
 

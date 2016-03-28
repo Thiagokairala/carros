@@ -14,7 +14,7 @@ public class ImagemRegraImpl extends CarrosRegras implements ImagemRegra {
 	@Override
 	public Imagem buildImagem(ResultSet rs) {
 		Imagem imagem = new Imagem();
-		imagem.setId(getLong(rs, "idimagme"));
+		imagem.setId(getLong(rs, "idimagem"));
 		imagem.setHashImagem(getString(rs, "hash_imagem"));
 		imagem.setCaminhoImagem(getString(rs, "endereco_imagem"));
 		imagem.setDataInclusao(getGregorianCalendar(rs, "dt_inclusao"));

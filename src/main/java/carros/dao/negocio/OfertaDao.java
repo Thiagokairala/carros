@@ -22,4 +22,6 @@ public interface OfertaDao {
 	public Oferta buscarOfertaPorId(Oferta oferta);
 
 	public void finalizarOferta(Oferta oferta, Lojista lojista);
+
+	public List<Oferta> buscarOfertasPorConcessionaria(long idConcessionaria);
 }

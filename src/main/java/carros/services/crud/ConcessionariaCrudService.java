@@ -22,6 +22,10 @@ public class ConcessionariaCrudService {
 
 	}
 
+	public Concessionaria buscarConcessionariaPorId(long id) {
+		return concessionariaDao.buscarConcessionariaPorIdUsuario(id);
+	}
+
 	@Autowired
 	public void setConcessionariaDao(ConcessionariaDao concessionariaDao) {
 		this.concessionariaDao = concessionariaDao;
