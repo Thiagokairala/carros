@@ -1,12 +1,15 @@
 package carros.regras.negocio;
 
 import java.sql.ResultSet;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import carros.entities.negocio.AvaliacaoVeiculo;
+import carros.entities.pessoas.aparencia.Imagem;
 import carros.regras.CarrosRegras;
 import carros.regras.pessoa.aparencia.ImagemRegra;
 
@@ -22,7 +25,7 @@ public class AvaliacaoVeiculoRegraImpl extends CarrosRegras implements Avaliacao
 		avaliacaoVeiculo.setDescricao(getString(row, "txt_descricao_avaliacao"));
 		avaliacaoVeiculo.setPrecoParaConserto(getBidDecimal(row, "db_preco_para_conserto"));
 		avaliacaoVeiculo.setKmRodado(getInt(row, "km_rodado"));
-		avaliacaoVeiculo.setImage(imagemRegra.buildImagem(row));
+		avaliacaoVeiculo.setImages(Arrays.asList(imagemRegra.buildImagem(row)));
 		return avaliacaoVeiculo;
 	}
 
@@ -34,7 +37,7 @@ public class AvaliacaoVeiculoRegraImpl extends CarrosRegras implements Avaliacao
 		avaliacaoVeiculo.setDescricao(getString(rs, "txt_descricao_avaliacao"));
 		avaliacaoVeiculo.setPrecoParaConserto(getBidDecimal(rs, "db_preco_para_conserto"));
 		avaliacaoVeiculo.setKmRodado(getInt(rs, "km_rodado"));
-		avaliacaoVeiculo.setImage(imagemRegra.buildImagem(rs));
+		avaliacaoVeiculo.setImages(Arrays.asList(imagemRegra.buildImagem(rs)));
 		return avaliacaoVeiculo;
 	}
 

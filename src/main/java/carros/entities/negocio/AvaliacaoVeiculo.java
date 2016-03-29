@@ -2,6 +2,7 @@ package carros.entities.negocio;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.List;
 
 import carros.entities.pessoas.aparencia.Imagem;
 
@@ -13,7 +14,7 @@ public class AvaliacaoVeiculo implements Serializable {
 	private String descricao;
 	private BigDecimal precoParaConserto;
 	private int kmRodado;
-	private Imagem image;;
+	private List<Imagem> images;
 
 	public Long getId() {
 		return id;
@@ -47,12 +48,12 @@ public class AvaliacaoVeiculo implements Serializable {
 		this.kmRodado = kmRodado;
 	}
 
-	public Imagem getImage() {
-		return image;
+	public List<Imagem> getImages() {
+		return images;
 	}
 
-	public void setImage(Imagem image) {
-		this.image = image;
+	public void setImages(List<Imagem> images) {
+		this.images = images;
 	}
 
 }

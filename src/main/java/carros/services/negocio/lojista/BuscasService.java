@@ -45,6 +45,14 @@ public class BuscasService {
 		return ofertaDao.buscarOfertasPorFiltro(filtro, pagina);
 	}
 
+	public Oferta buscarOfertaPorId(long idOferta) {
+		Oferta oferta = new Oferta();
+		oferta.setId(idOferta);
+		oferta = ofertaDao.buscarOfertaPorId(oferta);
+		oferta.getVeiculo().getAvaliacaoVeiculo().setImages(imagemService.getImagemOferta(oferta));
+		return oferta;
+	}
+
 	@Autowired
 	public void setOfertaDao(OfertaDao ofertaDao) {
 		this.ofertaDao = ofertaDao;

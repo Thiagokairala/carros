@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import carros.dao.pessoa.aparencia.ImagemDao;
+import carros.entities.negocio.Oferta;
 import carros.entities.pessoas.aparencia.Imagem;
 
 @Service
@@ -44,6 +46,11 @@ public class ImagemService {
 		headers.setContentType(MediaType.IMAGE_PNG);
 
 		return new ResponseEntity<byte[]>(IOUtils.toByteArray(in), headers, HttpStatus.OK);
+	}
+
+	public List<Imagem> getImagemOferta(Oferta oferta) {
+		return imagemDao.buscarImagensOferta(oferta.getVeiculo().getAvaliacaoVeiculo().getId());
+
 	}
 
 	private void salvarRegistroDeImagem(String fileName) {

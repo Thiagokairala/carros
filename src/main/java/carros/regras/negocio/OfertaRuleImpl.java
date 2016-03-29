@@ -19,6 +19,8 @@ public class OfertaRuleImpl extends CarrosRegras implements OfertaRule {
 	@Override
 	public Oferta buildOferta(Map<String, Object> row) {
 		Oferta oferta = new Oferta();
+		System.out.println("buscando idOferta");
+		System.out.println(getLong(row, "idoferta"));
 
 		oferta.setId(getLong(row, "idoferta"));
 		oferta.setValorDaOferta(getBidDecimal(row, "db_preco_oferta"));

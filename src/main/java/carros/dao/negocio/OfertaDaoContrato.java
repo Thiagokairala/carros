@@ -4,7 +4,7 @@ public class OfertaDaoContrato {
 
 	public static final String SELECT_TODAS_OFERTAS = "SELECT concessionaria.*," + "usuario.*, "
 			+ "pessoa.txt_nome_de_tela, " + "veiculo.*, " + "modelo_veiculo.*, " + "marca_veiculo.*, "
-			+ "tipo_veiculo.*, " + "avaliacao_veiculo.*, " + "( "
+			+ "tipo_veiculo.*, " + "avaliacao_veiculo.*, " + "oferta.*, " + "( "
 			+ "	SELECT avaliacao_veiculo_has_imagem.imagem_idimagem FROM avaliacao_veiculo_has_imagem "
 			+ "    WHERE avaliacao_veiculo_has_imagem.avaliacao_veiculo_idavaliacao_carro = avaliacao_veiculo.idavaliacao_veiculo "
 			+ "    LIMIT 1 " + ") AS idimagem " + "FROM oferta "
@@ -20,7 +20,7 @@ public class OfertaDaoContrato {
 
 	public static final String SELECT_OFERTAS_POR_TIPO = "SELECT concessionaria.*," + "usuario.*, "
 			+ "pessoa.txt_nome_de_tela, " + "veiculo.*, " + "modelo_veiculo.*, " + "marca_veiculo.*, "
-			+ "tipo_veiculo.*, " + "avaliacao_veiculo.*, " + "( "
+			+ "tipo_veiculo.*, " + "avaliacao_veiculo.*, " + "oferta.*, " + "( "
 			+ "	SELECT avaliacao_veiculo_has_imagem.imagem_idimagem FROM avaliacao_veiculo_has_imagem "
 			+ "    WHERE avaliacao_veiculo_has_imagem.avaliacao_veiculo_idavaliacao_carro = avaliacao_veiculo.idavaliacao_veiculo "
 			+ "    LIMIT 1 " + ") AS idimagem " + "FROM oferta "
@@ -36,7 +36,7 @@ public class OfertaDaoContrato {
 
 	public static final String SELECT_OFERTAS_POR_MARCA = "SELECT concessionaria.*," + "usuario.*, "
 			+ "pessoa.txt_nome_de_tela, " + "veiculo.*, " + "modelo_veiculo.*, " + "marca_veiculo.*, "
-			+ "tipo_veiculo.*, " + "avaliacao_veiculo.*, " + "( "
+			+ "tipo_veiculo.*, " + "avaliacao_veiculo.*, " + "oferta.*, " + "( "
 			+ "	SELECT avaliacao_veiculo_has_imagem.imagem_idimagem FROM avaliacao_veiculo_has_imagem "
 			+ "    WHERE avaliacao_veiculo_has_imagem.avaliacao_veiculo_idavaliacao_carro = avaliacao_veiculo.idavaliacao_veiculo "
 			+ "    LIMIT 1 " + ") AS idimagem " + "FROM oferta "
@@ -52,7 +52,7 @@ public class OfertaDaoContrato {
 
 	public static final String SELECT_OFERTAS_POR_RANGE_DE_PRECO = "SELECT concessionaria.*," + "usuario.*, "
 			+ "pessoa.txt_nome_de_tela, " + "veiculo.*, " + "modelo_veiculo.*, " + "marca_veiculo.*, "
-			+ "tipo_veiculo.*, " + "avaliacao_veiculo.*, " + "( "
+			+ "tipo_veiculo.*, " + "avaliacao_veiculo.*, " + "oferta.*, " + "( "
 			+ "	SELECT avaliacao_veiculo_has_imagem.imagem_idimagem FROM avaliacao_veiculo_has_imagem "
 			+ "    WHERE avaliacao_veiculo_has_imagem.avaliacao_veiculo_idavaliacao_carro = avaliacao_veiculo.idavaliacao_veiculo "
 			+ "    LIMIT 1 " + ") AS idimagem " + "FROM oferta "
@@ -68,7 +68,7 @@ public class OfertaDaoContrato {
 
 	public static final String SELECT_OFERTAS_POR_FILTRO = "SELECT concessionaria.*," + "usuario.*, "
 			+ "pessoa.txt_nome_de_tela, " + "veiculo.*, " + "modelo_veiculo.*, " + "marca_veiculo.*, "
-			+ "tipo_veiculo.*, " + "avaliacao_veiculo.*, " + "( "
+			+ "tipo_veiculo.*, " + "avaliacao_veiculo.*, " + "oferta.*, " + "( "
 			+ "	SELECT avaliacao_veiculo_has_imagem.imagem_idimagem FROM avaliacao_veiculo_has_imagem "
 			+ "    WHERE avaliacao_veiculo_has_imagem.avaliacao_veiculo_idavaliacao_carro = avaliacao_veiculo.idavaliacao_veiculo "
 			+ "    LIMIT 1 " + ") AS idimagem " + "FROM oferta "
@@ -89,7 +89,7 @@ public class OfertaDaoContrato {
 
 	public static final String SELECT_OFERTA_POR_ID = "SELECT concessionaria.*," + "usuario.*, "
 			+ "pessoa.txt_nome_de_tela, " + "veiculo.*, " + "modelo_veiculo.*, " + "marca_veiculo.*, "
-			+ "tipo_veiculo.*, " + "avaliacao_veiculo.*, " + "( "
+			+ "tipo_veiculo.*, " + "avaliacao_veiculo.*, " + "oferta.*, " + "( "
 			+ "	SELECT avaliacao_veiculo_has_imagem.imagem_idimagem FROM avaliacao_veiculo_has_imagem "
 			+ "    WHERE avaliacao_veiculo_has_imagem.avaliacao_veiculo_idavaliacao_carro = avaliacao_veiculo.idavaliacao_veiculo "
 			+ "    LIMIT 1 " + ") AS idimagem " + "FROM oferta "
@@ -108,7 +108,7 @@ public class OfertaDaoContrato {
 
 	public static final String SELECT_OFERTA_POR_CONCESSIONARIA = "SELECT concessionaria.*," + "usuario.*, "
 			+ "pessoa.txt_nome_de_tela, " + "veiculo.*, " + "modelo_veiculo.*, " + "marca_veiculo.*, "
-			+ "tipo_veiculo.*, " + "avaliacao_veiculo.*, " + "( "
+			+ "tipo_veiculo.*, " + "avaliacao_veiculo.*, " + "oferta.*, " + "( "
 			+ "	SELECT avaliacao_veiculo_has_imagem.imagem_idimagem FROM avaliacao_veiculo_has_imagem "
 			+ "    WHERE avaliacao_veiculo_has_imagem.avaliacao_veiculo_idavaliacao_carro = avaliacao_veiculo.idavaliacao_veiculo "
 			+ "    LIMIT 1 " + ") AS idimagem " + "FROM oferta "

@@ -7,4 +7,8 @@ public final class ImagemDaoContrato {
 			+ "VALUES (?, ?, now())";
 
 	public static final String SELECT_IMAGEM = "SELECT * FROM imagem " + "WHERE idimagem = ?";
+
+	public static final String SELECT_IMAGEM_AVALIACAO = "SELECT * FROM imagem "
+			+ "JOIN avaliacao_veiculo_has_imagem ON imagem.idimagem = avaliacao_veiculo_has_imagem.imagem_idimagem "
+			+ "WHERE avaliacao_veiculo_has_imagem.avaliacao_veiculo_idavaliacao_carro = ?";
 }
