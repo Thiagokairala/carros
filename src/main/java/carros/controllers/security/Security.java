@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import carros.entities.security.LoginForm;
 import carros.entities.usuarios.Concessionaria;
 import carros.entities.usuarios.Lojista;
+import carros.entities.usuarios.Usuario;
 import carros.entities.usuarios.UsuarioConcessionaria;
 import carros.exception.security.CarrosUserNotFound;
 import carros.exception.security.CarrosUsuarioNaoAutenticado;
@@ -84,8 +85,11 @@ public class Security {
 			Lojista lojista = (Lojista) result;
 			sessaoAtributoService
 					.iniciarSessao(new UsuarioSessao(lojista.getUsuario().getIdUsuario(), TipoUsuarioSessao.LOJISTA));
+		} else if (result instanceof Usuario) {
+			Usuario usuario = (Usuario) result;
+			sessaoAtributoService.iniciarSessao(new UsuarioSessao(usuario.getIdUsuario(), TipoUsuarioSessao.ADMIN));
 		} else {
-			throw new CarrosUsuarioNaoTemPapel("este usuario não se enquadra no sistema");
+			throw new CarrosUsuarioNaoTemPapel("este usuario nï¿½o se enquadra no sistema");
 		}
 
 	}

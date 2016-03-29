@@ -38,11 +38,11 @@ public class LoginUserService {
 			if (usuario.isAutenticado()) {
 				return getUsuarioCorreto(usuario);
 			} else {
-				throw new CarrosUsuarioNaoAutenticado("O usuario ainda não confirmou o email");
+				throw new CarrosUsuarioNaoAutenticado("O usuario ainda nï¿½o confirmou o email");
 			}
 
 		} catch (EmptyResultDataAccessException e) {
-			throw new CarrosUserNotFound("Usuário não cadastrado o sistema ou a senha não confere");
+			throw new CarrosUserNotFound("Usuï¿½rio nï¿½o cadastrado o sistema ou a senha nï¿½o confere");
 		}
 	}
 
@@ -56,7 +56,7 @@ public class LoginUserService {
 
 			return getUsuarioCorreto(usuario);
 		} catch (EmptyResultDataAccessException e) {
-			throw new CarrosUserNotFound("Usuário não cadastrado o sistema ou a senha não confere");
+			throw new CarrosUserNotFound("Usuï¿½rio nï¿½o cadastrado o sistema ou a senha nï¿½o confere");
 		}
 	}
 
