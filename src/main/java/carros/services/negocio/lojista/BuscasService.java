@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import carros.dao.negocio.OfertaDao;
 import carros.entities.negocio.Oferta;
 import carros.services.image.ImagemService;
+import carros.services.negocio.AcessoriosService;
 import carros.util.Paginacao;
 
 @Service
@@ -15,6 +16,7 @@ public class BuscasService {
 
 	private OfertaDao ofertaDao;
 	private ImagemService imagemService;
+	private AcessoriosService acessoriosService;
 
 	public List<Oferta> listarTodasOfertas(int page) {
 		page *= Paginacao.TAMANHO_PAGINA;
@@ -50,6 +52,7 @@ public class BuscasService {
 		oferta.setId(idOferta);
 		oferta = ofertaDao.buscarOfertaPorId(oferta);
 		oferta.getVeiculo().getAvaliacaoVeiculo().setImages(imagemService.getImagemOferta(oferta));
+		oferta.getVeiculo().setAcessorios(acessoriosService.getAcessorios(oferta.getVeiculo().getId()));
 		return oferta;
 	}
 
@@ -61,6 +64,11 @@ public class BuscasService {
 	@Autowired
 	public void setImagemService(ImagemService imagemService) {
 		this.imagemService = imagemService;
+	}
+
+	@Autowired
+	public void setAcessoriosService(AcessoriosService acessoriosService) {
+		this.acessoriosService = acessoriosService;
 	}
 
 }

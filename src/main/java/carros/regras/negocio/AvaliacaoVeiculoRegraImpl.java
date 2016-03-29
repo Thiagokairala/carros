@@ -2,14 +2,12 @@ package carros.regras.negocio;
 
 import java.sql.ResultSet;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import carros.entities.negocio.AvaliacaoVeiculo;
-import carros.entities.pessoas.aparencia.Imagem;
 import carros.regras.CarrosRegras;
 import carros.regras.pessoa.aparencia.ImagemRegra;
 

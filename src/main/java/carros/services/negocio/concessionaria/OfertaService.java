@@ -13,6 +13,7 @@ import carros.entities.negocio.ModeloVeiculo;
 import carros.entities.negocio.Oferta;
 import carros.entities.negocio.Veiculo;
 import carros.services.crud.VeiculoCrudService;
+import carros.services.negocio.AcessoriosService;
 
 @Service
 public class OfertaService {
@@ -20,6 +21,7 @@ public class OfertaService {
 	private ModeloVeiculoDao modeloVeiculoDao;
 	private VeiculoCrudService veiculoCrudService;
 	private OfertaDao ofertaDao;
+	private AcessoriosService acessoriosService;
 
 	public List<MarcaVeiculo> getTodasMarcas() {
 
@@ -33,6 +35,7 @@ public class OfertaService {
 
 	public Oferta cadastrarOferta(Oferta oferta) {
 		Veiculo veiculo = veiculoCrudService.inserirVeiculo(oferta.getVeiculo());
+		acessoriosService.inserirAcessoriosVeiculo(veiculo);
 
 		oferta.setVeiculo(veiculo);
 		return ofertaDao.inserirOferta(oferta);
@@ -58,5 +61,9 @@ public class OfertaService {
 		this.ofertaDao = ofertaDao;
 	}
 
-	
+	@Autowired
+	public void setAcessoriosService(AcessoriosService acessoriosService) {
+		this.acessoriosService = acessoriosService;
+	}
+
 }

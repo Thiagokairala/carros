@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import carros.dao.negocio.VeiculoDao;
 import carros.entities.negocio.AvaliacaoVeiculo;
 import carros.entities.negocio.Veiculo;
+import carros.services.negocio.AcessoriosService;
 
 @Service
 public class VeiculoCrudService {
@@ -14,7 +15,8 @@ public class VeiculoCrudService {
 	private AvaliacaoVeiculoCrudService avaliacaoVeiculoCrudService;
 
 	public Veiculo inserirVeiculo(Veiculo veiculo) {
-		AvaliacaoVeiculo avaliacaoVeiculo = avaliacaoVeiculoCrudService.inserirAvaliacaoVeiculo(veiculo.getAvaliacaoVeiculo());
+		AvaliacaoVeiculo avaliacaoVeiculo = avaliacaoVeiculoCrudService
+				.inserirAvaliacaoVeiculo(veiculo.getAvaliacaoVeiculo());
 		veiculo.setAvaliacaoVeiculo(avaliacaoVeiculo);
 		return veiculoDao.inserirVeiculo(veiculo);
 	}
