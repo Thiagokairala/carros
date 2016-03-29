@@ -20,4 +20,6 @@ public final class UsuarioConcessionariaDaoContrato {
 			+ "    ) AS concessionaria "
 			+ "ON concessionaria.idconcessionaria = usuario_concessionaria.concessionaria_idconcessionaria "
 			+ "WHERE usuario_idusuario = ?";
+	public static final String SELECT_USUARIOS_DE_UMA_CONCESSIONARIA = "SELECT * FROM usuario_concessionaria "
+			+ "WHERE concessionaria_idconcessionaria = ?";
 }

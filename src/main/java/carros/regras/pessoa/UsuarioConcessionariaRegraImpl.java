@@ -1,6 +1,7 @@
 package carros.regras.pessoa;
 
 import java.sql.ResultSet;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -10,8 +11,7 @@ import carros.regras.CarrosRegras;
 import carros.regras.security.UsuarioRegra;
 
 @Component
-public class UsuarioConcessionariaRegraImpl extends CarrosRegras implements
-		UsuarioConcessionariaRegra {
+public class UsuarioConcessionariaRegraImpl extends CarrosRegras implements UsuarioConcessionariaRegra {
 	private UsuarioRegra usuarioRegra;
 	private ConcessionariaRegra concessionariaRegra;
 	private NivelUsuarioConcessionariaRegra nivelUsuarioConcessionariaRegra;
@@ -21,13 +21,23 @@ public class UsuarioConcessionariaRegraImpl extends CarrosRegras implements
 		UsuarioConcessionaria usuarioConcessionaria = new UsuarioConcessionaria();
 
 		usuarioConcessionaria.setUsuario(usuarioRegra.buildUsuario(rs));
-		usuarioConcessionaria.setIdUsuarioConcessionaria(getLong(rs,
-				"idusuario_concessionaria"));
-		usuarioConcessionaria.setConcessionaria(concessionariaRegra
-				.construirConcessionaria(rs));
+		usuarioConcessionaria.setIdUsuarioConcessionaria(getLong(rs, "idusuario_concessionaria"));
+		usuarioConcessionaria.setConcessionaria(concessionariaRegra.construirConcessionaria(rs));
 		usuarioConcessionaria
-				.setNivelUsuarioConcessionaria(nivelUsuarioConcessionariaRegra
-						.buildNivelUsuarioConcessionaria(rs));
+				.setNivelUsuarioConcessionaria(nivelUsuarioConcessionariaRegra.buildNivelUsuarioConcessionaria(rs));
+
+		return usuarioConcessionaria;
+	}
+
+	@Override
+	public UsuarioConcessionaria buildUsuarioConcessionaria(Map<String, Object> row) {
+		UsuarioConcessionaria usuarioConcessionaria = new UsuarioConcessionaria();
+
+		usuarioConcessionaria.setUsuario(usuarioRegra.buildUsuario(row));
+		usuarioConcessionaria.setIdUsuarioConcessionaria(getLong(row, "idusuario_concessionaria"));
+		usuarioConcessionaria.setConcessionaria(concessionariaRegra.construirConcessionaria(row));
+		usuarioConcessionaria
+				.setNivelUsuarioConcessionaria(nivelUsuarioConcessionariaRegra.buildNivelUsuarioConcessionaria(row));
 
 		return usuarioConcessionaria;
 	}
@@ -43,8 +53,7 @@ public class UsuarioConcessionariaRegraImpl extends CarrosRegras implements
 	}
 
 	@Autowired
-	public void setNivelUsuarioConcessionariaRegra(
-			NivelUsuarioConcessionariaRegra nivelUsuarioConcessionariaRegra) {
+	public void setNivelUsuarioConcessionariaRegra(NivelUsuarioConcessionariaRegra nivelUsuarioConcessionariaRegra) {
 		this.nivelUsuarioConcessionariaRegra = nivelUsuarioConcessionariaRegra;
 	}
 

@@ -131,9 +131,11 @@ public abstract class CarrosRegras {
 
 	public double getDouble(Map<String, Object> row, String columnName) {
 		double returnDouble = 0;
-
-		returnDouble = ((Float) row.get(columnName)).floatValue();
-
+		try {
+			returnDouble = ((Float) row.get(columnName)).floatValue();
+		} catch (NullPointerException e) {
+			logger.warn("Field " + columnName + " not in the resultSet");
+		}
 		return returnDouble;
 	}
 

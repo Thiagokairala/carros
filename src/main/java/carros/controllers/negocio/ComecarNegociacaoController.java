@@ -23,18 +23,23 @@ import carros.services.negocio.NegociacaoService;
 @Scope("request")
 public class ComecarNegociacaoController extends ControladoraBase {
 
-	private NegociacaoService NegociacaoService;
+	private NegociacaoService negociacaoService;
 
 	@RequestMapping(value = "/comecar", method = RequestMethod.POST)
 	public @ResponseBody ResponseEntity<Chat> comecarNegociacao(@RequestBody Negociacao negociacao) throws Exception {
 		Lojista lojista = super.usuarioSessaoEhLojista();
-		NegociacaoService.abrirNegociacoes(negociacao, lojista);
-		return new ResponseEntity<Chat>(HttpStatus.OK);
+		Chat chat = negociacaoService.abrirNegociacoes(negociacao, lojista);
+		if(chat == null) {
+			return new ResponseEntity<Chat>(HttpStatus.ACCEPTED);
+		}else {
+			return new ResponseEntity<Chat>(chat, HttpStatus.OK);		
+		}
+	
 	}
 
 	@Autowired
 	public void setNegociacaoService(NegociacaoService negociacaoService) {
-		NegociacaoService = negociacaoService;
+		this.negociacaoService = negociacaoService;
 	}
 
 }
