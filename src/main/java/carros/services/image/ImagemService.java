@@ -38,7 +38,6 @@ public class ImagemService {
 	}
 
 	public ResponseEntity<byte[]> getImagem(long id) throws IOException {
-		System.out.println(id);
 		Imagem imagem = imagemDao.buscarImagem(id);
 		InputStream in = new FileInputStream("./" + imagem.getCaminhoImagem());
 
