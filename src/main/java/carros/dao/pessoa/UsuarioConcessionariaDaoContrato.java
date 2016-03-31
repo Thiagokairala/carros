@@ -19,6 +19,8 @@ public final class UsuarioConcessionariaDaoContrato {
 			+ "    FROM concessionaria "
 			+ "    ) AS concessionaria "
 			+ "ON concessionaria.idconcessionaria = usuario_concessionaria.concessionaria_idconcessionaria "
+			+ "JOIN imagem "
+			+ "ON imagem.idimagem = pessoa.imagem_idimagem "
 			+ "WHERE usuario_idusuario = ?";
 	public static final String SELECT_USUARIOS_DE_UMA_CONCESSIONARIA = "SELECT * FROM usuario_concessionaria "
 			+ "JOIN usuario ON usuario.idusuario = usuario_concessionaria.usuario_idusuario "

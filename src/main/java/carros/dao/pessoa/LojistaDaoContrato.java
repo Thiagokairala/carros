@@ -13,5 +13,7 @@ public final class LojistaDaoContrato {
 			+ "ON endereco.idendereco = pessoa.endereco_idendereco "
 			+ "JOIN telefone "
 			+ "ON telefone.idtelefone = pessoa.idpessoa "
+			+ "JOIN imagem "
+			+ "ON imagem.idimagem = pessoa.imagem_idimagem "
 			+ "WHERE lojista.usuario_idusuario = ?";
 }

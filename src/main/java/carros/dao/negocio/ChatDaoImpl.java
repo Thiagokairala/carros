@@ -77,6 +77,18 @@ public class ChatDaoImpl implements ChatDao {
 		return chats;
 	}
 
+	@Override
+	public List<Chat> getChatsUsuarioConcessionaria(Long idUsuarioConcessionaria) {
+		List<Chat> chats = new ArrayList<Chat>();
+		Object[] arrayParams = new Object[] { idUsuarioConcessionaria };
+		List<Map<String, Object>> rows = jdbcTemplate.queryForList(ChatDaoContrato.GET_TODOS_CHATS_USUARIO_CONCESSIONARIA,
+				arrayParams);
+		for (Map<String, Object> row : rows) {
+			chats.add(chatRegra.buildRegra(row));
+		}
+		return chats;
+	}
+
 	@Autowired
 	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
 		this.jdbcTemplate = jdbcTemplate;

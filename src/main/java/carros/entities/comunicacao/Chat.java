@@ -15,6 +15,7 @@ public class Chat implements Serializable {
 	private Boolean finalizado;
 	private Lojista lojista;
 	private List<UsuarioConcessionaria> usuariosConcessionaria;
+	private List<Mensagem> mensagens;
 
 	public Long getId() {
 		return id;
@@ -52,8 +53,16 @@ public class Chat implements Serializable {
 		return usuariosConcessionaria;
 	}
 
-	public void setUsuariosConcessionaria(
-			List<UsuarioConcessionaria> usuariosConcessionaria) {
+	public void setUsuariosConcessionaria(List<UsuarioConcessionaria> usuariosConcessionaria) {
 		this.usuariosConcessionaria = usuariosConcessionaria;
 	}
+
+	public List<Mensagem> getMensagens() {
+		return mensagens;
+	}
+
+	public void setMensagens(List<Mensagem> mensagens) {
+		this.mensagens = mensagens;
+	}
+
 }

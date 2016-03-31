@@ -11,5 +11,8 @@ public final class ChatDaoContrato {
 			+ "(chat_idchat, usuario_concessionaria_idusuario_concessionaria) VALUES (?, ?)";
 	public static final String GET_TODOS_CHATS_LOJISTA = "SELECT * FROM chat WHERE lojista_idlojista = ? "
 			+ "AND bool_finalizado = false";
+	public static final String GET_TODOS_CHATS_USUARIO_CONCESSIONARIA = "SELECT * FROM chat "
+			+ "JOIN chat_inclui_usuario_concessionaria ON chat_inclui_usuario_concessionaria.chat_idchat = chat.idchat "
+			+ "WHERE chat_inclui_usuario_concessionaria.usuario_concessionaria_idusuario_concessionaria = ? AND bool_finalizado = false";
 
 }

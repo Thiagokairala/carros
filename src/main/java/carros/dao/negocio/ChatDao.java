@@ -15,4 +15,6 @@ public interface ChatDao {
 
 	public List<Chat> getChatsLojista(Long idLojista);
 
+	public List<Chat> getChatsUsuarioConcessionaria(Long idUsuarioConcessionaria);
+
 }

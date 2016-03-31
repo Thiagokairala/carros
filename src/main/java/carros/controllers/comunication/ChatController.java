@@ -36,6 +36,10 @@ public class ChatController extends ControladoraBase {
 			chats = chatService.geChatsUsuarioConcessionaria(usuarioSessao.getSessionUserId());
 		}
 
+		for (Chat chat : chats) {
+			chat.setMensagens(chatService.getMensagensPorChat(chat.getId()));
+		}
+
 		return new ResponseEntity<List<Chat>>(chats, HttpStatus.OK);
 	}
 
