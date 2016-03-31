@@ -16,6 +16,7 @@ import org.springframework.stereotype.Repository;
 
 import carros.entities.comunicacao.Chat;
 import carros.entities.usuarios.UsuarioConcessionaria;
+import carros.regras.comunicacao.ChatRegra;
 import carros.regras.pessoa.UsuarioConcessionariaRegra;
 
 @Repository
@@ -23,6 +24,7 @@ public class ChatDaoImpl implements ChatDao {
 
 	private JdbcTemplate jdbcTemplate;
 	private UsuarioConcessionariaRegra usuarioConcessionariaRegra;
+	private ChatRegra chatRegra;
 
 	@Override
 	public Chat criarChat(Chat chat) {
@@ -58,11 +60,21 @@ public class ChatDaoImpl implements ChatDao {
 	public void InserirUsuariosConcessionaria(List<UsuarioConcessionaria> usuarios, Long idChat) {
 		for (UsuarioConcessionaria usuario : usuarios) {
 			Object[] arrayParams = new Object[] { idChat, usuario.getIdUsuarioConcessionaria() };
-			System.out.println(idChat);
-			System.out.println(usuario.getUsuario().getIdUsuario());
+
 			jdbcTemplate.update(ChatDaoContrato.INSERIR_USUARIO_CHAT, arrayParams);
 		}
+	}
 
+	@Override
+	public List<Chat> getChatsLojista(Long idLojista) {
+		List<Chat> chats = new ArrayList<Chat>();
+		Object[] arrayParams = new Object[] { idLojista };
+		List<Map<String, Object>> rows = jdbcTemplate.queryForList(ChatDaoContrato.GET_TODOS_CHATS_LOJISTA,
+				arrayParams);
+		for (Map<String, Object> row : rows) {
+			chats.add(chatRegra.buildRegra(row));
+		}
+		return chats;
 	}
 
 	@Autowired
@@ -73,6 +85,11 @@ public class ChatDaoImpl implements ChatDao {
 	@Autowired
 	public void setUsuarioConcessionariaRegra(UsuarioConcessionariaRegra usuarioConcessionariaRegra) {
 		this.usuarioConcessionariaRegra = usuarioConcessionariaRegra;
+	}
+
+	@Autowired
+	public void setChatRegra(ChatRegra chatRegra) {
+		this.chatRegra = chatRegra;
 	}
 
 }

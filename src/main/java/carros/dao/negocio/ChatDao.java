@@ -13,4 +13,6 @@ public interface ChatDao {
 
 	public void InserirUsuariosConcessionaria(List<UsuarioConcessionaria> usuarios, Long idChat);
 
+	public List<Chat> getChatsLojista(Long idLojista);
+
 }
