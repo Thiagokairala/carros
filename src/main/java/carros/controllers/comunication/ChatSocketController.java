@@ -17,7 +17,7 @@ public class ChatSocketController {
 	private ChatService chatService;
 
 	private final static String CHAT_TOPIC = "/topic/chats/";
-	private final static String MENSAGENS_TOPIC = "/topic/mensagem";
+	private final static String MENSAGENS_TOPIC = "/topic/mensagem/";
 
 	@MessageMapping("/chat")
 	public void sendMessage(Chat chat) {
@@ -30,7 +30,11 @@ public class ChatSocketController {
 	@MessageMapping("/newMessage")
 	public void sendMessageOfChat(Mensagem mensagem) {
 		mensagem = chatService.registrarMensagem(mensagem);
-		simpMessagingTemplate.convertAndSend(MENSAGENS_TOPIC, mensagem);
+		Chat chat = chatService.buscarChatComIntegrantes(mensagem.getChat());
+		for (UsuarioConcessionaria usuario : chat.getUsuariosConcessionaria()) {
+			simpMessagingTemplate.convertAndSend(MENSAGENS_TOPIC + usuario.getUsuario().getIdUsuario(), mensagem);
+		}
+		simpMessagingTemplate.convertAndSend(MENSAGENS_TOPIC + chat.getLojista().getUsuario().getIdUsuario(), mensagem);
 	}
 
 	@Autowired

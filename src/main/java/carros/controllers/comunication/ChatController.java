@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import carros.controllers.ControladoraBase;
 import carros.entities.comunicacao.Chat;
+import carros.exception.UsuarioNaoTemChatException;
 import carros.security.session.UsuarioSessao;
 import carros.services.comunication.ChatService;
 
@@ -34,6 +35,8 @@ public class ChatController extends ControladoraBase {
 			chats = chatService.getChatsLojista(usuarioSessao.getSessionUserId());
 		} else if (usuarioSessao.isUsuarioConcessionaria()) {
 			chats = chatService.geChatsUsuarioConcessionaria(usuarioSessao.getSessionUserId());
+		} else {
+			throw new UsuarioNaoTemChatException();
 		}
 
 		for (Chat chat : chats) {

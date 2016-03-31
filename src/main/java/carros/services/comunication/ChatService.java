@@ -41,6 +41,12 @@ public class ChatService {
 		
 		return mensagemDao.buscarMensagensChat(id);
 	}
+	
+	public Chat buscarChatComIntegrantes(Chat chat) {
+		chat = chatDao.buscarChat(chat);
+		chat.setUsuariosConcessionaria(chatDao.getUsuariosConcessionariaChat(chat.getId()));
+		return chat;
+	}
 
 	@Autowired
 	public void setLojistaDao(LojistaDao lojistaDao) {

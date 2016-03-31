@@ -14,6 +14,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
+import carros.dao.negocio.extractor.ChatRowMapper;
 import carros.entities.comunicacao.Chat;
 import carros.entities.usuarios.UsuarioConcessionaria;
 import carros.regras.comunicacao.ChatRegra;
@@ -25,6 +26,7 @@ public class ChatDaoImpl implements ChatDao {
 	private JdbcTemplate jdbcTemplate;
 	private UsuarioConcessionariaRegra usuarioConcessionariaRegra;
 	private ChatRegra chatRegra;
+	private ChatRowMapper chatRowMapper;
 
 	@Override
 	public Chat criarChat(Chat chat) {
@@ -81,12 +83,18 @@ public class ChatDaoImpl implements ChatDao {
 	public List<Chat> getChatsUsuarioConcessionaria(Long idUsuarioConcessionaria) {
 		List<Chat> chats = new ArrayList<Chat>();
 		Object[] arrayParams = new Object[] { idUsuarioConcessionaria };
-		List<Map<String, Object>> rows = jdbcTemplate.queryForList(ChatDaoContrato.GET_TODOS_CHATS_USUARIO_CONCESSIONARIA,
-				arrayParams);
+		List<Map<String, Object>> rows = jdbcTemplate
+				.queryForList(ChatDaoContrato.GET_TODOS_CHATS_USUARIO_CONCESSIONARIA, arrayParams);
 		for (Map<String, Object> row : rows) {
 			chats.add(chatRegra.buildRegra(row));
 		}
 		return chats;
+	}
+
+	@Override
+	public Chat buscarChat(Chat chat) {
+		Object[] arrayParams = new Object[] { chat.getId() };
+		return (Chat) jdbcTemplate.queryForObject(ChatDaoContrato.BUSCAR_CHAT_POR_ID, arrayParams, chatRowMapper);
 	}
 
 	@Autowired
@@ -102,6 +110,11 @@ public class ChatDaoImpl implements ChatDao {
 	@Autowired
 	public void setChatRegra(ChatRegra chatRegra) {
 		this.chatRegra = chatRegra;
+	}
+
+	@Autowired
+	public void setChatRowMapper(ChatRowMapper chatRowMapper) {
+		this.chatRowMapper = chatRowMapper;
 	}
 
 }

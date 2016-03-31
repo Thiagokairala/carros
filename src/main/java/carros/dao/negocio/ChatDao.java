@@ -17,4 +17,6 @@ public interface ChatDao {
 
 	public List<Chat> getChatsUsuarioConcessionaria(Long idUsuarioConcessionaria);
 
+	public Chat buscarChat(Chat chat);
+
 }
