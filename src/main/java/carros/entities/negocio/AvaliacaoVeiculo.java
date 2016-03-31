@@ -14,6 +14,9 @@ public class AvaliacaoVeiculo implements Serializable {
 	private String descricao;
 	private BigDecimal precoParaConserto;
 	private int kmRodado;
+	private int ano;
+	private int modelo;
+	private CorVeiculo cor;
 	private List<Imagem> images;
 
 	public Long getId() {
@@ -54,6 +57,30 @@ public class AvaliacaoVeiculo implements Serializable {
 
 	public void setImages(List<Imagem> images) {
 		this.images = images;
+	}
+
+	public int getAno() {
+		return ano;
+	}
+
+	public void setAno(int ano) {
+		this.ano = ano;
+	}
+
+	public int getModelo() {
+		return modelo;
+	}
+
+	public void setModelo(int modelo) {
+		this.modelo = modelo;
+	}
+
+	public CorVeiculo getCor() {
+		return cor;
+	}
+
+	public void setCor(CorVeiculo cor) {
+		this.cor = cor;
 	}
 
 }
