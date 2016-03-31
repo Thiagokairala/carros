@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import carros.controllers.ControladoraBase;
+import carros.controllers.comunication.ChatSocketController;
 import carros.entities.auxiliar.Negociacao;
 import carros.entities.comunicacao.Chat;
 import carros.entities.usuarios.Lojista;
@@ -24,22 +25,28 @@ import carros.services.negocio.NegociacaoService;
 public class ComecarNegociacaoController extends ControladoraBase {
 
 	private NegociacaoService negociacaoService;
+	private ChatSocketController chatSocketController;
 
 	@RequestMapping(value = "/comecar", method = RequestMethod.POST)
 	public @ResponseBody ResponseEntity<Chat> comecarNegociacao(@RequestBody Negociacao negociacao) throws Exception {
 		Lojista lojista = super.usuarioSessaoEhLojista();
 		Chat chat = negociacaoService.abrirNegociacoes(negociacao, lojista);
-		if(chat == null) {
+		if (chat == null) {
 			return new ResponseEntity<Chat>(HttpStatus.ACCEPTED);
-		}else {
-			return new ResponseEntity<Chat>(chat, HttpStatus.OK);		
+		} else {
+			chatSocketController.sendMessage(chat);
+			return new ResponseEntity<Chat>(chat, HttpStatus.OK);
 		}
-	
 	}
 
 	@Autowired
 	public void setNegociacaoService(NegociacaoService negociacaoService) {
 		this.negociacaoService = negociacaoService;
+	}
+
+	@Autowired
+	public void setChatSocketCOntroller(ChatSocketController chatSocketController) {
+		this.chatSocketController = chatSocketController;
 	}
 
 }

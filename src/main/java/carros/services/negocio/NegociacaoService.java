@@ -64,7 +64,12 @@ public class NegociacaoService {
 		chat.setNomeDoChat("Chat " + lojista.getUsuario().getPessoa().getNomeDeTela() + " - "
 				+ oferta.getConcessionaria().getUsuario().getPessoa().getNomeDeTela());
 		chat = chatDao.criarChat(chat);
+		List<UsuarioConcessionaria> usuarios = usuarioConcessionariaDao
+				.buscarUsuariosDeUmaConcessionaria(oferta.getConcessionaria().getIdConcessionaria());
+		chatDao.InserirUsuariosConcessionaria(usuarios, chat.getId());
+		chat.setUsuariosConcessionaria(usuarios);
 		negociacaoDao.comecarNegociacao(negociacao, lojista, chat);
+
 		return chat;
 	}
 
