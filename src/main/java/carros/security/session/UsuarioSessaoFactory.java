@@ -54,9 +54,7 @@ public class UsuarioSessaoFactory extends AbstractFactoryBean<UsuarioSessao> imp
 
 	@Override
 	public UsuarioSessao createInstance() throws Exception {
-		if (sessionUser == null) {
-			buildObject();
-		}
+		buildObject();
 		return sessionUser;
 	}
 

@@ -46,7 +46,6 @@ public class Security {
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public @ResponseBody ResponseEntity<Serializable> login(@RequestBody LoginForm loginForm)
 			throws CarrosUserNotFound, CarrosUsuarioNaoTemPapel, CarrosUsuarioNaoAutenticado {
-		logger.info("/security/login");
 
 		Serializable result = LoginUserService.loginUser(loginForm);
 		iniciarSessao(result);
@@ -73,25 +72,29 @@ public class Security {
 	}
 
 	private void iniciarSessao(Serializable result) throws CarrosUsuarioNaoTemPapel {
+		logger.info("Selecionando tipo de usuário");
 		if (result instanceof Concessionaria) {
+			logger.info("Concessionaria selecionada");
 			Concessionaria concessionaria = (Concessionaria) result;
 			sessaoAtributoService.iniciarSessao(
 					new UsuarioSessao(concessionaria.getUsuario().getIdUsuario(), TipoUsuarioSessao.CONCESSIONARIA));
 		} else if (result instanceof UsuarioConcessionaria) {
+			logger.info("UsuarioConcessionaria selecionada");
 			UsuarioConcessionaria usuarioConcessionaria = (UsuarioConcessionaria) result;
 			sessaoAtributoService.iniciarSessao(new UsuarioSessao(usuarioConcessionaria.getUsuario().getIdUsuario(),
 					TipoUsuarioSessao.USUARIO_CONCESSIONARIA));
 		} else if (result instanceof Lojista) {
+			logger.info("Lojista selecionado");
 			Lojista lojista = (Lojista) result;
 			sessaoAtributoService
 					.iniciarSessao(new UsuarioSessao(lojista.getUsuario().getIdUsuario(), TipoUsuarioSessao.LOJISTA));
 		} else if (result instanceof Usuario) {
+			logger.info("ADMIN selecionado");
 			Usuario usuario = (Usuario) result;
 			sessaoAtributoService.iniciarSessao(new UsuarioSessao(usuario.getIdUsuario(), TipoUsuarioSessao.ADMIN));
 		} else {
 			throw new CarrosUsuarioNaoTemPapel("este usuario n�o se enquadra no sistema");
 		}
-
 	}
 
 	@Autowired

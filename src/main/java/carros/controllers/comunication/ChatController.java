@@ -30,7 +30,7 @@ public class ChatController extends ControladoraBase {
 	public @ResponseBody ResponseEntity<List<Chat>> getAllChats() throws Exception {
 		List<Chat> chats = null;
 		UsuarioSessao usuarioSessao = super.getUsuarioSessaoFactory().createInstance();
-
+		
 		if (usuarioSessao.isLojista()) {
 			chats = chatService.getChatsLojista(usuarioSessao.getSessionUserId());
 		} else if (usuarioSessao.isUsuarioConcessionaria()) {

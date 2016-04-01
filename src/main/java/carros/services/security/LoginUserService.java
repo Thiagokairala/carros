@@ -2,6 +2,8 @@ package carros.services.security;
 
 import java.io.Serializable;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -23,6 +25,8 @@ import carros.services.security.password.PasswordHandler;
 @Service
 @Scope("request")
 public class LoginUserService {
+
+	private static final Logger logger = LoggerFactory.getLogger(LoginUserService.class);
 
 	private PasswordHandler passwordHandler;
 	private UsuarioDao usuarioDao;
