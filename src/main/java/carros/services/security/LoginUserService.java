@@ -35,6 +35,7 @@ public class LoginUserService {
 	private LojistaDao lojistaDao;
 
 	public Serializable loginUser(LoginForm loginForm) throws CarrosUserNotFound, CarrosUsuarioNaoAutenticado {
+		logger.info("loggin in user");
 		Usuario usuario;
 		loginForm.setPassword(this.passwordHandler.criptografarSenha(loginForm.getPassword()));
 		try {
