@@ -16,7 +16,7 @@ public final class ChatDaoContrato {
 			+ "WHERE chat_inclui_usuario_concessionaria.usuario_concessionaria_idusuario_concessionaria = ? AND bool_finalizado = false";
 	public static final String BUSCAR_CHAT_POR_ID = "SELECT * FROM chat "
 			+ "JOIN lojista ON chat.lojista_idlojista = lojista.idlojista "
-			+ "JOIN usuario ON lojista.usuario_idusuario = usuario.idusuario "
-			+ "WHERE idchat = ?";
+			+ "JOIN usuario ON lojista.usuario_idusuario = usuario.idusuario " + "WHERE idchat = ?";
+	public static final String FINALIZAR_CHAT = "UPDATE chaT SET bool_finalizado=true WHERE idchat = ?";
 
 }

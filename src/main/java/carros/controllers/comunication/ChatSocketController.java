@@ -18,6 +18,7 @@ public class ChatSocketController {
 
 	private final static String CHAT_TOPIC = "/topic/chats/";
 	private final static String MENSAGENS_TOPIC = "/topic/mensagem/";
+	private final static String FINALIZAR_CHAT_TOPIC = "/topic/finalizaChat/";
 
 	@MessageMapping("/chat")
 	public void sendMessage(Chat chat) {
@@ -35,6 +36,16 @@ public class ChatSocketController {
 			simpMessagingTemplate.convertAndSend(MENSAGENS_TOPIC + usuario.getUsuario().getIdUsuario(), mensagem);
 		}
 		simpMessagingTemplate.convertAndSend(MENSAGENS_TOPIC + chat.getLojista().getUsuario().getIdUsuario(), mensagem);
+	}
+
+	@MessageMapping("/finalizarChat")
+	public void finalizarChat(Chat chat) {
+		chat = chatService.buscarChatComIntegrantes(chat);
+		for (UsuarioConcessionaria usuario : chat.getUsuariosConcessionaria()) {
+			simpMessagingTemplate.convertAndSend(FINALIZAR_CHAT_TOPIC + usuario.getUsuario().getIdUsuario(), chat.getId());
+		}
+		simpMessagingTemplate.convertAndSend(FINALIZAR_CHAT_TOPIC + chat.getLojista().getUsuario().getIdUsuario(),
+				chat.getId());
 	}
 
 	@Autowired

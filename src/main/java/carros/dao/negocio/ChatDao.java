@@ -19,4 +19,6 @@ public interface ChatDao {
 
 	public Chat buscarChat(Chat chat);
 
+	public int finalizarCat(Chat chat);
+
 }

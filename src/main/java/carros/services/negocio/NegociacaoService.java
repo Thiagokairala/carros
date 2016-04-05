@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import carros.controllers.comunication.ChatSocketController;
 import carros.dao.negocio.ChatDao;
 import carros.dao.negocio.NegociacaoDao;
 import carros.dao.negocio.NotificacaoDao;
@@ -25,6 +26,7 @@ public class NegociacaoService {
 	private ChatDao chatDao;
 	private NotificacaoDao notificacaoDao;
 	private UsuarioConcessionariaDao usuarioConcessionariaDao;
+	private ChatSocketController chatSocketController;
 
 	public Chat abrirNegociacoes(Negociacao negociacao, Lojista lojista) throws CarrosOfertaJaFinalizadaException {
 
@@ -46,7 +48,7 @@ public class NegociacaoService {
 		List<UsuarioConcessionaria> destinatariosNotificacao = usuarioConcessionariaDao
 				.buscarUsuariosDeUmaConcessionaria(oferta.getConcessionaria().getIdConcessionaria());
 		for (UsuarioConcessionaria usuario : destinatariosNotificacao) {
-			notificacaoDao.criarNotificacao(usuario.getIdUsuarioConcessionaria(), "Negociação finalizada",
+			notificacaoDao.criarNotificacao(usuario.getIdUsuarioConcessionaria(), "Negociaï¿½ï¿½o finalizada",
 					gerarCorpoNotificacao(negociacao, oferta, lojista));
 		}
 		ofertaDao.finalizarOferta(oferta, lojista);
@@ -56,10 +58,12 @@ public class NegociacaoService {
 		Oferta oferta = ofertaDao.buscarOfertaPorChat(novaOfertaDto);
 		Chat chat = chatDao.buscarChat(novaOfertaDto.getChat());
 		ofertaDao.finalizarOferta(oferta, chat.getLojista());
+		chatDao.finalizarCat(chat);
+		chatSocketController.finalizarChat(chat);
 	}
 
 	private String gerarCorpoNotificacao(Negociacao negociacao, Oferta oferta, Lojista lojista) {
-		String corpoNotificacao = "Negociação do carro " + oferta.getVeiculo().getModeloVeiculo().getNome()
+		String corpoNotificacao = "Negociaï¿½ï¿½o do carro " + oferta.getVeiculo().getModeloVeiculo().getNome()
 				+ " cotada por: " + oferta.getValorDaOferta() + " finalizada e fechada com o lojista: "
 				+ lojista.getUsuario().getPessoa().getNomeDeTela() + " por: " + negociacao.getPrecoOferecido();
 		return corpoNotificacao;
@@ -82,7 +86,7 @@ public class NegociacaoService {
 
 	private void verificarSeEstaAberto(Oferta oferta) throws CarrosOfertaJaFinalizadaException {
 		if (oferta.getFinalizado()) {
-			throw new CarrosOfertaJaFinalizadaException("Esta oferta já finalizou");
+			throw new CarrosOfertaJaFinalizadaException("Esta oferta jï¿½ finalizou");
 		}
 	}
 
@@ -110,4 +114,10 @@ public class NegociacaoService {
 	public void setUsuarioConcessionariaDao(UsuarioConcessionariaDao usuarioConcessionariaDao) {
 		this.usuarioConcessionariaDao = usuarioConcessionariaDao;
 	}
+
+	@Autowired
+	public void setChatSocketController(ChatSocketController chatSocketController) {
+		this.chatSocketController = chatSocketController;
+	}
+
 }

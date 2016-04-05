@@ -97,6 +97,12 @@ public class ChatDaoImpl implements ChatDao {
 		return (Chat) jdbcTemplate.queryForObject(ChatDaoContrato.BUSCAR_CHAT_POR_ID, arrayParams, chatRowMapper);
 	}
 
+	@Override
+	public int finalizarCat(Chat chat) {
+		Object[] arrayParams = new Object[] { chat.getId() };
+		return jdbcTemplate.update(ChatDaoContrato.FINALIZAR_CHAT, arrayParams);
+	}
+
 	@Autowired
 	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
 		this.jdbcTemplate = jdbcTemplate;
