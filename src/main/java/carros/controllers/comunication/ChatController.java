@@ -7,7 +7,6 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import carros.controllers.ControladoraBase;
 import carros.entities.comunicacao.Chat;
-import carros.entities.comunicacao.NovaOfertaDto;
 import carros.exception.UsuarioNaoTemChatException;
 import carros.security.session.UsuarioSessao;
 import carros.services.comunication.ChatService;

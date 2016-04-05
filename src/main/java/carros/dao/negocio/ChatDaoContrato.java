@@ -17,6 +17,8 @@ public final class ChatDaoContrato {
 	public static final String BUSCAR_CHAT_POR_ID = "SELECT * FROM chat "
 			+ "JOIN lojista ON chat.lojista_idlojista = lojista.idlojista "
 			+ "JOIN usuario ON lojista.usuario_idusuario = usuario.idusuario " + "WHERE idchat = ?";
-	public static final String FINALIZAR_CHAT = "UPDATE chaT SET bool_finalizado=true WHERE idchat = ?";
+	public static final String FINALIZAR_CHAT = "UPDATE chat SET bool_finalizado=true WHERE idchat = ?";
+	public static final String BUSCAR_CHAT_POR_OFERTA = "SELECT chat_idchat AS idchat FROM lojista_fez_oferta "
+			+ "WHERE oferta_idoferta = ?";
 
 }

@@ -3,6 +3,7 @@ package carros.dao.negocio;
 import java.util.List;
 
 import carros.entities.comunicacao.Chat;
+import carros.entities.negocio.Oferta;
 import carros.entities.usuarios.UsuarioConcessionaria;
 
 public interface ChatDao {
@@ -20,5 +21,7 @@ public interface ChatDao {
 	public Chat buscarChat(Chat chat);
 
 	public int finalizarCat(Chat chat);
+
+	public List<Chat> getChatsOferta(Oferta oferta);
 
 }

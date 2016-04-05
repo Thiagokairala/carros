@@ -1,5 +1,7 @@
 package carros.controllers.negocio;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
@@ -17,6 +19,7 @@ import carros.entities.auxiliar.Negociacao;
 import carros.entities.comunicacao.Chat;
 import carros.entities.comunicacao.NovaOfertaDto;
 import carros.entities.usuarios.Lojista;
+import carros.services.comunication.ChatService;
 import carros.services.negocio.NegociacaoService;
 
 @RestController
@@ -27,12 +30,17 @@ public class NegociacaoController extends ControladoraBase {
 
 	private NegociacaoService negociacaoService;
 	private ChatSocketController chatSocketController;
+	private ChatService chatService;
 
 	@RequestMapping(value = "/comecar", method = RequestMethod.POST)
 	public @ResponseBody ResponseEntity<Chat> comecarNegociacao(@RequestBody Negociacao negociacao) throws Exception {
 		Lojista lojista = super.usuarioSessaoEhLojista();
 		Chat chat = negociacaoService.abrirNegociacoes(negociacao, lojista);
 		if (chat == null) {
+			List<Chat> chats = chatService.finalizarChats(negociacao.getOferta());
+			for(Chat chatParaFInalizar : chats) {
+				chatSocketController.finalizarChat(chatParaFInalizar);
+			}
 			return new ResponseEntity<Chat>(HttpStatus.ACCEPTED);
 		} else {
 			chatSocketController.sendMessage(chat);
@@ -54,6 +62,11 @@ public class NegociacaoController extends ControladoraBase {
 	@Autowired
 	public void setChatSocketCOntroller(ChatSocketController chatSocketController) {
 		this.chatSocketController = chatSocketController;
+	}
+
+	@Autowired
+	public void setChatService(ChatService chatService) {
+		this.chatService = chatService;
 	}
 
 }

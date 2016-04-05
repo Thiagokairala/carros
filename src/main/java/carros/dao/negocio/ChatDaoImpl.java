@@ -16,6 +16,7 @@ import org.springframework.stereotype.Repository;
 
 import carros.dao.negocio.extractor.ChatRowMapper;
 import carros.entities.comunicacao.Chat;
+import carros.entities.negocio.Oferta;
 import carros.entities.usuarios.UsuarioConcessionaria;
 import carros.regras.comunicacao.ChatRegra;
 import carros.regras.pessoa.UsuarioConcessionariaRegra;
@@ -101,6 +102,19 @@ public class ChatDaoImpl implements ChatDao {
 	public int finalizarCat(Chat chat) {
 		Object[] arrayParams = new Object[] { chat.getId() };
 		return jdbcTemplate.update(ChatDaoContrato.FINALIZAR_CHAT, arrayParams);
+	}
+
+	@Override
+	public List<Chat> getChatsOferta(Oferta oferta) {
+		List<Chat> listChat = new ArrayList<Chat>();
+		Object[] arrayParams = new Object[] {oferta.getId() };
+		List<Map<String, Object>> rowList = jdbcTemplate.queryForList(ChatDaoContrato.BUSCAR_CHAT_POR_OFERTA, arrayParams);
+		
+		for(Map<String, Object> row : rowList) {
+			listChat.add(chatRegra.buildRegra(row));
+		}
+		
+		return listChat;
 	}
 
 	@Autowired

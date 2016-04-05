@@ -11,6 +11,7 @@ import carros.dao.pessoa.LojistaDao;
 import carros.dao.pessoa.UsuarioConcessionariaDao;
 import carros.entities.comunicacao.Chat;
 import carros.entities.comunicacao.Mensagem;
+import carros.entities.negocio.Oferta;
 import carros.entities.usuarios.Lojista;
 import carros.entities.usuarios.UsuarioConcessionaria;
 
@@ -38,14 +39,22 @@ public class ChatService {
 	}
 
 	public List<Mensagem> getMensagensPorChat(Long id) {
-		
+
 		return mensagemDao.buscarMensagensChat(id);
 	}
-	
+
 	public Chat buscarChatComIntegrantes(Chat chat) {
 		chat = chatDao.buscarChat(chat);
 		chat.setUsuariosConcessionaria(chatDao.getUsuariosConcessionariaChat(chat.getId()));
 		return chat;
+	}
+
+	public List<Chat> finalizarChats(Oferta oferta) {
+		List<Chat> chats = chatDao.getChatsOferta(oferta);
+		for (Chat chat : chats) {
+			chatDao.finalizarCat(chat);
+		}
+		return chats;
 	}
 
 	@Autowired
