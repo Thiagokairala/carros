@@ -128,4 +128,8 @@ public class OfertaDaoContrato {
 			+ "JOIN avaliacao_veiculo ON veiculo.avaliacao_veiculo_idavaliacao_veiculo = avaliacao_veiculo.idavaliacao_veiculo "
 			+ "JOIN cor_veiculo ON avaliacao_veiculo.cor_veiculo_idcor_veiculo = cor_veiculo.idcor_veiculo "
 			+ "WHERE concessionaria.idconcessionaria = ? AND oferta.bool_finalizada = false";
+
+	public static final String BUSCAR_OFERTA_POR_CHAT = "SELECT * FROM oferta "
+			+ "JOIN lojista_fez_oferta ON oferta.idoferta = lojista_fez_oferta.oferta_idoferta "
+			+ "WHERE chat_idchat = ?";
 }

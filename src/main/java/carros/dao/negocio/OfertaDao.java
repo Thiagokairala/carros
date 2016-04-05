@@ -2,6 +2,7 @@ package carros.dao.negocio;
 
 import java.util.List;
 
+import carros.entities.comunicacao.NovaOfertaDto;
 import carros.entities.negocio.Oferta;
 import carros.entities.usuarios.Lojista;
 
@@ -24,4 +25,6 @@ public interface OfertaDao {
 	public void finalizarOferta(Oferta oferta, Lojista lojista);
 
 	public List<Oferta> buscarOfertasPorConcessionaria(long idConcessionaria);
+
+	public Oferta buscarOfertaPorChat(NovaOfertaDto novaOfertaDto);
 }

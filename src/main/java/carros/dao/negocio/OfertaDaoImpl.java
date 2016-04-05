@@ -15,6 +15,7 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import carros.dao.negocio.extractor.OfertaRowMapper;
+import carros.entities.comunicacao.NovaOfertaDto;
 import carros.entities.negocio.Oferta;
 import carros.entities.usuarios.Lojista;
 import carros.regras.negocio.OfertaRule;
@@ -101,9 +102,18 @@ public class OfertaDaoImpl implements OfertaDao {
 
 	@Override
 	public List<Oferta> buscarOfertasPorConcessionaria(long idConcessionaria) {
-		Object[] arrayList = new Object[] {idConcessionaria};
-		
+		Object[] arrayList = new Object[] { idConcessionaria };
+
 		return buscarOfertasPrivate(OfertaDaoContrato.SELECT_OFERTA_POR_CONCESSIONARIA, arrayList);
+	}
+
+	@Override
+	public Oferta buscarOfertaPorChat(NovaOfertaDto novaOfertaDto) {
+		Object[] arrayParams = new Object[] { novaOfertaDto.getChat().getId() };
+
+		Oferta oferta = (Oferta) jdbcTemplate.queryForObject(OfertaDaoContrato.BUSCAR_OFERTA_POR_CHAT, arrayParams,
+				ofertaRowMapper);
+		return oferta;
 	}
 
 	private List<Oferta> buscarOfertasPrivate(String query, Object[] params) {

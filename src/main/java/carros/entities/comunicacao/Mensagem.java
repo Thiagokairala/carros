@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.GregorianCalendar;
 
 import carros.entities.pessoas.aparencia.Imagem;
-import carros.entities.usuarios.Usuario;
 
 public class Mensagem implements Serializable {
 
@@ -15,7 +14,7 @@ public class Mensagem implements Serializable {
 	private String nomeRemetente;
 	private Imagem imagem;
 	private GregorianCalendar dataEnvio;
-	private Usuario usuario;
+	private Long idUsuario;
 	private Chat chat;
 
 	public String getMensagem() {
@@ -50,12 +49,12 @@ public class Mensagem implements Serializable {
 		this.dataEnvio = dataEnvio;
 	}
 
-	public Usuario getUsuario() {
-		return usuario;
+	public Long getIdUsuario() {
+		return idUsuario;
 	}
 
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
+	public void setIdUsuario(Long idUsuario) {
+		this.idUsuario = idUsuario;
 	}
 
 	public Chat getChat() {

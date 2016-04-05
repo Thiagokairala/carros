@@ -8,14 +8,12 @@ import org.springframework.stereotype.Component;
 import carros.entities.comunicacao.Mensagem;
 import carros.regras.CarrosRegras;
 import carros.regras.pessoa.aparencia.ImagemRegra;
-import carros.regras.security.UsuarioRegra;
 
 @Component
 public class MensagemRegraImpl extends CarrosRegras implements MensagemRegra {
 
 	private ChatRegra chatRegra;
 	private ImagemRegra imagemRegra;
-	private UsuarioRegra usuarioRegra;
 
 	@Override
 	public Mensagem buildMensagem(Map<String, Object> row) {
@@ -26,7 +24,7 @@ public class MensagemRegraImpl extends CarrosRegras implements MensagemRegra {
 		mensagem.setImagem(imagemRegra.buildImagem(row));
 		mensagem.setMensagem(getString(row, "txt_mensagem"));
 		mensagem.setNomeRemetente(getString(row, "txt_nomeDeTela"));
-		mensagem.setUsuario(usuarioRegra.buildUsuario(row));
+		mensagem.setIdUsuario(getLong(row, "idusuario"));
 		return mensagem;
 	}
 
@@ -39,10 +37,4 @@ public class MensagemRegraImpl extends CarrosRegras implements MensagemRegra {
 	public void setImagemRegra(ImagemRegra imagemRegra) {
 		this.imagemRegra = imagemRegra;
 	}
-
-	@Autowired
-	public void setUsuarioRegra(UsuarioRegra usuarioRegra) {
-		this.usuarioRegra = usuarioRegra;
-	}
-
 }

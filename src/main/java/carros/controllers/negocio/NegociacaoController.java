@@ -15,6 +15,7 @@ import carros.controllers.ControladoraBase;
 import carros.controllers.comunication.ChatSocketController;
 import carros.entities.auxiliar.Negociacao;
 import carros.entities.comunicacao.Chat;
+import carros.entities.comunicacao.NovaOfertaDto;
 import carros.entities.usuarios.Lojista;
 import carros.services.negocio.NegociacaoService;
 
@@ -22,7 +23,7 @@ import carros.services.negocio.NegociacaoService;
 @Service
 @RequestMapping("/negociacao")
 @Scope("request")
-public class ComecarNegociacaoController extends ControladoraBase {
+public class NegociacaoController extends ControladoraBase {
 
 	private NegociacaoService negociacaoService;
 	private ChatSocketController chatSocketController;
@@ -37,6 +38,12 @@ public class ComecarNegociacaoController extends ControladoraBase {
 			chatSocketController.sendMessage(chat);
 			return new ResponseEntity<Chat>(chat, HttpStatus.OK);
 		}
+	}
+
+	@RequestMapping(value = "/novaOferta", method = RequestMethod.POST)
+	public @ResponseBody ResponseEntity<String> novaOferta(@RequestBody NovaOfertaDto novaOfertaDto) {
+		negociacaoService.novaOferta(novaOfertaDto);
+		return new ResponseEntity<String>(HttpStatus.OK);
 	}
 
 	@Autowired

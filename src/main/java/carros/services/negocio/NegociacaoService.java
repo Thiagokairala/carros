@@ -12,6 +12,7 @@ import carros.dao.negocio.OfertaDao;
 import carros.dao.pessoa.UsuarioConcessionariaDao;
 import carros.entities.auxiliar.Negociacao;
 import carros.entities.comunicacao.Chat;
+import carros.entities.comunicacao.NovaOfertaDto;
 import carros.entities.negocio.Oferta;
 import carros.entities.usuarios.Lojista;
 import carros.entities.usuarios.UsuarioConcessionaria;
@@ -49,6 +50,12 @@ public class NegociacaoService {
 					gerarCorpoNotificacao(negociacao, oferta, lojista));
 		}
 		ofertaDao.finalizarOferta(oferta, lojista);
+	}
+
+	public void novaOferta(NovaOfertaDto novaOfertaDto) {
+		Oferta oferta = ofertaDao.buscarOfertaPorChat(novaOfertaDto);
+		Chat chat = chatDao.buscarChat(novaOfertaDto.getChat());
+		ofertaDao.finalizarOferta(oferta, chat.getLojista());
 	}
 
 	private String gerarCorpoNotificacao(Negociacao negociacao, Oferta oferta, Lojista lojista) {
@@ -103,5 +110,4 @@ public class NegociacaoService {
 	public void setUsuarioConcessionariaDao(UsuarioConcessionariaDao usuarioConcessionariaDao) {
 		this.usuarioConcessionariaDao = usuarioConcessionariaDao;
 	}
-
 }

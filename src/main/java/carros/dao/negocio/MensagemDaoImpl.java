@@ -33,7 +33,7 @@ public class MensagemDaoImpl implements MensagemDao {
 				PreparedStatement stmt = connection.prepareStatement(MensagemDaoContrato.INSERIR_MENSAGEM,
 						new String[] { "id" });
 				stmt.setString(1, mensagem.getMensagem());
-				stmt.setLong(2, mensagem.getUsuario().getIdUsuario());
+				stmt.setLong(2, mensagem.getIdUsuario());
 				stmt.setLong(3, mensagem.getChat().getId());
 				stmt.setString(4, mensagem.getNomeRemetente());
 				stmt.setLong(5, mensagem.getImagem().getId());
