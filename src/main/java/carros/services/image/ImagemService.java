@@ -26,7 +26,7 @@ import carros.entities.pessoas.aparencia.Imagem;
 public class ImagemService {
 	private ImagemDao imagemDao;
 
-	public void salvarImagem(MultipartFile file) throws IOException {
+	public Imagem salvarImagem(MultipartFile file) throws IOException {
 		String fileName = "image/" + (new GregorianCalendar()).getTimeInMillis() + "."
 				+ file.getOriginalFilename().split("\\.")[1];
 		byte[] bytes = file.getBytes();
@@ -34,7 +34,7 @@ public class ImagemService {
 		stream.write(bytes);
 		stream.close();
 
-		salvarRegistroDeImagem(fileName);
+		return salvarRegistroDeImagem(fileName);
 	}
 
 	public ResponseEntity<byte[]> getImagem(long id) throws IOException {
@@ -52,11 +52,11 @@ public class ImagemService {
 
 	}
 
-	private void salvarRegistroDeImagem(String fileName) {
+	private Imagem salvarRegistroDeImagem(String fileName) {
 		Imagem imagem = new Imagem();
 		imagem.setCaminhoImagem(fileName);
 		imagem.setHashImagem(Long.toString(new GregorianCalendar().getTimeInMillis()));
-		imagemDao.inserir(imagem);
+		return imagemDao.inserir(imagem);
 	}
 
 	@Autowired

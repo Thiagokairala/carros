@@ -10,8 +10,9 @@ public class EmailHtmlFormatter {
 	private String cofirmationUrl = "http://localhost:8080/carros/security/confirmarEmail?token=";
 
 	public String formatarEmail(Usuario usuario) {
+		System.out.println(usuario.getTokenAutenticacao());
 		cofirmationUrl += usuario.getTokenAutenticacao();
-		String email = "<h1>Você se registrou,</h1>";
+		String email = "<h1>Vocï¿½ se registrou,</h1>";
 		email += "<p>Para finalizar o registro clique <a href='" + cofirmationUrl + "'>aqui</a></p>";
 		System.out.println(email);
 		return email;

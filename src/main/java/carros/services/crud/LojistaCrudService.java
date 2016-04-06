@@ -16,9 +16,12 @@ public class LojistaCrudService {
 
 	public Lojista inserirLojista(Lojista lojista) {
 		TipoUsuario tipoUsuario = new TipoUsuario();
+
 		tipoUsuario.setId(TipoUsuarioContrato.LOJISTA);
 		lojista.getUsuario().setTipoUsuario(tipoUsuario);
+
 		lojista = lojistaDao.inserirLojista(lojista);
+
 		if (lojista.getIdLojista() > 0) {
 			enviarEmailLojista(lojista);
 		}

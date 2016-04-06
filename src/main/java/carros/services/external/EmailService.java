@@ -44,7 +44,6 @@ public class EmailService {
 			transport.sendMessage(mensagem, mensagem.getAllRecipients());
 			transport.close();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			System.out.println(">> Erro: Envio Mensagem");
 			e.printStackTrace();
 		}

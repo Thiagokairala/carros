@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import carros.entities.pessoas.aparencia.Imagem;
 import carros.services.image.ImagemService;
 
 @RestController
@@ -26,27 +27,25 @@ public class ImagemController {
 	private ImagemService imagemService;
 
 	@RequestMapping(value = "/upload", method = RequestMethod.POST)
-	public @ResponseBody ResponseEntity<String> singleFileUpload(@RequestParam("image") MultipartFile file)
+	public @ResponseBody ResponseEntity<Imagem> singleFileUpload(@RequestParam("image") MultipartFile file)
 			throws IOException {
-		
 
 		if (!file.isEmpty()) {
 			try {
-				imagemService.salvarImagem(file);
-				return new ResponseEntity<String>(HttpStatus.OK);
+
+				return new ResponseEntity<Imagem>(imagemService.salvarImagem(file), HttpStatus.OK);
 
 			} catch (Exception e) {
 				e.printStackTrace();
-				return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
+				return new ResponseEntity<Imagem>(HttpStatus.BAD_REQUEST);
 			}
 		} else {
-			return new ResponseEntity<String>(HttpStatus.UNAUTHORIZED);
+			return new ResponseEntity<Imagem>(HttpStatus.UNAUTHORIZED);
 		}
 	}
-	
 
 	@RequestMapping(value = "/buscarFoto/{id}/{hash}", method = RequestMethod.GET)
-	public ResponseEntity<byte[]> testzphoto(@PathVariable("id") long id) throws IOException { 
+	public ResponseEntity<byte[]> testzphoto(@PathVariable("id") long id) throws IOException {
 		return imagemService.getImagem(id);
 	}
 

@@ -51,6 +51,7 @@ public class PessoaDaoImpl implements PessoaDao {
 				stmt.setString(3, pessoa.getNomeDeTela());
 				stmt.setLong(4, pessoa.getEndereco().getId());
 				stmt.setLong(5, pessoa.getTelefone().getId());
+				stmt.setLong(6, pessoa.getImagem().getId());
 
 				return stmt;
 			}

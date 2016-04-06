@@ -52,9 +52,10 @@ public class Security {
 		return new ResponseEntity<Serializable>(result, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "confirmarEmail", method = RequestMethod.GET)
+	@RequestMapping(value = "/confirmarEmail", method = RequestMethod.GET)
 	public @ResponseBody ResponseEntity<Serializable> confirmarEmail(@RequestParam(required = true) String token)
 			throws CarrosUsuarioNaoTemPapel, CarrosUserNotFound {
+		System.out.println(token);
 		Serializable result = LoginUserService.confirmarEmail(token);
 		iniciarSessao(result);
 		return new ResponseEntity<Serializable>(result, HttpStatus.OK);

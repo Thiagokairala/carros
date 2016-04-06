@@ -36,6 +36,8 @@ public class UsuarioDaoImpl implements UsuarioDao {
 		usuario.setSenha(this.passwordHandler.criptografarSenha(usuario.getSenha()));
 		usuario.setTokenAutenticacao(
 				passwordHandler.criptografarSenha(usuario.getEmail()) + gregorianCalendar.getTimeInMillis());
+		System.out.println(usuario.getTokenAutenticacao());
+		
 		jdbcTemplate.update(new PreparedStatementCreator() {
 			public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
 				PreparedStatement stmt = connection.prepareStatement(UsuarioDaoContrato.INSERIR_USUARIO,
