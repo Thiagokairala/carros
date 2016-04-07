@@ -37,7 +37,7 @@ public class UsuarioDaoImpl implements UsuarioDao {
 		usuario.setTokenAutenticacao(
 				passwordHandler.criptografarSenha(usuario.getEmail()) + gregorianCalendar.getTimeInMillis());
 		System.out.println(usuario.getTokenAutenticacao());
-		
+
 		jdbcTemplate.update(new PreparedStatementCreator() {
 			public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
 				PreparedStatement stmt = connection.prepareStatement(UsuarioDaoContrato.INSERIR_USUARIO,
@@ -78,6 +78,12 @@ public class UsuarioDaoImpl implements UsuarioDao {
 		jdbcTemplate.update(UsuarioDaoContrato.SETAR_AUTENTICADO, arrayParams);
 	}
 
+	@Override
+	public void updateUsuario(Usuario usuario) {
+		pessoaDao.updatePessoa(usuario.getPessoa());
+
+	}
+
 	@Autowired
 	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
 		this.jdbcTemplate = jdbcTemplate;
@@ -97,4 +103,5 @@ public class UsuarioDaoImpl implements UsuarioDao {
 	public void setUsuarioRowMapper(UsuarioRowMapper usuarioRowMapper) {
 		this.usuarioRowMapper = usuarioRowMapper;
 	}
+
 }

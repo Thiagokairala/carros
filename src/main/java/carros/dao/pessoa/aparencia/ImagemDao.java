@@ -11,4 +11,6 @@ public interface ImagemDao {
 	public Imagem buscarImagem(long id);
 
 	public List<Imagem> buscarImagensOferta(Long id);
+
+	public Imagem update(Imagem imagem);
 }

@@ -11,4 +11,6 @@ public interface UsuarioDao {
 	public Usuario loginUsuario(String token);
 
 	public void setarAutenticado(Long idUsuario);
+
+	public void updateUsuario(Usuario usuario);
 }

@@ -22,10 +22,8 @@ public class TelefoneDaoImpl implements TelefoneDao {
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 
 		jdbcTemplate.update(new PreparedStatementCreator() {
-			public PreparedStatement createPreparedStatement(
-					Connection connection) throws SQLException {
-				PreparedStatement stmt = connection.prepareStatement(
-						TelefoneDaoContrato.INSERIR_TELEFONE,
+			public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+				PreparedStatement stmt = connection.prepareStatement(TelefoneDaoContrato.INSERIR_TELEFONE,
 						new String[] { "id" });
 				stmt.setString(1, telefone.getDdd());
 				stmt.setString(2, telefone.getNumeroDeTelefone());
@@ -36,6 +34,12 @@ public class TelefoneDaoImpl implements TelefoneDao {
 		telefone.setId((Long) keyHolder.getKey());
 
 		return telefone;
+	}
+
+	@Override
+	public void updateTelefone(Telefone telefone) {
+		Object[] arrayParams = new Object[] { telefone.getDdd(), telefone.getNumeroDeTelefone(), telefone.getId() };
+		jdbcTemplate.update(TelefoneDaoContrato.UPDATE_TELEFONE, arrayParams);
 	}
 
 	@Autowired

@@ -54,8 +54,8 @@ public class Security {
 
 	@RequestMapping(value = "/confirmarEmail", method = RequestMethod.GET)
 	public @ResponseBody ResponseEntity<Serializable> confirmarEmail(@RequestParam(required = true) String token)
-			throws CarrosUsuarioNaoTemPapel, CarrosUserNotFound {
-		System.out.println(token);
+			throws Exception {
+		logger.debug("token atutenticação: " + token);
 		Serializable result = LoginUserService.confirmarEmail(token);
 		iniciarSessao(result);
 		return new ResponseEntity<Serializable>(result, HttpStatus.OK);

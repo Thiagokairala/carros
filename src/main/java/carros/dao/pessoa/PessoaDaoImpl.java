@@ -41,11 +41,9 @@ public class PessoaDaoImpl implements PessoaDao {
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 
 		jdbcTemplate.update(new PreparedStatementCreator() {
-			public PreparedStatement createPreparedStatement(
-					Connection connection) throws SQLException {
-				PreparedStatement stmt = connection
-						.prepareStatement(PessoaDaoContrato.INSERIR_PESSOA,
-								new String[] { "id" });
+			public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+				PreparedStatement stmt = connection.prepareStatement(PessoaDaoContrato.INSERIR_PESSOA,
+						new String[] { "id" });
 				stmt.setString(1, pessoa.getDocIdentificacao());
 				stmt.setString(2, pessoa.getNome());
 				stmt.setString(3, pessoa.getNomeDeTela());
@@ -59,6 +57,14 @@ public class PessoaDaoImpl implements PessoaDao {
 
 		pessoa.setIdPessoa((Long) keyHolder.getKey());
 		return pessoa;
+	}
+
+	@Override
+	public void updatePessoa(Pessoa pessoa) {
+		enderecoDao.updateEndereco(pessoa.getEndereco());
+		telefoneDao.updateTelefone(pessoa.getTelefone());
+		Object[] arrayParams = new Object[] {pessoa.getNomeDeTela(), pessoa.getIdPessoa()};
+		jdbcTemplate.update(PessoaDaoContrato.UPDATE_PESSOA, arrayParams);
 	}
 
 	@Autowired

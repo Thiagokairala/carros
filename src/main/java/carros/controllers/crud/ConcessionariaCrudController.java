@@ -32,6 +32,12 @@ public class ConcessionariaCrudController {
 		return new ResponseEntity<Concessionaria>(concessionariaCrudService.inserirConcessionaria(concessionaria),
 				HttpStatus.OK);
 	}
+	
+	@RequestMapping(value="/update", method=RequestMethod.POST)
+	public @ResponseBody ResponseEntity<Concessionaria> updateConcessionaria(@RequestBody Concessionaria concessionaria) {
+		concessionariaCrudService.updateConcessionaria(concessionaria);
+		return new ResponseEntity<Concessionaria>(HttpStatus.OK);
+	}
 
 	@RequestMapping(value = "/buscarTodas", method = RequestMethod.GET)
 	public @ResponseBody ResponseEntity<List<Concessionaria>> buscarTodasConcessionarias() {

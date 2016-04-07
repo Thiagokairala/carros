@@ -44,6 +44,24 @@ public class ImagemController {
 		}
 	}
 
+	@RequestMapping(value = "/upload/{idImagem}", method = RequestMethod.POST)
+	public @ResponseBody ResponseEntity<Imagem> replaceFile(@RequestParam("image") MultipartFile file,
+			@PathVariable Long idImagem) throws IOException {
+		System.out.println(idImagem);
+
+		if (!file.isEmpty()) {
+			try {
+				return new ResponseEntity<Imagem>(imagemService.atualizarImagem(file, idImagem), HttpStatus.OK);
+
+			} catch (Exception e) {
+				return new ResponseEntity<Imagem>(HttpStatus.BAD_REQUEST);
+			}
+		} else {
+			return new ResponseEntity<Imagem>(HttpStatus.UNAUTHORIZED);
+		}
+
+	}
+
 	@RequestMapping(value = "/buscarFoto/{id}/{hash}", method = RequestMethod.GET)
 	public ResponseEntity<byte[]> testzphoto(@PathVariable("id") long id) throws IOException {
 		return imagemService.getImagem(id);

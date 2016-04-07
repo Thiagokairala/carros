@@ -22,10 +22,8 @@ public class EnderecoDaoImpl implements EnderecoDao {
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 
 		jdbcTemplate.update(new PreparedStatementCreator() {
-			public PreparedStatement createPreparedStatement(
-					Connection connection) throws SQLException {
-				PreparedStatement stmt = connection.prepareStatement(
-						EnderecoDaoContrato.INSERIR_ENDERECO,
+			public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+				PreparedStatement stmt = connection.prepareStatement(EnderecoDaoContrato.INSERIR_ENDERECO,
 						new String[] { "id" });
 				stmt.setString(1, endereco.getCep());
 				stmt.setString(2, endereco.getEndereco());
@@ -36,6 +34,12 @@ public class EnderecoDaoImpl implements EnderecoDao {
 		endereco.setId((Long) keyHolder.getKey());
 
 		return endereco;
+	}
+
+	@Override
+	public void updateEndereco(Endereco endereco) {
+		Object[] arrayParams = new Object[] { endereco.getCep(), endereco.getEndereco(), endereco.getId() };
+		jdbcTemplate.update(EnderecoDaoContrato.UPDATE_ENDERECO, arrayParams);
 	}
 
 	@Autowired

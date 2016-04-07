@@ -82,6 +82,11 @@ public class ConcessionariaDaoImpl implements ConcessionariaDao {
 		return concessionarias;
 	}
 
+	@Override
+	public void update(Concessionaria concessionaria) {
+		usuarioDao.updateUsuario(concessionaria.getUsuario());
+	}
+
 	@Autowired
 	public void setConcessionariaRowMapper(ConcessionariaRowMapper concessionariaRowMapper) {
 		this.concessionariaRowMapper = concessionariaRowMapper;

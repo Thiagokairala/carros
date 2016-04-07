@@ -22,6 +22,11 @@ public class ConcessionariaCrudService {
 
 	}
 
+	public void updateConcessionaria(Concessionaria concessionaria) {
+
+		concessionariaDao.update(concessionaria);
+	}
+
 	public Concessionaria buscarConcessionariaPorId(long id) {
 		return concessionariaDao.buscarConcessionariaPorIdUsuario(id);
 	}

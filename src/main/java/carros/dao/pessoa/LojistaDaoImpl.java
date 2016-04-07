@@ -47,6 +47,7 @@ public class LojistaDaoImpl implements LojistaDao {
 	@Override
 	public Lojista buscarLojistaPorIdUsuario(Long idUsuario) {
 		Object[] arrayArguments = new Object[] { idUsuario };
+		System.out.println(idUsuario);
 		return (Lojista) jdbcTemplate.queryForObject(
 				LojistaDaoContrato.SELECT_LOJISTA_POR_ID_USUARIO,
 				arrayArguments, lojistaRowMapper);

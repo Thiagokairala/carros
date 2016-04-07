@@ -66,6 +66,26 @@ public class ImagemDaoImpl implements ImagemDao {
 		return listaDeImagens;
 	}
 
+	@Override
+	public Imagem update(Imagem imagem) {
+		KeyHolder keyHolder = new GeneratedKeyHolder();
+
+		jdbcTemplate.update(new PreparedStatementCreator() {
+			public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+				PreparedStatement stmt = connection.prepareStatement(ImagemDaoContrato.UPDATE_IMAGEM,
+						new String[] { "id" });
+				stmt.setString(1, imagem.getHashImagem());
+				stmt.setString(2, imagem.getCaminhoImagem());
+				stmt.setLong(3, imagem.getId());
+				return stmt;
+			}
+		}, keyHolder);
+
+		imagem.setId((Long) keyHolder.getKey());
+
+		return imagem;
+	}
+
 	@Autowired
 	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
 		this.jdbcTemplate = jdbcTemplate;

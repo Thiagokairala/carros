@@ -14,6 +14,7 @@ import carros.dao.pessoa.LojistaDao;
 import carros.dao.pessoa.UsuarioConcessionariaDao;
 import carros.dao.security.UsuarioDao;
 import carros.entities.security.LoginForm;
+import carros.entities.usuarios.Lojista;
 import carros.entities.usuarios.TipoUsuario;
 import carros.entities.usuarios.TipoUsuarioConst;
 import carros.entities.usuarios.Usuario;
@@ -61,6 +62,7 @@ public class LoginUserService {
 
 			return getUsuarioCorreto(usuario);
 		} catch (EmptyResultDataAccessException e) {
+			e.printStackTrace();
 			throw new CarrosUserNotFound("Usu�rio n�o cadastrado o sistema ou a senha n�o confere");
 		}
 	}
@@ -77,7 +79,9 @@ public class LoginUserService {
 			usuarioConcessionaria.getConcessionaria().setUsuario(null);
 			return usuarioConcessionaria;
 		} else if (tipoUsuario.getId() == TipoUsuarioConst.LOJISTA.getTipoUsuarioConst()) {
-			return lojistaDao.buscarLojistaPorIdUsuario(usuario.getIdUsuario());
+			Lojista lojista = lojistaDao.buscarLojistaPorIdUsuario(usuario.getIdUsuario());
+			System.out.println(lojista);
+			return lojista;
 		}
 		return null;
 	}

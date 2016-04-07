@@ -23,5 +23,4 @@ public final class ConcessionariaDaoContrato {
 			+ "JOIN endereco ON pessoa.endereco_idendereco = endereco.idendereco "
 			+ "JOIN imagem ON pessoa.imagem_idimagem = imagem.idimagem "
 			+ "JOIN telefone ON pessoa.telefone_idtelefone = telefone.idtelefone";
-
 }

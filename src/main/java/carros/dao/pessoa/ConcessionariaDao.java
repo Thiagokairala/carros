@@ -16,4 +16,6 @@ public interface ConcessionariaDao {
 
 	public List<Concessionaria> buscarTodasConcessionaria();
 
+	public void update(Concessionaria concessionaria);
+
 }

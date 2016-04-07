@@ -1,5 +1,6 @@
 package carros.services.image;
 
+import java.awt.Image;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -37,6 +38,17 @@ public class ImagemService {
 		return salvarRegistroDeImagem(fileName);
 	}
 
+	public Imagem atualizarImagem(MultipartFile file, Long idImagem) throws IOException {
+		String fileName = "image/" + (new GregorianCalendar()).getTimeInMillis() + "."
+				+ file.getOriginalFilename().split("\\.")[1];
+		byte[] bytes = file.getBytes();
+		BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File(fileName)));
+		stream.write(bytes);
+		stream.close();
+
+		return salvarUpdateDeImagem(fileName, idImagem);
+	}
+
 	public ResponseEntity<byte[]> getImagem(long id) throws IOException {
 		Imagem imagem = imagemDao.buscarImagem(id);
 		InputStream in = new FileInputStream("./" + imagem.getCaminhoImagem());
@@ -50,6 +62,14 @@ public class ImagemService {
 	public List<Imagem> getImagemOferta(Oferta oferta) {
 		return imagemDao.buscarImagensOferta(oferta.getVeiculo().getAvaliacaoVeiculo().getId());
 
+	}
+
+	private Imagem salvarUpdateDeImagem(String fileName, Long idImagem) {
+		Imagem imagem = new Imagem();
+		imagem.setCaminhoImagem(fileName);
+		imagem.setId(idImagem);
+		imagem.setHashImagem(Long.toString(new GregorianCalendar().getTimeInMillis()));
+		return imagemDao.update(imagem);
 	}
 
 	private Imagem salvarRegistroDeImagem(String fileName) {
