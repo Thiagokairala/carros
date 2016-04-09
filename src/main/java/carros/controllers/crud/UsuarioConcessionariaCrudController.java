@@ -1,5 +1,7 @@
 package carros.controllers.crud;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
@@ -8,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,14 +29,19 @@ public class UsuarioConcessionariaCrudController {
 	public @ResponseBody ResponseEntity<UsuarioConcessionaria> inserirUsuarioConcessionaria(
 			@RequestBody UsuarioConcessionaria usuarioConcessionaria) {
 		return new ResponseEntity<UsuarioConcessionaria>(
-				usuarioConcessionariaCrudService
-						.inserirUsuarioConcessionaria(usuarioConcessionaria),
-				HttpStatus.OK);
+				usuarioConcessionariaCrudService.inserirUsuarioConcessionaria(usuarioConcessionaria), HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/listar", method = RequestMethod	.GET)
+	public @ResponseBody ResponseEntity<List	<UsuarioConcessionaria>> buscarUsuariosConcessionaria(
+			@RequestParam Long idConcessionaria) {
+
+		return new ResponseEntity<List<UsuarioConcessionaria>>(
+				usuarioConcessionariaCrudService.listarUsuarios(idConcessionaria), HttpStatus.OK);
 	}
 
 	@Autowired
-	public void setUsuarioConcessionariaCrudService(
-			UsuarioConcessionariaCrudService usuarioConcessionariaCrudService) {
+	public void setUsuarioConcessionariaCrudService(UsuarioConcessionariaCrudService usuarioConcessionariaCrudService) {
 		this.usuarioConcessionariaCrudService = usuarioConcessionariaCrudService;
 	}
 

@@ -1,5 +1,7 @@
 package carros.services.crud;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +23,11 @@ public class UsuarioConcessionariaCrudService {
 	public void setUsuarioConcessionariaDao(
 			UsuarioConcessionariaDao usuarioConcessionariaDao) {
 		this.usuarioConcessionariaDao = usuarioConcessionariaDao;
+	}
+
+	public List<UsuarioConcessionaria> listarUsuarios(Long idConcessionaria) {
+		// TODO Auto-generated method stub
+		return usuarioConcessionariaDao.buscarUsuariosDeUmaConcessionaria(idConcessionaria);
 	}
 
 }

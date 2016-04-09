@@ -67,7 +67,7 @@ public class OfertaService {
 	}
 
 	public Boolean lojistaJaFezOferta(Long ofertaId, Long lojistaId) {
-		
+			
 		return ofertaDao.lojistaJaFezOferta(ofertaId, lojistaId);
 	}
 

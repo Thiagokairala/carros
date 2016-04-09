@@ -15,6 +15,7 @@ public class Usuario implements Serializable {
 	private TipoUsuario tipoUsuario;
 	private String tokenAutenticacao;
 	private boolean autenticado;
+	private boolean ativo;
 
 	private Pessoa pessoa;
 
@@ -80,6 +81,14 @@ public class Usuario implements Serializable {
 
 	public void setAutenticado(boolean autenticado) {
 		this.autenticado = autenticado;
+	}
+
+	public boolean isAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(boolean ativo) {
+		this.ativo = ativo;
 	}
 
 }

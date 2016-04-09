@@ -25,6 +25,7 @@ public class UsuarioRegraImpl extends CarrosRegras implements UsuarioRegra {
 		usuario.setEmail(getString(rs, "txt_email"));
 		usuario.setTipoUsuario(tipoUsuarioRegra.buildTipoUsuario(rs));
 		usuario.setAutenticado(getBoolean(rs, "bool_autenticado"));
+		usuario.setAtivo(getBoolean(rs, "bool_ativo"));
 		return usuario;
 	}
 
@@ -36,6 +37,8 @@ public class UsuarioRegraImpl extends CarrosRegras implements UsuarioRegra {
 		usuario.setUsername(getString(row, "txt_nome_usuario"));
 		usuario.setEmail(getString(row, "txt_email"));
 		usuario.setTipoUsuario(tipoUsuarioRegra.buildTipoUsuario(row));
+		usuario.setAutenticado(getBoolean(row, "bool_autenticado"));
+		usuario.setAtivo(getBoolean(row, "bool_ativo"));
 
 		return usuario;
 	}
