@@ -33,7 +33,6 @@ public class NegociacaoService {
 		Oferta oferta = ofertaDao.buscarOfertaPorId(negociacao.getOferta());
 
 		verificarSeEstaAberto(oferta);
-
 		if (negociacao.getPrecoOferecido().compareTo(oferta.getValorDaOferta()) < 0) {
 			return abrirNegociacao(negociacao, lojista, oferta);
 		} else {

@@ -66,4 +66,9 @@ public class OfertaService {
 		this.acessoriosService = acessoriosService;
 	}
 
+	public Boolean lojistaJaFezOferta(Long ofertaId, Long lojistaId) {
+		
+		return ofertaDao.lojistaJaFezOferta(ofertaId, lojistaId);
+	}
+
 }

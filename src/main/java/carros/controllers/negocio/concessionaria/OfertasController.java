@@ -52,7 +52,11 @@ public class OfertasController extends ControladoraBase {
 		return new ResponseEntity<List<Oferta>>(HttpStatus.OK);
 	}
 
-	
+	@RequestMapping(value = "/usuarioJaFezOferta", method = RequestMethod.GET)
+	public @ResponseBody ResponseEntity<Boolean> usuarioJaFezOferta(@RequestParam Long ofertaId,
+			@RequestParam Long lojistaId) {
+		return new ResponseEntity<Boolean>(ofertaService.lojistaJaFezOferta(ofertaId, lojistaId), HttpStatus.OK);
+	}
 
 	@Autowired
 	public void setOfertaService(OfertaService ofertaService) {

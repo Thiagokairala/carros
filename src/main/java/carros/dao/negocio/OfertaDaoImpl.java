@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -116,6 +117,18 @@ public class OfertaDaoImpl implements OfertaDao {
 		return oferta;
 	}
 
+	@Override
+	public Boolean lojistaJaFezOferta(Long ofertaId, Long lojistaId) {
+		Object[] arrayParams = new Object[] { ofertaId, lojistaId };
+	
+		try {
+			jdbcTemplate.queryForObject(OfertaDaoContrato.LOJISTA_JA_FEZ_OFERTA, arrayParams, ofertaRowMapper);
+			return true;
+		} catch (EmptyResultDataAccessException e) {
+			return false;
+		}
+	}
+
 	private List<Oferta> buscarOfertasPrivate(String query, Object[] params) {
 		List<Oferta> ofertas = new ArrayList<Oferta>();
 
@@ -140,5 +153,4 @@ public class OfertaDaoImpl implements OfertaDao {
 	public void setOfertaRowMapper(OfertaRowMapper ofertaRowMapper) {
 		this.ofertaRowMapper = ofertaRowMapper;
 	}
-
 }

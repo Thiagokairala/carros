@@ -13,8 +13,7 @@ public interface OfertaDao {
 
 	public List<Oferta> buscarOfertasMarca(int idMarca, int pagina);
 
-	public List<Oferta> buscarOfertasPorRangeDePreco(double precoMinimo,
-			double precoMaximo, int pagina);
+	public List<Oferta> buscarOfertasPorRangeDePreco(double precoMinimo, double precoMaximo, int pagina);
 
 	public List<Oferta> buscarOfertasPorFiltro(String filtro, int pagina);
 
@@ -27,4 +26,6 @@ public interface OfertaDao {
 	public List<Oferta> buscarOfertasPorConcessionaria(long idConcessionaria);
 
 	public Oferta buscarOfertaPorChat(NovaOfertaDto novaOfertaDto);
+
+	public Boolean lojistaJaFezOferta(Long ofertaId, Long lojistaId);
 }

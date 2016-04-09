@@ -132,4 +132,8 @@ public class OfertaDaoContrato {
 	public static final String BUSCAR_OFERTA_POR_CHAT = "SELECT * FROM oferta "
 			+ "JOIN lojista_fez_oferta ON oferta.idoferta = lojista_fez_oferta.oferta_idoferta "
 			+ "WHERE chat_idchat = ?";
+
+	public static final String LOJISTA_JA_FEZ_OFERTA = "SELECT * FROM lojista_fez_oferta "
+			+ "WHERE oferta_idoferta = ? "
+			+ "AND lojista_idlojista = ?";
 }
