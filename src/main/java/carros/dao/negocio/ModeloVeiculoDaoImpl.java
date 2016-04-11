@@ -34,6 +34,13 @@ public class ModeloVeiculoDaoImpl implements ModeloVeiculoDao {
 
 	}
 
+	@Override
+	public void registrar(ModeloVeiculo modeloVeiculo) {
+		Object[] arrayParams = new Object[] { modeloVeiculo.getNome(), modeloVeiculo.getMarcaVeiculo().getId(),
+				modeloVeiculo.getTipoVeiculo().getId() };
+		jdbcTemplate.update(ModeloVeiculoDaoContrato.INSERIR_MODELO_VEICULO, arrayParams);
+	}
+
 	@Autowired
 	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
 		this.jdbcTemplate = jdbcTemplate;

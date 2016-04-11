@@ -8,4 +8,6 @@ public interface ModeloVeiculoDao {
 
 	public List<ModeloVeiculo> listarModelosPorMarca(int idMarca);
 
+	public void registrar(ModeloVeiculo modeloVeiculo);
+
 }
