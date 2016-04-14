@@ -14,7 +14,7 @@ public class LojistaCrudService {
 	private LojistaDao lojistaDao;
 	private EmailService emailService;
 
-	public Lojista inserirLojista(Lojista lojista) {
+	public Lojista inserirLojista(Lojista lojista) throws Exception {
 		TipoUsuario tipoUsuario = new TipoUsuario();
 
 		tipoUsuario.setId(TipoUsuarioContrato.LOJISTA);

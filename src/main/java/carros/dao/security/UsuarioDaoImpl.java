@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.GregorianCalendar;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -17,6 +18,8 @@ import carros.dao.security.extractor.UsuarioRowMapper;
 import carros.entities.pessoas.Pessoa;
 import carros.entities.security.LoginForm;
 import carros.entities.usuarios.Usuario;
+import carros.exception.EmailJaExistente;
+import carros.exception.NomeDeUsuarioExistente;
 import carros.services.security.password.PasswordHandler;
 
 @Repository
@@ -28,7 +31,9 @@ public class UsuarioDaoImpl implements UsuarioDao {
 	private UsuarioRowMapper usuarioRowMapper;
 
 	@Override
-	public Usuario inserirUsuario(Usuario usuario) {
+	public Usuario inserirUsuario(Usuario usuario) throws Exception {
+		chekEmail(usuario.getEmail());
+		checkUsrname(usuario.getUsername());
 		Pessoa pessoa = pessoaDao.inserirPessoa(usuario.getPessoa());
 
 		GregorianCalendar gregorianCalendar = new GregorianCalendar();
@@ -36,7 +41,6 @@ public class UsuarioDaoImpl implements UsuarioDao {
 		usuario.setSenha(this.passwordHandler.criptografarSenha(usuario.getSenha()));
 		usuario.setTokenAutenticacao(
 				passwordHandler.criptografarSenha(usuario.getEmail()) + gregorianCalendar.getTimeInMillis());
-		System.out.println(usuario.getTokenAutenticacao());
 
 		jdbcTemplate.update(new PreparedStatementCreator() {
 			public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
@@ -55,6 +59,26 @@ public class UsuarioDaoImpl implements UsuarioDao {
 
 		usuario.setIdUsuario((Long) keyHolder.getKey());
 		return usuario;
+	}
+
+	private void checkUsrname(String username) throws NomeDeUsuarioExistente {
+		try {
+			jdbcTemplate.queryForObject(UsuarioDaoContrato.BUSCAR_USERNAME, usuarioRowMapper,
+					new Object[] { username });
+			throw new NomeDeUsuarioExistente();
+		} catch (EmptyResultDataAccessException e) {
+			// nothgin to do.
+		}
+	}
+
+	private void chekEmail(String email) throws EmailJaExistente {
+		try {
+			jdbcTemplate.queryForObject(UsuarioDaoContrato.BUSCAR_EMAIL, usuarioRowMapper, new Object[] { email });
+			throw new EmailJaExistente();
+		} catch (EmptyResultDataAccessException e) {
+			// nothgin to do.
+		}
+
 	}
 
 	@Override
@@ -82,6 +106,12 @@ public class UsuarioDaoImpl implements UsuarioDao {
 	public void updateUsuario(Usuario usuario) {
 		pessoaDao.updatePessoa(usuario.getPessoa());
 
+	}
+
+	@Override
+	public void trocarStatusUsuairo(Usuario usuario) {
+		Object[] arrayParams = new Object[] { usuario.isAtivo(), usuario.getIdUsuario() };
+		jdbcTemplate.update(UsuarioDaoContrato.TROCAR_STATUS_USUARIO, arrayParams);
 	}
 
 	@Autowired

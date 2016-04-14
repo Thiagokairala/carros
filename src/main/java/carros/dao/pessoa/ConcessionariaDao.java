@@ -6,7 +6,7 @@ import carros.entities.usuarios.Concessionaria;
 
 public interface ConcessionariaDao {
 
-	public Concessionaria inserirConcessionaria(Concessionaria concessionaria);
+	public Concessionaria inserirConcessionaria(Concessionaria concessionaria) throws Exception;
 
 	public void inserirNotaConcessionaria(Concessionaria concessionaria);
 	

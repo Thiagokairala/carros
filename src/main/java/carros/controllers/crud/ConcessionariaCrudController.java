@@ -27,7 +27,7 @@ public class ConcessionariaCrudController {
 
 	@RequestMapping(value = "/inserir", method = RequestMethod.POST)
 	public @ResponseBody ResponseEntity<Concessionaria> inserirConcessionaria(
-			@RequestBody Concessionaria concessionaria) {
+			@RequestBody Concessionaria concessionaria) throws Exception {
 
 		return new ResponseEntity<Concessionaria>(concessionariaCrudService.inserirConcessionaria(concessionaria),
 				HttpStatus.OK);

@@ -16,8 +16,10 @@ import org.springframework.stereotype.Repository;
 
 import carros.dao.pessoa.extractor.UsuarioConcessionariaRowMapper;
 import carros.dao.security.UsuarioDao;
+import carros.entities.usuarios.NivelUsuarioConcessionaria;
 import carros.entities.usuarios.Usuario;
 import carros.entities.usuarios.UsuarioConcessionaria;
+import carros.regras.pessoa.NivelUsuarioConcessionariaRegra;
 import carros.regras.pessoa.UsuarioConcessionariaRegra;
 
 @Repository
@@ -26,9 +28,10 @@ public class UsuarioConcessionariaDaoImpl implements UsuarioConcessionariaDao {
 	private UsuarioDao usuarioDao;
 	private UsuarioConcessionariaRowMapper usuarioConcessionariaRowMapper;
 	private UsuarioConcessionariaRegra usuarioConcessionariaRegra;
+	private NivelUsuarioConcessionariaRegra nivelUsuarioConcessionariaRegra;
 
 	@Override
-	public UsuarioConcessionaria inserirUsuarioConcessionaria(UsuarioConcessionaria usuarioConcessionaria) {
+	public UsuarioConcessionaria inserirUsuarioConcessionaria(UsuarioConcessionaria usuarioConcessionaria) throws Exception {
 		Usuario usuario = usuarioDao.inserirUsuario(usuarioConcessionaria.getUsuario());
 
 		KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -55,11 +58,11 @@ public class UsuarioConcessionariaDaoImpl implements UsuarioConcessionariaDao {
 		List<UsuarioConcessionaria> usuarios = new ArrayList<UsuarioConcessionaria>();
 		List<Map<String, Object>> returnedRows = jdbcTemplate
 				.queryForList(UsuarioConcessionariaDaoContrato.SELECT_USUARIOS_DE_UMA_CONCESSIONARIA, paramsList);
-		
-		for(Map<String, Object>row : returnedRows){
+
+		for (Map<String, Object> row : returnedRows) {
 			usuarios.add(usuarioConcessionariaRegra.buildUsuarioConcessionaria(row));
 		}
-		
+
 		return usuarios;
 	}
 
@@ -69,6 +72,18 @@ public class UsuarioConcessionariaDaoImpl implements UsuarioConcessionariaDao {
 		return (UsuarioConcessionaria) jdbcTemplate.queryForObject(
 				UsuarioConcessionariaDaoContrato.SELECT_USUARIO_CONCESSIONARIA_POR_ID_USUARIO, arrayArguments,
 				usuarioConcessionariaRowMapper);
+	}
+
+	@Override
+	public List<NivelUsuarioConcessionaria> buscarNiveisUsuario() {
+		List<NivelUsuarioConcessionaria> listaNiveis = new ArrayList<NivelUsuarioConcessionaria>();
+		List<Map<String, Object>> rows = jdbcTemplate.queryForList(UsuarioConcessionariaDaoContrato.SELECT_NIVEIS_USUARIO);
+		
+		for(Map<String, Object> row: rows) {
+			listaNiveis.add(nivelUsuarioConcessionariaRegra.buildNivelUsuarioConcessionaria(row));
+		}
+		
+		return listaNiveis;
 	}
 
 	@Autowired
@@ -89,6 +104,11 @@ public class UsuarioConcessionariaDaoImpl implements UsuarioConcessionariaDao {
 	@Autowired
 	public void setUsuarioConcessionariaRegra(UsuarioConcessionariaRegra usuarioConcessionariaRegra) {
 		this.usuarioConcessionariaRegra = usuarioConcessionariaRegra;
+	}
+
+	@Autowired
+	public void setNivelUsuarioConcessionariaRegra(NivelUsuarioConcessionariaRegra nivelUsuarioConcessionariaRegra) {
+		this.nivelUsuarioConcessionariaRegra = nivelUsuarioConcessionariaRegra;
 	}
 
 }

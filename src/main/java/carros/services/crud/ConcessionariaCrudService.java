@@ -13,7 +13,7 @@ public class ConcessionariaCrudService {
 
 	private ConcessionariaDao concessionariaDao;
 
-	public Concessionaria inserirConcessionaria(Concessionaria concessionaria) {
+	public Concessionaria inserirConcessionaria(Concessionaria concessionaria) throws Exception {
 		return concessionariaDao.inserirConcessionaria(concessionaria);
 	}
 

@@ -4,7 +4,7 @@ import carros.entities.security.LoginForm;
 import carros.entities.usuarios.Usuario;
 
 public interface UsuarioDao {
-	public Usuario inserirUsuario(Usuario usuario);
+	public Usuario inserirUsuario(Usuario usuario) throws Exception;
 
 	public Usuario loginUsuario(LoginForm loginForm);
 
@@ -13,4 +13,6 @@ public interface UsuarioDao {
 	public void setarAutenticado(Long idUsuario);
 
 	public void updateUsuario(Usuario usuario);
+
+	public void trocarStatusUsuairo(Usuario usuario);
 }

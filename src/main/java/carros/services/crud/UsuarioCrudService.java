@@ -10,12 +10,18 @@ import carros.entities.usuarios.Usuario;
 public class UsuarioCrudService {
 	private UsuarioDao usuarioDao;
 
-	public Usuario inserirUsuario(Usuario usuario) {
+	public Usuario inserirUsuario(Usuario usuario) throws Exception {
 		return usuarioDao.inserirUsuario(usuario);
 	}
 
 	@Autowired
 	public void setUsuarioDao(UsuarioDao usuarioDao) {
 		this.usuarioDao = usuarioDao;
+	}
+
+	public Usuario trocarStatusUsuario(Usuario usuario) {
+		usuario.setAtivo(!usuario.isAtivo());
+		usuarioDao.trocarStatusUsuairo(usuario);
+		return usuario;
 	}
 }

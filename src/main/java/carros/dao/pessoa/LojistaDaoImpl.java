@@ -23,7 +23,7 @@ public class LojistaDaoImpl implements LojistaDao {
 	private LojistaRowMapper lojistaRowMapper;
 
 	@Override
-	public Lojista inserirLojista(Lojista lojista) {
+	public Lojista inserirLojista(Lojista lojista) throws Exception {
 		Usuario usuario = usuarioDao.inserirUsuario(lojista.getUsuario());
 
 		KeyHolder keyHolder = new GeneratedKeyHolder();

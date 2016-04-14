@@ -24,7 +24,7 @@ public class UsuarioCrudController {
 
 	@RequestMapping(value = "/inserir", method = RequestMethod.POST)
 	public @ResponseBody ResponseEntity<Usuario> inserirUsuario(
-			@RequestBody Usuario usuario) {
+			@RequestBody Usuario usuario) throws Exception {
 		return new ResponseEntity<Usuario>(
 				usuarioCrudService.inserirUsuario(usuario), HttpStatus.OK);
 	}

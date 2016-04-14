@@ -1,6 +1,6 @@
 package carros.exception;
 
-public class CarrosException extends Exception{
+public class CarrosException extends Exception {
 
 	private static final long serialVersionUID = -3763594412521714535L;
 

@@ -21,4 +21,5 @@ public final class UsuarioConcessionariaDaoContrato {
 			+ "JOIN pessoa ON usuario.pessoa_idpessoa = pessoa.idpessoa "
 			+ "JOIN nivel_usuario_concessionaria ON usuario_concessionaria.nivel_usuario_concessionaria_idnivel_usuario_concessionaria = nivel_usuario_concessionaria.idnivel_usuario_concessionaria "
 			+ "WHERE concessionaria_idconcessionaria = ?";
+	public static final String SELECT_NIVEIS_USUARIO = "SELECT * FROM nivel_usuario_concessionaria";
 }

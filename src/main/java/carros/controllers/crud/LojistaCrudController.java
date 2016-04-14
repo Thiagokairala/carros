@@ -23,7 +23,7 @@ public class LojistaCrudController {
 
 	@RequestMapping(value = "/inserir", method = RequestMethod.POST)
 	public @ResponseBody ResponseEntity<Lojista> inserirLojista(
-			@RequestBody Lojista lojista) {
+			@RequestBody Lojista lojista) throws Exception {
 		return new ResponseEntity<Lojista>(
 				lojistaCrudService.inserirLojista(lojista), HttpStatus.OK);
 	}

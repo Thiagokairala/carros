@@ -37,7 +37,7 @@ public class ConcessionariaDaoImpl implements ConcessionariaDao {
 	}
 
 	@Override
-	public Concessionaria inserirConcessionaria(Concessionaria concessionaria) {
+	public Concessionaria inserirConcessionaria(Concessionaria concessionaria) throws Exception {
 		Usuario usuario = usuarioDao.inserirUsuario(concessionaria.getUsuario());
 
 		KeyHolder keyHolder = new GeneratedKeyHolder();
