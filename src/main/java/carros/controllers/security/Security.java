@@ -20,16 +20,19 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import carros.entities.security.LoginForm;
+import carros.entities.security.TrocaDeSenha;
 import carros.entities.usuarios.Concessionaria;
 import carros.entities.usuarios.Lojista;
 import carros.entities.usuarios.Usuario;
 import carros.entities.usuarios.UsuarioConcessionaria;
+import carros.exception.SenhaNaoConfere;
 import carros.exception.security.CarrosUserNotFound;
 import carros.exception.security.CarrosUsuarioNaoAutenticado;
 import carros.exception.security.CarrosUsuarioNaoTemPapel;
 import carros.security.session.SessaoAtributoService;
 import carros.security.session.TipoUsuarioSessao;
 import carros.security.session.UsuarioSessao;
+import carros.services.crud.UsuarioCrudService;
 import carros.services.security.LoginUserService;
 
 @RestController
@@ -40,14 +43,15 @@ public class Security {
 
 	private static final Logger logger = LoggerFactory.getLogger(Security.class);
 
-	private LoginUserService LoginUserService;
+	private LoginUserService loginUserService;
 	private SessaoAtributoService sessaoAtributoService;
+	private UsuarioCrudService usuarioCrudService;
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public @ResponseBody ResponseEntity<Serializable> login(@RequestBody LoginForm loginForm)
 			throws CarrosUserNotFound, CarrosUsuarioNaoTemPapel, CarrosUsuarioNaoAutenticado {
 
-		Serializable result = LoginUserService.loginUser(loginForm);
+		Serializable result = loginUserService.loginUser(loginForm);
 		iniciarSessao(result);
 		return new ResponseEntity<Serializable>(result, HttpStatus.OK);
 	}
@@ -56,7 +60,7 @@ public class Security {
 	public @ResponseBody ResponseEntity<Serializable> confirmarEmail(@RequestParam(required = true) String token)
 			throws Exception {
 		logger.debug("token atutenticação: " + token);
-		Serializable result = LoginUserService.confirmarEmail(token);
+		Serializable result = loginUserService.confirmarEmail(token);
 		iniciarSessao(result);
 		return new ResponseEntity<Serializable>(result, HttpStatus.OK);
 	}
@@ -70,6 +74,30 @@ public class Security {
 
 		return new ResponseEntity<String>(HttpStatus.OK);
 
+	}
+
+	@RequestMapping(value = "/trocarSenha", method = RequestMethod.POST)
+	public @ResponseBody ResponseEntity<String> changePassword(@RequestBody TrocaDeSenha trocaDeSenha)
+			throws SenhaNaoConfere {
+		System.out.println(trocaDeSenha);
+		System.out.println(trocaDeSenha.getSenhaAntiga());
+		System.out.println(trocaDeSenha.getSenhaNova());
+		System.out.println(trocaDeSenha.getConfirmacaoSenha());
+		if (trocaDeSenha != null) {
+			System.out.println("entoru 1");
+			if (trocaDeSenha.getSenhaNova() != null && trocaDeSenha.getSenhaNova().length() > 3) {
+				System.out.println("entrou 2");
+				if (trocaDeSenha.getSenhaNova().equals(trocaDeSenha.getConfirmacaoSenha())) {
+					System.out.println("entrou 3");
+					usuarioCrudService.trocarSenha(trocaDeSenha);
+					return new ResponseEntity<String>(HttpStatus.OK);
+
+				}
+			}
+		}
+		System.out.println("ALGO DEU ERRADO");
+
+		throw new SenhaNaoConfere();
 	}
 
 	private void iniciarSessao(Serializable result) throws CarrosUsuarioNaoTemPapel {
@@ -100,12 +128,17 @@ public class Security {
 
 	@Autowired
 	public void setLoginUserService(LoginUserService loginUserService) {
-		this.LoginUserService = loginUserService;
+		this.loginUserService = loginUserService;
 	}
 
 	@Autowired
 	public void setSessaoAtributoService(SessaoAtributoService sessaoAtributoService) {
 		this.sessaoAtributoService = sessaoAtributoService;
+	}
+
+	@Autowired
+	public void setUsuarioCrudService(UsuarioCrudService usuarioCrudService) {
+		this.usuarioCrudService = usuarioCrudService;
 	}
 
 }

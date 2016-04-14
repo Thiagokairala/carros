@@ -15,4 +15,8 @@ public interface UsuarioDao {
 	public void updateUsuario(Usuario usuario);
 
 	public void trocarStatusUsuairo(Usuario usuario);
+
+	public void verificarSenhaAtual(Long idUsuario, String senhaAntiga);
+
+	public void trocarSenha(Long long1, String criptografarSenha);
 }

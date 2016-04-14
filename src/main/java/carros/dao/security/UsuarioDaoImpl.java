@@ -114,6 +114,18 @@ public class UsuarioDaoImpl implements UsuarioDao {
 		jdbcTemplate.update(UsuarioDaoContrato.TROCAR_STATUS_USUARIO, arrayParams);
 	}
 
+	@Override
+	public void verificarSenhaAtual(Long idUsuario, String senhaAntiga) {
+		jdbcTemplate.queryForObject(UsuarioDaoContrato.VERIFICAR_SENHA, usuarioRowMapper,
+				new Object[] { idUsuario, senhaAntiga });
+	}
+
+	@Override
+	public void trocarSenha(Long idUsuario, String senha) {
+
+		jdbcTemplate.update(UsuarioDaoContrato.TROCAR_SENHA, new Object[] {senha, idUsuario});
+	}
+
 	@Autowired
 	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
 		this.jdbcTemplate = jdbcTemplate;

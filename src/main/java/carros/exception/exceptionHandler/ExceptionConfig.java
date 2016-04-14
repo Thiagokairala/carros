@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import carros.exception.CarrosException;
 import carros.exception.EmailJaExistente;
 import carros.exception.NomeDeUsuarioExistente;
+import carros.exception.SenhaNaoConfere;
 import carros.exception.UsuarioNaoTemChatException;
 import carros.exception.security.CarrosUserNotFound;
 import carros.exception.security.CarrosUsuarioNaoAutenticado;
@@ -56,6 +57,11 @@ public class ExceptionConfig {
 	@ExceptionHandler(EmailJaExistente.class)
 	public @ResponseBody ResponseEntity<String> emailJaCadastrado() {
 		return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
+	}
+
+	@ExceptionHandler(SenhaNaoConfere.class)
+	public @ResponseBody ResponseEntity<String> senhaNaoConfere() {
+		return new ResponseEntity<String>(HttpStatus.FORBIDDEN);
 	}
 
 }
