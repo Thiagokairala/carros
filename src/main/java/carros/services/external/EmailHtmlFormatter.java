@@ -7,7 +7,7 @@ import carros.entities.usuarios.Usuario;
 @Service
 public class EmailHtmlFormatter {
 
-	private String cofirmationUrl = "http://localhost:8080/carros/security/confirmarEmail?token=";
+	private String cofirmationUrl = "http://localhost:8080/carrosWeb/#/main/confirmEmail/";
 
 	public String formatarEmail(Usuario usuario) {
 		System.out.println(usuario.getTokenAutenticacao());
