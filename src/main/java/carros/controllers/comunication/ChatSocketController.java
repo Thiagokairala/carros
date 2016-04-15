@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 
 import carros.entities.comunicacao.Chat;
 import carros.entities.comunicacao.Mensagem;
+import carros.entities.comunicacao.Notificacao;
 import carros.entities.usuarios.UsuarioConcessionaria;
 import carros.services.comunication.ChatService;
 
@@ -19,6 +20,16 @@ public class ChatSocketController {
 	private final static String CHAT_TOPIC = "/topic/chats/";
 	private final static String MENSAGENS_TOPIC = "/topic/mensagem/";
 	private final static String FINALIZAR_CHAT_TOPIC = "/topic/finalizaChat/";
+	private final static String NOTIFICACOES = "/topic/notificacao/";
+
+	@MessageMapping("/notificacao")
+	public void sendNotificacao(Long destinatario, String titulo, String texto) {
+		Notificacao notificacao = new Notificacao();
+		notificacao.setTitulo(titulo);
+		notificacao.setCorpo(texto);
+		System.out.println("Enviando para " + destinatario);
+		simpMessagingTemplate.convertAndSend(NOTIFICACOES + destinatario, notificacao);
+	}
 
 	@MessageMapping("/chat")
 	public void sendMessage(Chat chat) {
@@ -40,12 +51,18 @@ public class ChatSocketController {
 
 	@MessageMapping("/finalizarChat")
 	public void finalizarChat(Chat chat) {
-		chat = chatService.buscarChatComIntegrantes(chat);
-		for (UsuarioConcessionaria usuario : chat.getUsuariosConcessionaria()) {
-			simpMessagingTemplate.convertAndSend(FINALIZAR_CHAT_TOPIC + usuario.getUsuario().getIdUsuario(), chat.getId());
+		try {
+			chat = chatService.buscarChatComIntegrantes(chat);
+			for (UsuarioConcessionaria usuario : chat.getUsuariosConcessionaria()) {
+				simpMessagingTemplate.convertAndSend(FINALIZAR_CHAT_TOPIC + usuario.getUsuario().getIdUsuario(),
+						chat.getId());
+			}
+			simpMessagingTemplate.convertAndSend(FINALIZAR_CHAT_TOPIC + chat.getLojista().getUsuario().getIdUsuario(),
+					chat.getId());
+		} catch (Exception e) {
+			// nothing to do.
 		}
-		simpMessagingTemplate.convertAndSend(FINALIZAR_CHAT_TOPIC + chat.getLojista().getUsuario().getIdUsuario(),
-				chat.getId());
+
 	}
 
 	@Autowired

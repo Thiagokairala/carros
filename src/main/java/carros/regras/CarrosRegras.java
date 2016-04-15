@@ -88,8 +88,12 @@ public abstract class CarrosRegras {
 
 	public Boolean getBoolean(Map<String, Object> row, String columnName) {
 		Boolean bool = false;
-		bool = (Boolean) row.get(columnName);
 
+		try {
+			bool = (Boolean) row.get(columnName);
+		} catch (Exception e) {
+			logger.warn("Field " + columnName + " not in the resultSet");
+		}
 		return bool;
 	}
 

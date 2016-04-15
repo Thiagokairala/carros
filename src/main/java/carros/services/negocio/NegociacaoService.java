@@ -47,7 +47,7 @@ public class NegociacaoService {
 		List<UsuarioConcessionaria> destinatariosNotificacao = usuarioConcessionariaDao
 				.buscarUsuariosDeUmaConcessionaria(oferta.getConcessionaria().getIdConcessionaria());
 		for (UsuarioConcessionaria usuario : destinatariosNotificacao) {
-			notificacaoDao.criarNotificacao(usuario.getIdUsuarioConcessionaria(), "Negociaï¿½ï¿½o finalizada",
+			notificacaoDao.criarNotificacao(usuario.getUsuario().getIdUsuario(), "Negociação finalizada",
 					gerarCorpoNotificacao(negociacao, oferta, lojista));
 		}
 		ofertaDao.finalizarOferta(oferta, lojista);
@@ -62,7 +62,7 @@ public class NegociacaoService {
 	}
 
 	private String gerarCorpoNotificacao(Negociacao negociacao, Oferta oferta, Lojista lojista) {
-		String corpoNotificacao = "Negociaï¿½ï¿½o do carro " + oferta.getVeiculo().getModeloVeiculo().getNome()
+		String corpoNotificacao = "Negociaçãoo do carro " + oferta.getVeiculo().getModeloVeiculo().getNome()
 				+ " cotada por: " + oferta.getValorDaOferta() + " finalizada e fechada com o lojista: "
 				+ lojista.getUsuario().getPessoa().getNomeDeTela() + " por: " + negociacao.getPrecoOferecido();
 		return corpoNotificacao;

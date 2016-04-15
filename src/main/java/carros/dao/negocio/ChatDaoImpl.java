@@ -107,13 +107,14 @@ public class ChatDaoImpl implements ChatDao {
 	@Override
 	public List<Chat> getChatsOferta(Oferta oferta) {
 		List<Chat> listChat = new ArrayList<Chat>();
-		Object[] arrayParams = new Object[] {oferta.getId() };
-		List<Map<String, Object>> rowList = jdbcTemplate.queryForList(ChatDaoContrato.BUSCAR_CHAT_POR_OFERTA, arrayParams);
-		
-		for(Map<String, Object> row : rowList) {
+		Object[] arrayParams = new Object[] { oferta.getId() };
+		List<Map<String, Object>> rowList = jdbcTemplate.queryForList(ChatDaoContrato.BUSCAR_CHAT_POR_OFERTA,
+				arrayParams);
+
+		for (Map<String, Object> row : rowList) {
 			listChat.add(chatRegra.buildRegra(row));
 		}
-		
+
 		return listChat;
 	}
 

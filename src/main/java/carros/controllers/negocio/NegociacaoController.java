@@ -35,7 +35,6 @@ public class NegociacaoController extends ControladoraBase {
 	@RequestMapping(value = "/comecar", method = RequestMethod.POST)
 	public @ResponseBody ResponseEntity<Chat> comecarNegociacao(@RequestBody Negociacao negociacao) throws Exception {
 		Lojista lojista = super.usuarioSessaoEhLojista();
-		System.out.println(negociacao);
 		Chat chat = negociacaoService.abrirNegociacoes(negociacao, lojista);
 		if (chat == null) {
 			List<Chat> chats = chatService.finalizarChats(negociacao.getOferta());
