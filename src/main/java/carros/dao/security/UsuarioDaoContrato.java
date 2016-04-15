@@ -11,6 +11,11 @@ public final class UsuarioDaoContrato {
 	public static final String BUSCAR_USERNAME = "SELECT * FROM usuario WHERE txt_nome_usuario =?";
 	public static final String VERIFICAR_SENHA = "SELECT * FROM usuario WHERE idusuario = ? AND txt_senha_usuario = ?";
 	public static final String TROCAR_SENHA = "UPDATE usuario SET txt_senha_usuario = ? WHERE idusuario = ?";
+	public static final String INSERIR_TOKEN_ESQUECI_SENHA = "INSERT INTO esqueci_senha_token (txt_token, usuario_idusuario) VALUES (?, ?)";
+	public static final String BUSCAR_USUARIO_POR_TOKEN_ESQUECI_SENHA = "SELECT * FROM usuario "
+			+ "JOIN esqueci_senha_token "
+			+ "ON usuario.idusuario = esqueci_senha_token.usuario_idusuario "
+			+ "WHERE txt_token = ? AND bool_usado = false";
 	public static String INSERIR_USUARIO = "INSERT INTO usuario (txt_nome_usuario, "
 			+ "txt_senha_usuario, pessoa_idpessoa, txt_email, tipo_usuario_idtipo_usuario, txt_token_autenticacao, bool_ativo) VALUES "
 			+ "(?, ?, ?, ?, ?, ?, true)";

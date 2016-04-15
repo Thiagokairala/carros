@@ -19,9 +19,37 @@ public class EmailService {
 	private AutenticacaoEmail autenticacaoEmail;
 	private EmailHtmlFormatter emailHtmlFormatter;
 
+	public void sendNewPasswordEmail(String hash, String email) {
+		Properties propriedades = preparaProperties();
+
+		autenticacaoEmail.setUsername(EmailContrato.USUARIO_EMAIL);
+		autenticacaoEmail.setPassword(EmailContrato.SENHA_EMAIL);
+
+		Session session = Session.getDefaultInstance(propriedades, autenticacaoEmail);
+		session.setDebug(true);
+
+		Message mensagem = preparaMensageTrocaSenha(session, hash, email);
+
+		enviarTransport(mensagem, session);
+	}
+
+	private Message preparaMensageTrocaSenha(Session session, String hash, String email) {
+		Message mensagem = new MimeMessage(session);
+		try {
+			mensagem.setRecipient(Message.RecipientType.TO, new InternetAddress(email));
+			mensagem.setFrom(new InternetAddress(EmailContrato.EMAIL_FROM));
+			mensagem.setSubject("confirmação de registro");
+			mensagem.setContent(emailHtmlFormatter.formatarEmailTrocaSenha(hash, email), "text/html");
+		} catch (Exception e) {
+			System.out.println(">> Erro: Completar Mensagem");
+			e.printStackTrace();
+		}
+		return mensagem;
+	}
+
 	public void sendActivationEmail(Usuario usuario) {
 
-		Properties propriedades = preparaProperties(usuario);
+		Properties propriedades = preparaProperties();
 
 		autenticacaoEmail.setUsername(EmailContrato.USUARIO_EMAIL);
 		autenticacaoEmail.setPassword(EmailContrato.SENHA_EMAIL);
@@ -54,7 +82,7 @@ public class EmailService {
 		try {
 			mensagem.setRecipient(Message.RecipientType.TO, new InternetAddress(usuario.getEmail()));
 			mensagem.setFrom(new InternetAddress(EmailContrato.EMAIL_FROM));
-			mensagem.setSubject("confirmaï¿½ï¿½o de registro");
+			mensagem.setSubject("confirmação de registro");
 			mensagem.setContent(emailHtmlFormatter.formatarEmail(usuario), "text/html");
 		} catch (Exception e) {
 			System.out.println(">> Erro: Completar Mensagem");
@@ -63,7 +91,7 @@ public class EmailService {
 		return mensagem;
 	}
 
-	private Properties preparaProperties(Usuario usuario) {
+	private Properties preparaProperties() {
 		Properties propriedades = new Properties();
 		propriedades.put("mail.transport.protocol", "smtp");
 		propriedades.put("mail.smtp.starttls.enable", "true");

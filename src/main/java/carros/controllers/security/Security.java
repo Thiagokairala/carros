@@ -76,13 +76,21 @@ public class Security {
 
 	}
 
+	@RequestMapping(value = "/esqueciSenha", method = RequestMethod.POST)
+	public @ResponseBody ResponseEntity<String> esqueciSenha(@RequestBody String email) throws CarrosUserNotFound {
+		Usuario usuario = usuarioCrudService.buscarUsuarioPorEmail(email);
+		usuarioCrudService.enviarEmailAutenticacao(email, usuario);
+		return new ResponseEntity<String>(HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/verificarTokenEsqueciSenha", method = RequestMethod.POST)
+	public @ResponseBody ResponseEntity<Usuario> verificarTokenEsqueciSenha(@RequestBody String token) throws CarrosUserNotFound {
+		return new ResponseEntity<Usuario>(usuarioCrudService.verificarTokenEsqueciSenha(token)	, HttpStatus.OK);
+	}
+
 	@RequestMapping(value = "/trocarSenha", method = RequestMethod.POST)
 	public @ResponseBody ResponseEntity<String> changePassword(@RequestBody TrocaDeSenha trocaDeSenha)
 			throws SenhaNaoConfere {
-		System.out.println(trocaDeSenha);
-		System.out.println(trocaDeSenha.getSenhaAntiga());
-		System.out.println(trocaDeSenha.getSenhaNova());
-		System.out.println(trocaDeSenha.getConfirmacaoSenha());
 		if (trocaDeSenha != null) {
 			System.out.println("entoru 1");
 			if (trocaDeSenha.getSenhaNova() != null && trocaDeSenha.getSenhaNova().length() > 3) {
@@ -95,8 +103,21 @@ public class Security {
 				}
 			}
 		}
-		System.out.println("ALGO DEU ERRADO");
+		throw new SenhaNaoConfere();
+	}
+	
+	@RequestMapping(value = "/trocarSenhaComHash", method = RequestMethod.POST)
+	public @ResponseBody ResponseEntity<String> changePasswordComHash(@RequestBody TrocaDeSenha trocaDeSenha)
+			throws SenhaNaoConfere {
+		if (trocaDeSenha != null) {
+			if (trocaDeSenha.getSenhaNova() != null && trocaDeSenha.getSenhaNova().length() > 3) {
+				if (trocaDeSenha.getSenhaNova().equals(trocaDeSenha.getConfirmacaoSenha())) {
+					usuarioCrudService.trocarSenhaComHash(trocaDeSenha);
+					return new ResponseEntity<String>(HttpStatus.OK);
 
+				}
+			}
+		}
 		throw new SenhaNaoConfere();
 	}
 

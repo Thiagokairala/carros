@@ -20,6 +20,7 @@ import carros.entities.security.LoginForm;
 import carros.entities.usuarios.Usuario;
 import carros.exception.EmailJaExistente;
 import carros.exception.NomeDeUsuarioExistente;
+import carros.exception.security.CarrosUserNotFound;
 import carros.services.security.password.PasswordHandler;
 
 @Repository
@@ -123,7 +124,17 @@ public class UsuarioDaoImpl implements UsuarioDao {
 	@Override
 	public void trocarSenha(Long idUsuario, String senha) {
 
-		jdbcTemplate.update(UsuarioDaoContrato.TROCAR_SENHA, new Object[] {senha, idUsuario});
+		jdbcTemplate.update(UsuarioDaoContrato.TROCAR_SENHA, new Object[] { senha, idUsuario });
+	}
+
+	@Override
+	public Usuario buscarUsuarioPorEmail(String email) throws CarrosUserNotFound {
+		try {
+			return (Usuario) jdbcTemplate.queryForObject(UsuarioDaoContrato.BUSCAR_EMAIL, usuarioRowMapper,
+					new Object[] { email });
+		} catch (EmptyResultDataAccessException e) {
+			throw new CarrosUserNotFound();
+		}
 	}
 
 	@Autowired
@@ -144,6 +155,21 @@ public class UsuarioDaoImpl implements UsuarioDao {
 	@Autowired
 	public void setUsuarioRowMapper(UsuarioRowMapper usuarioRowMapper) {
 		this.usuarioRowMapper = usuarioRowMapper;
+	}
+
+	@Override
+	public void inserirTokenEsqueciSenha(String hash, Long idUsuario) {
+		jdbcTemplate.update(UsuarioDaoContrato.INSERIR_TOKEN_ESQUECI_SENHA, new Object[] { hash, idUsuario });
+	}
+
+	@Override
+	public Usuario verificarTokenEsqueciSenha(String token) throws CarrosUserNotFound {
+		try {
+		return (Usuario) jdbcTemplate.queryForObject(UsuarioDaoContrato.BUSCAR_USUARIO_POR_TOKEN_ESQUECI_SENHA,
+				usuarioRowMapper, new Object[] { token });
+		} catch(EmptyResultDataAccessException e) {
+			throw new CarrosUserNotFound();
+		}
 	}
 
 }
