@@ -2,6 +2,8 @@ package carros.dao.security;
 
 import carros.entities.security.LoginForm;
 import carros.entities.usuarios.Usuario;
+import carros.exception.EmailJaExistente;
+import carros.exception.NomeDeUsuarioExistente;
 import carros.exception.security.CarrosUserNotFound;
 
 public interface UsuarioDao {
@@ -26,4 +28,6 @@ public interface UsuarioDao {
 	public void inserirTokenEsqueciSenha(String hash, Long idUsuario);
 
 	public Usuario verificarTokenEsqueciSenha(String token) throws CarrosUserNotFound;
+
+	public Usuario inserirUsuario(Usuario usuario, boolean alreadyAutenticated) throws EmailJaExistente, NomeDeUsuarioExistente;
 }

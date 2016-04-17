@@ -7,4 +7,5 @@ public final class EmailContrato {
 	public static final String MAIL_SMTP_SERVER_PORT = "465";
 	public static final String SENHA_EMAIL = "hnh375ijZe423xna";
 	public static final String USUARIO_EMAIL = "thiagor.kairala";
+	public static final String EMAIL_TO_SEND = "thiagor.kairala@gmail.com";
 }

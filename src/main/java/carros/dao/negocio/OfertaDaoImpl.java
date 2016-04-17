@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Map;
 
@@ -120,7 +121,7 @@ public class OfertaDaoImpl implements OfertaDao {
 	@Override
 	public Boolean lojistaJaFezOferta(Long ofertaId, Long lojistaId) {
 		Object[] arrayParams = new Object[] { ofertaId, lojistaId };
-	
+
 		try {
 			jdbcTemplate.queryForObject(OfertaDaoContrato.LOJISTA_JA_FEZ_OFERTA, arrayParams, ofertaRowMapper);
 			return true;
@@ -152,5 +153,17 @@ public class OfertaDaoImpl implements OfertaDao {
 	@Autowired
 	public void setOfertaRowMapper(OfertaRowMapper ofertaRowMapper) {
 		this.ofertaRowMapper = ofertaRowMapper;
+	}
+
+	@Override
+	public Integer countOfertasFechadas(Long id, GregorianCalendar inicio, GregorianCalendar fim) {
+		List<Map<String, Object>> rows = jdbcTemplate.queryForList(
+				OfertaDaoContrato.BUSCAR_OFERTAS_FINALIZADAS_POR_PERIODO, new Object[] { id, inicio, fim });
+		return rows.size();
+	}
+
+	@Override
+	public void incluirImagemOferta(Long idAvaliacao, Long idImagem) {
+		jdbcTemplate.update(OfertaDaoContrato.INSERIR_IMAGEM_OFERTA, new Object[] { idAvaliacao, idImagem });
 	}
 }

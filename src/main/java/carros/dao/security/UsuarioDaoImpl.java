@@ -33,6 +33,17 @@ public class UsuarioDaoImpl implements UsuarioDao {
 
 	@Override
 	public Usuario inserirUsuario(Usuario usuario) throws Exception {
+		return inserirUsuarioPrivate(usuario, UsuarioDaoContrato.INSERIR_USUARIO);
+	}
+	@Override
+	public Usuario inserirUsuario(Usuario usuario, boolean alreadyAutenticated)
+			throws EmailJaExistente, NomeDeUsuarioExistente {
+		
+		return inserirUsuarioPrivate(usuario, UsuarioDaoContrato.INSERIR_USUARIO_JA_AUTENTICADO);
+	}
+
+
+	private Usuario inserirUsuarioPrivate(Usuario usuario, String iNSERIR_USUARIO) throws EmailJaExistente, NomeDeUsuarioExistente {
 		chekEmail(usuario.getEmail());
 		checkUsrname(usuario.getUsername());
 		Pessoa pessoa = pessoaDao.inserirPessoa(usuario.getPessoa());
@@ -171,5 +182,4 @@ public class UsuarioDaoImpl implements UsuarioDao {
 			throw new CarrosUserNotFound();
 		}
 	}
-
 }

@@ -1,5 +1,6 @@
 package carros.services.negocio.concessionaria;
 
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import carros.entities.negocio.MarcaVeiculo;
 import carros.entities.negocio.ModeloVeiculo;
 import carros.entities.negocio.Oferta;
 import carros.entities.negocio.Veiculo;
+import carros.entities.pessoas.aparencia.Imagem;
 import carros.services.crud.VeiculoCrudService;
 import carros.services.negocio.AcessoriosService;
 
@@ -38,7 +40,12 @@ public class OfertaService {
 		acessoriosService.inserirAcessoriosVeiculo(veiculo);
 
 		oferta.setVeiculo(veiculo);
-		return ofertaDao.inserirOferta(oferta);
+		oferta = ofertaDao.inserirOferta(oferta);
+
+		for (Imagem imagem : oferta.getVeiculo().getAvaliacaoVeiculo().getImages()) {
+			ofertaDao.incluirImagemOferta(oferta.getVeiculo().getAvaliacaoVeiculo().getId(), imagem.getId());
+		}
+		return oferta;
 	}
 
 	@Autowired
@@ -67,8 +74,12 @@ public class OfertaService {
 	}
 
 	public Boolean lojistaJaFezOferta(Long ofertaId, Long lojistaId) {
-			
+
 		return ofertaDao.lojistaJaFezOferta(ofertaId, lojistaId);
+	}
+
+	public Integer countOfertasFechadas(Long id, GregorianCalendar inicio, GregorianCalendar fim) {
+		return ofertaDao.countOfertasFechadas(id, inicio, fim);
 	}
 
 }

@@ -16,6 +16,9 @@ public final class UsuarioDaoContrato {
 			+ "JOIN esqueci_senha_token "
 			+ "ON usuario.idusuario = esqueci_senha_token.usuario_idusuario "
 			+ "WHERE txt_token = ? AND bool_usado = false";
+	public static final String INSERIR_USUARIO_JA_AUTENTICADO = "INSERT INTO usuario (txt_nome_usuario, "
+			+ "txt_senha_usuario, pessoa_idpessoa, txt_email, tipo_usuario_idtipo_usuario, txt_token_autenticacao, bool_ativo, bool_autenticado) VALUES "
+			+ "(?, ?, ?, ?, ?, ?, true, true)";
 	public static String INSERIR_USUARIO = "INSERT INTO usuario (txt_nome_usuario, "
 			+ "txt_senha_usuario, pessoa_idpessoa, txt_email, tipo_usuario_idtipo_usuario, txt_token_autenticacao, bool_ativo) VALUES "
 			+ "(?, ?, ?, ?, ?, ?, true)";

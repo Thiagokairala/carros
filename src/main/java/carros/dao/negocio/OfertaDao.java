@@ -1,5 +1,6 @@
 package carros.dao.negocio;
 
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import carros.entities.comunicacao.NovaOfertaDto;
@@ -28,4 +29,8 @@ public interface OfertaDao {
 	public Oferta buscarOfertaPorChat(NovaOfertaDto novaOfertaDto);
 
 	public Boolean lojistaJaFezOferta(Long ofertaId, Long lojistaId);
+
+	public Integer countOfertasFechadas(Long id, GregorianCalendar inicio, GregorianCalendar fim);
+
+	public void incluirImagemOferta(Long id, Long id2);
 }

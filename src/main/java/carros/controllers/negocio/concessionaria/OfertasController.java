@@ -1,5 +1,6 @@
 package carros.controllers.negocio.concessionaria;
 
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,6 +57,19 @@ public class OfertasController extends ControladoraBase {
 	public @ResponseBody ResponseEntity<Boolean> usuarioJaFezOferta(@RequestParam Long ofertaId,
 			@RequestParam Long lojistaId) {
 		return new ResponseEntity<Boolean>(ofertaService.lojistaJaFezOferta(ofertaId, lojistaId), HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/ofertasPorPeriodoConcessionaria", method = RequestMethod.GET)
+	public @ResponseBody ResponseEntity<Integer> ofertasPorPeriodoConcessionaria(@RequestParam Long id,
+			@RequestParam Long inicio,
+			@RequestParam Long fim) {
+		
+		GregorianCalendar inicioDate = new GregorianCalendar();
+		inicioDate.setTimeInMillis(inicio);
+		GregorianCalendar fimDate = new GregorianCalendar();
+		fimDate.setTimeInMillis(fim);
+		
+		return new ResponseEntity<Integer>(ofertaService.countOfertasFechadas(id, inicioDate, fimDate), HttpStatus.OK);
 	}
 
 	@Autowired

@@ -32,7 +32,7 @@ public class UsuarioConcessionariaDaoImpl implements UsuarioConcessionariaDao {
 
 	@Override
 	public UsuarioConcessionaria inserirUsuarioConcessionaria(UsuarioConcessionaria usuarioConcessionaria) throws Exception {
-		Usuario usuario = usuarioDao.inserirUsuario(usuarioConcessionaria.getUsuario());
+		Usuario usuario = usuarioDao.inserirUsuario(usuarioConcessionaria.getUsuario(), true);
 
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 

@@ -17,7 +17,7 @@ public class OfertaDaoContrato {
 			+ "JOIN tipo_veiculo ON tipo_veiculo.idtipo_veiculo = modelo_veiculo.tipo_veiculo_idtipo_veiculo "
 			+ "JOIN avaliacao_veiculo ON veiculo.avaliacao_veiculo_idavaliacao_veiculo = avaliacao_veiculo.idavaliacao_veiculo "
 			+ "JOIN cor_veiculo ON avaliacao_veiculo.cor_veiculo_idcor_veiculo = cor_veiculo.idcor_veiculo "
-			+ "WHERE oferta.bool_finalizada = false " + "LIMIT ?, ?";
+			+ "WHERE oferta.bool_finalizada = false " + "LIMIT ?, ? ORDER BY dt_criado DESC";
 
 	public static final String SELECT_OFERTAS_POR_TIPO = "SELECT concessionaria.*," + "usuario.*, "
 			+ "pessoa.txt_nome_de_tela, " + "veiculo.*, " + "modelo_veiculo.*, " + "marca_veiculo.*, "
@@ -34,7 +34,7 @@ public class OfertaDaoContrato {
 			+ "JOIN tipo_veiculo ON tipo_veiculo.idtipo_veiculo = modelo_veiculo.tipo_veiculo_idtipo_veiculo "
 			+ "JOIN avaliacao_veiculo ON veiculo.avaliacao_veiculo_idavaliacao_veiculo = avaliacao_veiculo.idavaliacao_veiculo "
 			+ "JOIN cor_veiculo ON avaliacao_veiculo.cor_veiculo_idcor_veiculo = cor_veiculo.idcor_veiculo "
-			+ "WHERE oferta.bool_finalizada = false AND tipo_veiculo.idtipo_veiculo = ? " + "LIMIT ?, ?";
+			+ "WHERE oferta.bool_finalizada = false AND tipo_veiculo.idtipo_veiculo = ? " + "LIMIT ?, ?  ORDER BY dt_criado DESC";
 
 	public static final String SELECT_OFERTAS_POR_MARCA = "SELECT concessionaria.*," + "usuario.*, "
 			+ "pessoa.txt_nome_de_tela, " + "veiculo.*, " + "modelo_veiculo.*, " + "marca_veiculo.*, "
@@ -51,7 +51,7 @@ public class OfertaDaoContrato {
 			+ "JOIN tipo_veiculo ON tipo_veiculo.idtipo_veiculo = modelo_veiculo.tipo_veiculo_idtipo_veiculo "
 			+ "JOIN avaliacao_veiculo ON veiculo.avaliacao_veiculo_idavaliacao_veiculo = avaliacao_veiculo.idavaliacao_veiculo "
 			+ "JOIN cor_veiculo ON avaliacao_veiculo.cor_veiculo_idcor_veiculo = cor_veiculo.idcor_veiculo "
-			+ "WHERE oferta.bool_finalizada = false AND marca_veiculo.idmarca_veiculo = ? " + "LIMIT ?, ?";
+			+ "WHERE oferta.bool_finalizada = false AND marca_veiculo.idmarca_veiculo = ? " + "LIMIT ?, ?  ORDER BY dt_criado DESC";
 
 	public static final String SELECT_OFERTAS_POR_RANGE_DE_PRECO = "SELECT concessionaria.*," + "usuario.*, "
 			+ "pessoa.txt_nome_de_tela, " + "veiculo.*, " + "modelo_veiculo.*, " + "cor_veiculo.*, "
@@ -68,7 +68,7 @@ public class OfertaDaoContrato {
 			+ "JOIN tipo_veiculo ON tipo_veiculo.idtipo_veiculo = modelo_veiculo.tipo_veiculo_idtipo_veiculo "
 			+ "JOIN avaliacao_veiculo ON veiculo.avaliacao_veiculo_idavaliacao_veiculo = avaliacao_veiculo.idavaliacao_veiculo "
 			+ "JOIN cor_veiculo ON avaliacao_veiculo.cor_veiculo_idcor_veiculo = cor_veiculo.idcor_veiculo "
-			+ "WHERE oferta.bool_finalizada = false AND oferta.db_preco_oferta BETWEEN ? AND ? " + "LIMIT ?, ?";
+			+ "WHERE oferta.bool_finalizada = false AND oferta.db_preco_oferta BETWEEN ? AND ? " + "LIMIT ?, ?  ORDER BY dt_criado DESC";
 
 	public static final String SELECT_OFERTAS_POR_FILTRO = "SELECT concessionaria.*," + "usuario.*, "
 			+ "pessoa.txt_nome_de_tela, " + "veiculo.*, " + "modelo_veiculo.*, " + "cor_veiculo.*, "
@@ -86,7 +86,7 @@ public class OfertaDaoContrato {
 			+ "JOIN avaliacao_veiculo ON veiculo.avaliacao_veiculo_idavaliacao_veiculo = avaliacao_veiculo.idavaliacao_veiculo "
 			+ "JOIN cor_veiculo ON avaliacao_veiculo.cor_veiculo_idcor_veiculo = cor_veiculo.idcor_veiculo "
 			+ "WHERE oferta.bool_finalizada = false " + "AND" + "	( " + "		marca_veiculo.txt_nome_marca LIKE ? "
-			+ "		OR modelo_veiculo.txt_nome_modelo LIKE ? " + "	) " + "LIMIT ?, ?";
+			+ "		OR modelo_veiculo.txt_nome_modelo LIKE ? " + "	) " + "LIMIT ?, ?  ORDER BY dt_criado DESC";
 
 	protected static final String INSERIR_OFERTA = "INSERT INTO oferta "
 			+ "(concessionaria_idconcessionaria, veiculo_idveiculo, db_preco_oferta, dt_criado) "
@@ -107,7 +107,7 @@ public class OfertaDaoContrato {
 			+ "JOIN tipo_veiculo ON tipo_veiculo.idtipo_veiculo = modelo_veiculo.tipo_veiculo_idtipo_veiculo "
 			+ "JOIN avaliacao_veiculo ON veiculo.avaliacao_veiculo_idavaliacao_veiculo = avaliacao_veiculo.idavaliacao_veiculo "
 			+ "JOIN cor_veiculo ON avaliacao_veiculo.cor_veiculo_idcor_veiculo = cor_veiculo.idcor_veiculo "
-			+ "WHERE idoferta = ?";
+			+ "WHERE idoferta = ?  ORDER BY dt_criado DESC";
 
 	public static final String FINALIZAR_OFERTA = "UPDATE oferta "
 			+ "SET bool_finalizada = true, dt_finalizado = now(), finalizado_por_lojista = ? " + "WHERE idoferta = ?";
@@ -127,13 +127,16 @@ public class OfertaDaoContrato {
 			+ "JOIN tipo_veiculo ON tipo_veiculo.idtipo_veiculo = modelo_veiculo.tipo_veiculo_idtipo_veiculo "
 			+ "JOIN avaliacao_veiculo ON veiculo.avaliacao_veiculo_idavaliacao_veiculo = avaliacao_veiculo.idavaliacao_veiculo "
 			+ "JOIN cor_veiculo ON avaliacao_veiculo.cor_veiculo_idcor_veiculo = cor_veiculo.idcor_veiculo "
-			+ "WHERE concessionaria.idconcessionaria = ? AND oferta.bool_finalizada = false";
+			+ "WHERE concessionaria.idconcessionaria = ? AND oferta.bool_finalizada = false  ORDER BY dt_criado DESC";
 
 	public static final String BUSCAR_OFERTA_POR_CHAT = "SELECT * FROM oferta "
 			+ "JOIN lojista_fez_oferta ON oferta.idoferta = lojista_fez_oferta.oferta_idoferta "
 			+ "WHERE chat_idchat = ?";
 
 	public static final String LOJISTA_JA_FEZ_OFERTA = "SELECT * FROM lojista_fez_oferta "
-			+ "WHERE oferta_idoferta = ? "
-			+ "AND lojista_idlojista = ?";
+			+ "WHERE oferta_idoferta = ? " + "AND lojista_idlojista = ?";
+
+	public static final String BUSCAR_OFERTAS_FINALIZADAS_POR_PERIODO = "SELECT * FROM oferta WHERE concessionaria_idconcessionaria = ? AND bool_finalizada = true AND dt_finalizado BETWEEN ? AND ?";
+
+	public static final String INSERIR_IMAGEM_OFERTA = "INSERT INTO avaliacao_veiculo_has_imagem (avaliacao_veiculo_idavaliacao_carro, imagem_idimagem) VALUES (?, ?)";
 }

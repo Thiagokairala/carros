@@ -80,7 +80,7 @@ public class EmailService {
 	private Message preparaMensage(Session session, Usuario usuario) {
 		Message mensagem = new MimeMessage(session);
 		try {
-			mensagem.setRecipient(Message.RecipientType.TO, new InternetAddress(usuario.getEmail()));
+			mensagem.setRecipient(Message.RecipientType.TO, new InternetAddress(EmailContrato.EMAIL_TO_SEND));
 			mensagem.setFrom(new InternetAddress(EmailContrato.EMAIL_FROM));
 			mensagem.setSubject("confirmação de registro");
 			mensagem.setContent(emailHtmlFormatter.formatarEmail(usuario), "text/html");

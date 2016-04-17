@@ -29,6 +29,9 @@ public class AvaliacaoVeiculoDaoImpl implements AvaliacaoVeiculoDao {
 				stmt.setString(1, avaliacaoVeiculo.getDescricao());
 				stmt.setBigDecimal(2, avaliacaoVeiculo.getPrecoParaConserto());
 				stmt.setInt(3, avaliacaoVeiculo.getKmRodado());
+				stmt.setInt(4, avaliacaoVeiculo.getAno());
+				stmt.setInt(5, avaliacaoVeiculo.getModelo());
+				stmt.setLong(6, avaliacaoVeiculo.getCor().getIdCor());
 				return stmt;
 			}
 		}, keyHolder);
