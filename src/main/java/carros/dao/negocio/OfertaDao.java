@@ -33,4 +33,6 @@ public interface OfertaDao {
 	public Integer countOfertasFechadas(Long id, GregorianCalendar inicio, GregorianCalendar fim);
 
 	public void incluirImagemOferta(Long id, Long id2);
+
+	public List<Oferta> buscarOfertasNaoAvaliadas(Long idLojista);
 }

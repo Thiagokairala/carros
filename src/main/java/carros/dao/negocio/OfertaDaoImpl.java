@@ -98,7 +98,8 @@ public class OfertaDaoImpl implements OfertaDao {
 
 	@Override
 	public void finalizarOferta(Oferta oferta, Lojista lojista) {
-		Object[] arrayParams = new Object[] { lojista.getIdLojista(), oferta.getId() };
+		Object[] arrayParams = new Object[] { OfertaDaoContrato.NUMERO_DIAS_ATE_AVALIACAO, lojista.getIdLojista(),
+				oferta.getId() };
 		jdbcTemplate.update(OfertaDaoContrato.FINALIZAR_OFERTA, arrayParams);
 	}
 
@@ -165,5 +166,18 @@ public class OfertaDaoImpl implements OfertaDao {
 	@Override
 	public void incluirImagemOferta(Long idAvaliacao, Long idImagem) {
 		jdbcTemplate.update(OfertaDaoContrato.INSERIR_IMAGEM_OFERTA, new Object[] { idAvaliacao, idImagem });
+	}
+
+	@Override
+	public List<Oferta> buscarOfertasNaoAvaliadas(Long idLojista) {
+		List<Oferta> ofertas = new ArrayList<Oferta>();
+		List<Map<String, Object>> rows = jdbcTemplate.queryForList(OfertaDaoContrato.LISTAR_OFERTAS_NAO_AVALIADAS,
+				new Object[] { idLojista });
+
+		for (Map<String, Object> row : rows) {
+			ofertas.add(ofertaRule.buildOferta(row));
+		}
+
+		return ofertas;
 	}
 }

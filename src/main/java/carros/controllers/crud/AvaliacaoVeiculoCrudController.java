@@ -27,14 +27,11 @@ public class AvaliacaoVeiculoCrudController {
 			@RequestBody AvaliacaoVeiculo avaliacaoVeiculo) {
 
 		return new ResponseEntity<AvaliacaoVeiculo>(
-				avaliacaoVeiculoCrudService
-						.inserirAvaliacaoVeiculo(avaliacaoVeiculo),
-				HttpStatus.OK);
+				avaliacaoVeiculoCrudService.inserirAvaliacaoVeiculo(avaliacaoVeiculo), HttpStatus.OK);
 	}
 
 	@Autowired
-	public void setAvaliacaoVeiculoCrudService(
-			AvaliacaoVeiculoCrudService avaliacaoVeiculoCrudService) {
+	public void setAvaliacaoVeiculoCrudService(AvaliacaoVeiculoCrudService avaliacaoVeiculoCrudService) {
 		this.avaliacaoVeiculoCrudService = avaliacaoVeiculoCrudService;
 	}
 
