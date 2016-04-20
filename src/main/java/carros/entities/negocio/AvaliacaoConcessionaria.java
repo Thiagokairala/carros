@@ -14,6 +14,7 @@ public class AvaliacaoConcessionaria implements Serializable {
 	private GregorianCalendar dataAvaliacao;
 	private int notaVelocidade;
 	private double notaGeral;
+	private Oferta oferta;
 	private Concessionaria concessionaria;
 
 	public int getNotaDocumentacao() {
@@ -70,6 +71,14 @@ public class AvaliacaoConcessionaria implements Serializable {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public Oferta getOferta() {
+		return oferta;
+	}
+
+	public void setOferta(Oferta oferta) {
+		this.oferta = oferta;
 	}
 
 }

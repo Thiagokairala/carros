@@ -142,12 +142,7 @@ public class OfertaDaoContrato {
 
 	public static final String INSERIR_IMAGEM_OFERTA = "INSERT INTO avaliacao_veiculo_has_imagem (avaliacao_veiculo_idavaliacao_carro, imagem_idimagem) VALUES (?, ?)";
 
-	public static final String LISTAR_OFERTAS_NAO_AVALIADAS =  "SELECT concessionaria.*," + "usuario.*, "
-			+ "pessoa.txt_nome_de_tela, " + "veiculo.*, " + "modelo_veiculo.*, " + "cor_veiculo.*, "
-			+ "marca_veiculo.*, " + "tipo_veiculo.*, " + "avaliacao_veiculo.*, " + "oferta.*, " + "( "
-			+ "	SELECT avaliacao_veiculo_has_imagem.imagem_idimagem FROM avaliacao_veiculo_has_imagem "
-			+ "    WHERE avaliacao_veiculo_has_imagem.avaliacao_veiculo_idavaliacao_carro = avaliacao_veiculo.idavaliacao_veiculo "
-			+ "    LIMIT 1 " + ") AS idimagem " + "FROM oferta "
+	public static final String LISTAR_OFERTAS_NAO_AVALIADAS =  "SELECT * FROM oferta "
 			+ "JOIN concessionaria ON oferta.concessionaria_idconcessionaria = concessionaria.idconcessionaria "
 			+ "JOIN usuario ON concessionaria.usuario_idusuario = usuario.idusuario "
 			+ "JOIN pessoa ON pessoa.idpessoa = usuario.pessoa_idpessoa "
@@ -157,8 +152,12 @@ public class OfertaDaoContrato {
 			+ "JOIN tipo_veiculo ON tipo_veiculo.idtipo_veiculo = modelo_veiculo.tipo_veiculo_idtipo_veiculo "
 			+ "JOIN avaliacao_veiculo ON veiculo.avaliacao_veiculo_idavaliacao_veiculo = avaliacao_veiculo.idavaliacao_veiculo "
 			+ "JOIN cor_veiculo ON avaliacao_veiculo.cor_veiculo_idcor_veiculo = cor_veiculo.idcor_veiculo "
+			+ "JOIN imagem ON pessoa.imagem_idimagem = imagem.idimagem "
 			+ "WHERE oferta.bool_finalizada = true "
 			+ "AND oferta.bool_avaliada = false "
 			+ "AND oferta.finalizado_por_lojista = ? "
 			+ "AND dt_avaliacao_sera_feita < now();";
+
+	public static final String SET_OFERTA_AVALIADA = "UPDATE oferta "
+			+ "SET bool_avaliada = true WHERE idoferta = ?";
 }

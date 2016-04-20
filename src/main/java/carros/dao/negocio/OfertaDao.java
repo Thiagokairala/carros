@@ -35,4 +35,6 @@ public interface OfertaDao {
 	public void incluirImagemOferta(Long id, Long id2);
 
 	public List<Oferta> buscarOfertasNaoAvaliadas(Long idLojista);
+
+	public void setOfertaAvaliada(Long id);
 }

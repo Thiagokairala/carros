@@ -180,4 +180,11 @@ public class OfertaDaoImpl implements OfertaDao {
 
 		return ofertas;
 	}
+
+	@Override
+	public void setOfertaAvaliada(Long idOferta) {
+	
+		jdbcTemplate.update(OfertaDaoContrato.SET_OFERTA_AVALIADA, new Object[] {idOferta});
+		
+	}
 }

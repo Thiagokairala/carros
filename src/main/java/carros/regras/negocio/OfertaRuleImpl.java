@@ -27,6 +27,7 @@ public class OfertaRuleImpl extends CarrosRegras implements OfertaRule {
 		oferta.setDataCriado(getGregorianCalendar(row, "dt_criado"));
 		oferta.setVeiculo(veiculoRegra.buildVeiculo(row));
 		oferta.setFinalizado(getBoolean(row, "bool_finalizada"));
+		oferta.setDataFinalizacao(getGregorianCalendar(row, "dt_finalizado"));
 		oferta.setConcessionaria(concessionariaRegra.construirConcessionaria(row));
 		return oferta;
 	}

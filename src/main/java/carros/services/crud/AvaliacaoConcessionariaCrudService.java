@@ -28,8 +28,10 @@ public class AvaliacaoConcessionariaCrudService {
 
 		avaliacaoConcessionaria.setConcessionaria(calcularNovaAvaliacao(avaliacaoConcessionaria.getConcessionaria(),
 				avaliacaoConcessionaria.getNotaGeral()));
+		avaliacaoConcessionaria = avaliacaoConcessionariaDao.avaliarConcessionaria(avaliacaoConcessionaria);
 
-		return avaliacaoConcessionariaDao.avaliarConcessionaria(avaliacaoConcessionaria);
+		ofertaDao.setOfertaAvaliada(avaliacaoConcessionaria.getOferta().getId());
+		return avaliacaoConcessionaria;
 	}
 
 	public List<Oferta> buscarAvaliacoesPendentes(Long idLojista) {
