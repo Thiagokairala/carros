@@ -31,6 +31,11 @@ public class MarcaVeiculoDaoImpl implements MarcaVeiculoDao {
 		return marcasVeiculos;
 	}
 
+	@Override
+	public void inserirMarca(MarcaVeiculo marca) {
+		jdbcTemplate.update(MarcaVeiculoDaoContrato.INSERIR_MARCA, new Object[] { marca.getId(), marca.getNome() });
+	}
+
 	@Autowired
 	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
 		this.jdbcTemplate = jdbcTemplate;

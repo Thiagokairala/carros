@@ -7,4 +7,7 @@ import carros.entities.negocio.MarcaVeiculo;
 public interface MarcaVeiculoDao {
 
 	public List<MarcaVeiculo> listarTodasMarcas();
+
+	public void inserirMarca(MarcaVeiculo marca);
+
 }
