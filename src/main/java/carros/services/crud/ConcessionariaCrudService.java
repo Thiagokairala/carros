@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import carros.dao.pessoa.ConcessionariaDao;
 import carros.entities.usuarios.Concessionaria;
+import carros.entities.usuarios.TipoUsuario;
 
 @Service
 public class ConcessionariaCrudService {
@@ -14,6 +15,7 @@ public class ConcessionariaCrudService {
 	private ConcessionariaDao concessionariaDao;
 
 	public Concessionaria inserirConcessionaria(Concessionaria concessionaria) throws Exception {
+		concessionaria.getUsuario().setTipoUsuario(new TipoUsuario(new Long(2)));
 		return concessionariaDao.inserirConcessionaria(concessionaria);
 	}
 

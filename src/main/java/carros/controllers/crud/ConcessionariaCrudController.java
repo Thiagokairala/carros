@@ -32,9 +32,10 @@ public class ConcessionariaCrudController {
 		return new ResponseEntity<Concessionaria>(concessionariaCrudService.inserirConcessionaria(concessionaria),
 				HttpStatus.OK);
 	}
-	
-	@RequestMapping(value="/update", method=RequestMethod.POST)
-	public @ResponseBody ResponseEntity<Concessionaria> updateConcessionaria(@RequestBody Concessionaria concessionaria) {
+
+	@RequestMapping(value = "/update", method = RequestMethod.POST)
+	public @ResponseBody ResponseEntity<Concessionaria> updateConcessionaria(
+			@RequestBody Concessionaria concessionaria) {
 		concessionariaCrudService.updateConcessionaria(concessionaria);
 		return new ResponseEntity<Concessionaria>(HttpStatus.OK);
 	}
@@ -47,8 +48,8 @@ public class ConcessionariaCrudController {
 
 	@RequestMapping(value = "/buscarPorId", method = RequestMethod.GET)
 	public @ResponseBody ResponseEntity<Concessionaria> buscarConcessionariaPorId(@RequestParam long id) {
-		return new ResponseEntity<Concessionaria>(concessionariaCrudService.buscarConcessionariaPorId(id),
-				HttpStatus.OK);
+		Concessionaria concessionaria = concessionariaCrudService.buscarConcessionariaPorId(id);
+		return new ResponseEntity<Concessionaria>(concessionaria, HttpStatus.OK);
 	}
 
 	@Autowired

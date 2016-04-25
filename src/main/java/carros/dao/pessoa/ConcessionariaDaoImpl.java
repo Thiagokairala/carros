@@ -47,6 +47,7 @@ public class ConcessionariaDaoImpl implements ConcessionariaDao {
 				PreparedStatement stmt = connection.prepareStatement(ConcessionariaDaoContrato.INSERIR_CONCESSIONARIA,
 						new String[] { "id" });
 				stmt.setLong(1, usuario.getIdUsuario());
+				stmt.setString(2, concessionaria.getResponsavel());
 				return stmt;
 			}
 		}, keyHolder);

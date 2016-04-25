@@ -9,6 +9,15 @@ public class TipoUsuario implements Serializable {
 	private Long id;
 	private String descricaoTipo;
 
+	public TipoUsuario() {
+		super();
+	}
+
+	public TipoUsuario(Long id) {
+		super();
+		this.id = id;
+	}
+
 	public Long getId() {
 		return id;
 	}

@@ -24,6 +24,7 @@ public class ConcessionariaRegraImpl extends CarrosRegras implements
 		concessionaria.setNumeroAvaliacoes(getInt(rs,
 				"int_numero_de_avaliacoes"));
 		concessionaria.setNotaGeral(getDouble(rs, "fl_nota_avaliacao"));
+		concessionaria.setResponsavel(getString(rs, "txt_responsavel"));
 
 		return concessionaria;
 	}
@@ -37,6 +38,7 @@ public class ConcessionariaRegraImpl extends CarrosRegras implements
 		concessionaria.setNumeroAvaliacoes(getInt(row,
 				"int_numero_de_avaliacoes"));
 		concessionaria.setNotaGeral(getDouble(row, "fl_nota_avaliacao"));
+		concessionaria.setResponsavel(getString(row, "txt_responsavel"));
 
 		return concessionaria;
 	}

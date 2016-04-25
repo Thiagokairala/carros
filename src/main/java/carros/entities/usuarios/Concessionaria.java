@@ -6,6 +6,7 @@ public class Concessionaria implements Serializable {
 
 	private static final long serialVersionUID = 4383597120730145553L;
 	private Long idConcessionaria;
+	private String responsavel;
 
 	private int numeroAvaliacoes;
 	private double notaGeral;
@@ -43,5 +44,15 @@ public class Concessionaria implements Serializable {
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
+
+	public String getResponsavel() {
+		return responsavel;
+	}
+
+	public void setResponsavel(String responsavel) {
+		this.responsavel = responsavel;
+	}
+	
+	
 
 }
