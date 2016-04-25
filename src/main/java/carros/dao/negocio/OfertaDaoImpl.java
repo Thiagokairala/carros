@@ -60,7 +60,8 @@ public class OfertaDaoImpl implements OfertaDao {
 
 	@Override
 	public List<Oferta> buscarOfertasPorFiltro(String filtro, int pagina) {
-		Object[] arrayParams = new Object[] { filtro, filtro, pagina, Paginacao.TAMANHO_PAGINA };
+		Object[] arrayParams = new Object[] { "%" + filtro + "%", "%" + filtro + "%", pagina,
+				Paginacao.TAMANHO_PAGINA };
 
 		return this.buscarOfertasPrivate(OfertaDaoContrato.SELECT_OFERTAS_POR_FILTRO, arrayParams);
 	}
@@ -183,8 +184,8 @@ public class OfertaDaoImpl implements OfertaDao {
 
 	@Override
 	public void setOfertaAvaliada(Long idOferta) {
-	
-		jdbcTemplate.update(OfertaDaoContrato.SET_OFERTA_AVALIADA, new Object[] {idOferta});
-		
+
+		jdbcTemplate.update(OfertaDaoContrato.SET_OFERTA_AVALIADA, new Object[] { idOferta });
+
 	}
 }
